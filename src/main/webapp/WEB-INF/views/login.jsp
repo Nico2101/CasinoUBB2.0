@@ -8,7 +8,7 @@
 <html lang="en">
 <head>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="utf-8" />
 <title>Login CasinoUBB</title>
@@ -68,7 +68,7 @@
 
 											<div class="space-6"></div>
 
-											<form action="index.htm" method="post">
+											<form action="verificarLogin.htm" method="post">
 												<fieldset>
 													<label class="block clearfix"> <span
 														class="block input-icon input-icon-right"> <input
@@ -79,7 +79,7 @@
 													</label> <label class="block clearfix"> <span
 														class="block input-icon input-icon-right"> <input
 															name="password" type="password" class="form-control"
-															placeholder="Contraseña" required pattern=".{8}" title="La contraseña debe tener 8 caracteres" /> <i
+															placeholder="Contraseña" required pattern=".{8}" title="Recuerda que la contraseña tiene 8 caracteres" /> <i
 															class="ace-icon fa fa-lock"></i>
 													</span>
 													</label>
@@ -151,53 +151,53 @@
 
 
 
-											<form action="registro.htm" method="post">
-												<fieldset>
-													<label class="block clearfix"> <span
-														class="block input-icon input-icon-right"> <input
-															type="text" class="form-control" required
-															oninput="checkRut(this)" placeholder="Rut" /> <i
-															class="ace-icon fa fa-male"></i>
+											<form action="registroUsuario.htm" method="post">
+										<fieldset>
+											<label class="block clearfix"> <span
+												class="block input-icon input-icon-right"> <input
+													type="text" class="form-control" required
+													oninput="checkRut(this)" placeholder="Rut" name="rut" /> <i
+													class="ace-icon fa fa-male"></i>
 
-													</span>
-													</label> <label class="block clearfix"> <span
-														class="block input-icon input-icon-right"> <input
-															type="text" class="form-control" placeholder="Nombre" />
-															<i class="ace-icon fa fa-user"></i>
-													</span>
-													</label> <label class="block clearfix"> <span
-														class="block input-icon input-icon-right"> <input
-															type="text" class="form-control"
-															placeholder="Apellido materno" /> <i
-															class="ace-icon fa fa-user"></i>
-													</span>
-													</label> <label class="block clearfix"> <span
-														class="block input-icon input-icon-right"> <input
-															type="text" class="form-control"
-															placeholder="Apellido paterno" /> <i
-															class="ace-icon fa fa-user"></i>
-													</span>
-													</label> <label class="block clearfix"> <span
-														class="block input-icon input-icon-right"> <input
-															type="password" class="form-control"
-															placeholder="Contraseña" /> <i
-															class="ace-icon fa fa-lock"></i>
-													</span>
-													</label> <label class="block clearfix"> <span
-														class="block input-icon input-icon-right"> <input
-															type="password" class="form-control"
-															placeholder="Repetir  contraseña" /> <i
-															class="ace-icon fa fa-retweet"></i>
-													</span>
-													</label>
+											</span>
+											</label> <label class="block clearfix"> <span
+												class="block input-icon input-icon-right"> <input
+													type="text" class="form-control" placeholder="Nombre"
+													name="nombre" required/> <i class="ace-icon fa fa-user"></i>
+											</span>
+											</label> <label class="block clearfix"> <span
+												class="block input-icon input-icon-right"> <input
+													type="text" class="form-control"
+													placeholder="Apellido Paterno" name="appat" required/> <i
+													class="ace-icon fa fa-user"></i>
+											</span>
+											</label> <label class="block clearfix"> <span
+												class="block input-icon input-icon-right"> <input
+													type="text" class="form-control"
+													placeholder="Apellido Materno" name="apmat" required /> <i
+													class="ace-icon fa fa-user"></i>
+											</span>
+											</label> <label class="block clearfix"> <span
+												class="block input-icon input-icon-right"> <input
+													type="password" class="form-control"
+													placeholder="Contraseña" name="clave" required /> <i
+													class="ace-icon fa fa-lock"></i>
+											</span>
+											</label> <label class="block clearfix"> <span
+												class="block input-icon input-icon-right"> <input
+													type="password" class="form-control"
+													placeholder="Repetir  contraseña" name="clave2" required /> <i
+													class="ace-icon fa fa-retweet"></i>
+											</span>
+											</label>
 
-													<button type="Submit"
-														class="width-65 pull-right btn btn-sm btn-success">
-														<span class="bigger-110">Registrarme</span>
+											<button type="Submit"
+												class="width-65 pull-right btn btn-sm btn-success">
+												<span class="bigger-110">Registrarme</span>
 
-													</button>
-												</fieldset>
-											</form>
+											</button>
+										</fieldset>
+									</form>
 										</div>
 
 									</div>
@@ -245,7 +245,8 @@
 																					'visible');//show target
 																});
 											});
-										</script>
+
+                                                                                </script>
 </body>
 <script>
 	function checkRut(rut) {
@@ -306,6 +307,7 @@
 		rut.setCustomValidity('');
 	}
 </script>
+
 
 </html>
 

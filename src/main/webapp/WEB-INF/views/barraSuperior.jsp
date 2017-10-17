@@ -3,6 +3,7 @@
     Created on : 15-sep-2017, 22:41:01
     Author     : Nicolas
 --%>
+<%@ include file="/WEB-INF/views/include.jsp" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,7 +35,10 @@
 				<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 					<span class="user-info">
 						<small>Bienvenido,</small>
-						Nicolás
+						<c:if test="${not empty nombre}">
+							<small>${nombre}</small>
+							
+						</c:if>
 					</span>
 
 					<i class="ace-icon fa fa-caret-down"></i>

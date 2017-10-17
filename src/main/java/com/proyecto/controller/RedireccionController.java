@@ -10,20 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RedireccionController {
 
-	
-	@RequestMapping (value="login")
-	public ModelAndView goToLogin() {
-		ModelAndView vista=new ModelAndView();
-		vista.setViewName("login");
-		return vista;
-	}
-	
-	
-	@RequestMapping(value = "index", method = RequestMethod.POST)
-	public String greeting(@RequestParam(value="rut", required = true)String rut, @RequestParam(value="password", required = true)String pass,Model model) {
-		return "index";
-	}
-	
 	@RequestMapping (value="index",  method = RequestMethod.GET )
 	public ModelAndView index() {
 		ModelAndView vista=new ModelAndView();
