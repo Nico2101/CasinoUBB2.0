@@ -6,6 +6,7 @@
 package com.proyecto.persistence;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,6 +70,10 @@ public class MenuDAO {
            
         }
         return lista;
+    }
+    public int ingresaMenu(String nombre, String tipo, String precio, Date fecha) {
+    	int result =0;
+    	return result;
     }
 
     private static Connection getConnection() {
