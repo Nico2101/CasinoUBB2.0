@@ -55,10 +55,15 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
+							<c:if test="${not empty menuIngresado}">
+									<script>
+									toastr.success("Menú ingresado correctamente");
+									</script>
+							</c:if>
 
 							<div id="formulario">
 								<form class="form-horizontal" role="form"
-									action="ingresarmenu.htm" method="GET">
+									action="ingresarmenu.htm" method="post">
 
 									<h1>Ingrese Menú</h1>
 									<br>
