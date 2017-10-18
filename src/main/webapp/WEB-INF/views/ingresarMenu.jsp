@@ -58,7 +58,7 @@
 
 							<div id="formulario">
 								<form class="form-horizontal" role="form"
-									action="" method="get">
+									action="ingresarmenu.htm" method="GET">
 
 									<h1>Ingrese Menú</h1>
 									<br>

@@ -16,25 +16,15 @@ import com.proyecto.transferObject.MenuTO;
 
 @Controller
 public class MenuController {
-	   @RequestMapping(value ="/agregar",method =RequestMethod.GET)
+	   @RequestMapping(value ="/ingresarmenu",method =RequestMethod.GET)
 	   public String login(@RequestParam(value="nombreMenu",required=false,defaultValue="World")String nombreMenu, @RequestParam(value="tipoMenu",required=false,defaultValue="World")String tipoMenu,@RequestParam(value="precioMenu",required=false,defaultValue="World")int precioMenu,@RequestParam(value="dateMenu",required=false,defaultValue="World")String dateMenu, Model model) throws SQLException {
 		  // model.addAttribute("user",user);
 		  // model.addAttribute("pass",pass);
         
 		MenuDAO dao = new MenuDAO();
         MenuTO to = new MenuTO();
-        
-        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
-        java.util.Date fechaUtils = null;
-        //java.util.Date fechaU = null;
-        try {
-            fechaUtils  = formatter.parse(dateMenu);
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-        Date fechaI = new Date(fechaUtils.getTime());
-        to.setFecha(fechaI);
-        
+        java.sql.Date fecha = java.sql.Date.valueOf(dateMenu);
+        to.setFecha(fecha);
         to.setNombre(nombreMenu);
         to.setPrecio(precioMenu);
         to.setTipo(tipoMenu);
@@ -44,7 +34,7 @@ public class MenuController {
         
         //model.addAttribute("MenuTO",menuTO);
 
-		return "index.jsp";
+		return "index";
 }   
 	   
 }
