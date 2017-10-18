@@ -55,10 +55,15 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
+							<c:if test="${not empty menuIngresado}">
+									<script>
+									toastr.success("Menú ingresado correctamente");
+									</script>
+							</c:if>
 
 							<div id="formulario">
 								<form class="form-horizontal" role="form"
-									action="" method="get">
+									action="ingresarmenu.htm" method="post">
 
 									<h1>Ingrese Menú</h1>
 									<br>
@@ -102,7 +107,7 @@
 											for="form-field-1"> Fecha Menú</label>
 
 										<div class="col-sm-9">
-											<input name="dateSelected" type="date" id="form-field-1"
+											<input name="dateMenu" type="date" id="form-field-1"
 												placeholder="" style="width: 300px"
 												class="col-xs-10 col-sm-5">
 										</div>

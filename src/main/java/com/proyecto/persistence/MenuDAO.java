@@ -6,6 +6,7 @@
 package com.proyecto.persistence;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class MenuDAO {
 
     private static final String BUSCA_MENU="select * from menu where fecha=?";
     private static final String OBTENER_MENU="select * from menu where fecha=?";
-    
+    private static final String INSERT_QUERY ="insert into menu(nombre,precio,tipo,fecha) values(?,?,?,?)";
     
     private static final String DB_NAME = "mydb";
     private static final String PORT = "3306";
@@ -69,6 +70,27 @@ public class MenuDAO {
            
         }
         return lista;
+    }
+    public int ingresaMenu(MenuTO to) throws SQLException {
+    	int result =0;
+    	Connection conn = null;
+        try{
+        conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement(INSERT_QUERY);
+        ps.setString(1, to.getNombre());
+        ps.setInt(2,to.getPrecio());
+        ps.setString(3, to.getTipo());
+        ps.setDate(4, to.getFecha());
+        ps.executeUpdate();
+        result = 1;
+        }catch(SQLException e){
+            System.out.println("Error aquiiii");
+            System.out.println(e);
+        }finally{
+            if(conn!=null)
+                conn.close();
+        }
+    	return result;
     }
 
     private static Connection getConnection() {
