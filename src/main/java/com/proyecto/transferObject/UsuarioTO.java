@@ -15,8 +15,17 @@ public class UsuarioTO {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String clave;
+    private String rol;
 
-    public String getClave() {
+    public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+
+	public String getClave() {
         return clave;
     }
 

@@ -35,8 +35,21 @@ public class LoginController {
 
 		if (usuarioDAO.verificar(usuarioTO) != null) {
 			String nombre = usuarioDAO.verificar(usuarioTO).getNombre();
-			vista.addObject("nombre", nombre);
-			vista.setViewName("index");
+			String rol=usuarioDAO.verificar(usuarioTO).getRol();
+			
+			//Vista usuario
+			if(rol.equalsIgnoreCase("usuario")) {
+				vista.addObject("nombre", nombre);
+				vista.setViewName("indexUsuario");
+			}else {
+				
+				//Vista adm
+				if(rol.equalsIgnoreCase("Administrador")) {
+					vista.addObject("nombre", nombre);
+					vista.setViewName("index");
+				}
+			}
+			
 			return vista;
 		} else {
 			vista.addObject("notuser", "No es usuario");

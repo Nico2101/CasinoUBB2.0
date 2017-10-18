@@ -16,11 +16,12 @@
         <b class="arrow"></b>
     </li>
 
+   
+
     <li class="">
-    	
         <a href="#" class="dropdown-toggle">
-            <i class="menu-icon glyphicon glyphicon-cutlery"></i>
-            <span class="menu-text"> Menú </span>
+            <i class="menu-icon glyphicon glyphicon-ice-lolly-tasted"></i>
+            <span class="menu-text"> Reserva </span>
 
             <b class="arrow fa fa-angle-down"></b>
         </a>
@@ -29,25 +30,33 @@
 
         <ul class="submenu">
             <li class="">
-                <a href="ingresarMenu.htm">
+                <a href="buscarMenu.htm">
                     <i class="menu-icon fa fa-caret-right"></i>
-                    Ingresar Menú
+                    Reservar Menú
                 </a>
 
                 <b class="arrow"></b>
             </li>
 
             <li class="">
-                <a href="buscarMenu2.htm">
+                <a href="">
                     <i class="menu-icon fa fa-caret-right"></i>
-                    Modificar Menú
+                    Modificar Reserva
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            
+             <li class="">
+                <a href="">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    Eliminar Reserva
                 </a>
 
                 <b class="arrow"></b>
             </li>
         </ul>
     </li>
-
     
     
 

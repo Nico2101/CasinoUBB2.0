@@ -59,8 +59,8 @@
 
 							
 							<div id="formulario">
-								<form class="form-horizontal" role="form"
-									action="MenuController" method="get">
+								<form action="verificarMenu.htm" class="form-horizontal" role="form"
+									 method="get">
 									
 									<h1>Reservar Menú</h1>
 									<br>

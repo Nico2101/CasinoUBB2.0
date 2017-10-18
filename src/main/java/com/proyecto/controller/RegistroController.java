@@ -31,7 +31,7 @@ public class RegistroController {
 		userTO.setClave(clave);
 
 		if (userDAO.agregarUsuario(userTO)) {
-			vista.setViewName("index");
+			vista.setViewName("indexUsuario");
 			vista.addObject("nombre", nombre);
 		} else {
 			vista.setViewName("login");

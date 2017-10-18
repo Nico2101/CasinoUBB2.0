@@ -42,6 +42,7 @@ public class UsuarioDAO {
 			if(rs.next()) {
 				result=new UsuarioTO();
 				result.setNombre(rs.getString("nombre"));
+				result.setRol(rs.getString("rol"));
 				
 			}
 		}catch(SQLException e) {
