@@ -180,13 +180,13 @@
 											</label> <label class="block clearfix"> <span
 												class="block input-icon input-icon-right"> <input
 													type="password" class="form-control"
-													placeholder="Contraseña" name="clave" required /> <i
+													placeholder="Contraseña" name="clave" required pattern=".{8}" title="La contraseña debe tener 8 caracteres" /> <i
 													class="ace-icon fa fa-lock"></i>
 											</span>
 											</label> <label class="block clearfix"> <span
 												class="block input-icon input-icon-right"> <input
 													type="password" class="form-control"
-													placeholder="Repetir  contraseña" name="clave2" required /> <i
+													placeholder="Repetir  contraseña" name="clave2" required pattern=".{8}" title="La contraseña debe tener 8 caracteres" /> <i
 													class="ace-icon fa fa-retweet"></i>
 											</span>
 											</label>
