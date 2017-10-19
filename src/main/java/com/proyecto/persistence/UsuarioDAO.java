@@ -19,58 +19,77 @@ import com.proyecto.transferObject.UsuarioTO;
  */
 public class UsuarioDAO {
 
-	private static final String VERIFICAR_USUARIO="select * from usuario where rut=? and clave=?";
-	private static final String AGREGAR_USUARIO="insert into usuario(rut,nombre,apellidoPaterno,apellidoMaterno,clave,rol) values(?,?,?,?,?,?)";
-	
-	
+	private static final String VERIFICAR_USUARIO = "select * from usuario where rut=? and clave=?";
+	private static final String AGREGAR_USUARIO = "insert into usuario(rut,nombre,apellidoPaterno,apellidoMaterno,clave,rol) values(?,?,?,?,?,?)";
+	private static final String GET_USER = "select * from usuario where rut=? and clave=?";
+
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
-	
-	public UsuarioTO verificar(UsuarioTO usuario) {
-		Connection conn=null;
-		UsuarioTO result=null;
+
+	public int getUser(String rut, String clave) {
+		Connection conn = null;
+
 		try {
-			conn=getConnection();
-			
-			PreparedStatement ps=conn.prepareStatement(VERIFICAR_USUARIO);
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(GET_USER);
+			ps.setString(1, rut);
+			ps.setString(2, clave);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("id");
+
+			}
+		} catch (SQLException e) {
+
+		}
+		return 0;
+	}
+
+	public UsuarioTO verificar(UsuarioTO usuario) {
+		Connection conn = null;
+		UsuarioTO result = null;
+		try {
+			conn = getConnection();
+
+			PreparedStatement ps = conn.prepareStatement(VERIFICAR_USUARIO);
 			ps.setString(1, usuario.getRut());
 			ps.setString(2, usuario.getClave());
-			ResultSet rs=ps.executeQuery();
-			if(rs.next()) {
-				result=new UsuarioTO();
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				result = new UsuarioTO();
 				result.setNombre(rs.getString("nombre"));
 				result.setRol(rs.getString("rol"));
-				
+
 			}
-		}catch(SQLException e) {
-			
+		} catch (SQLException e) {
+
 		}
 		return result;
 	}
-	
+
 	public boolean agregarUsuario(UsuarioTO usuario) {
 		Connection conn = null;
-		
+
 		try {
-			conn= getConnection();
-			PreparedStatement ps=conn.clientPrepareStatement(AGREGAR_USUARIO);
+			conn = getConnection();
+			PreparedStatement ps = conn.clientPrepareStatement(AGREGAR_USUARIO);
 			ps.setString(1, usuario.getRut());
 			ps.setString(2, usuario.getNombre());
 			ps.setString(3, usuario.getApellidoPaterno());
 			ps.setString(4, usuario.getApellidoMaterno());
 			ps.setString(5, usuario.getClave());
 			ps.setString(6, "usuario");
-			
+
 			ps.executeUpdate();
 			return true;
-		}catch(SQLException e) {
-			
+		} catch (SQLException e) {
+
 		}
 		return false;
-		
+
 	}
 
 	public static Connection getConnection() {

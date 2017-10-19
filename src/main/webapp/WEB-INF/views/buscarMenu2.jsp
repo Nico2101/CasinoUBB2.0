@@ -31,7 +31,7 @@
 			<script type="javascript">
                     try{ace.settings.loadState('sidebar')}catch(e){}
                 </script>
-			<%@ include file="barraLateral.jsp"%>
+			<%@ include file="barraLateralAdministrador.jsp"%>
 
 			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 				<i id="sidebar-toggle-icon"

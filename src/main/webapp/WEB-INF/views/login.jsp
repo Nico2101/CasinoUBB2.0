@@ -3,14 +3,18 @@
     Created on : Oct 13, 2017, 1:31:14 PM
     Author     : Juanita
 --%>
-
+<%@ include file="/WEB-INF/views/include.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
 <head>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="utf-8" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <title>Login CasinoUBB</title>
 
 <meta name="description" content="User login page" />
@@ -58,6 +62,25 @@
 									id="id-text2">Casino UBB</span>
 							</h1>
 
+							<c:if test="${not empty registrado}">
+								<script>
+									toastr.success("Registrado correctamente!");
+								</script>
+							</c:if>
+
+							<c:if test="${not empty sinregistro}">
+								<script>
+									toastr.error("Error en el registro");
+								</script>
+							</c:if>
+							
+							<c:if test="${not empty errorUsuario}">
+								<script>
+									toastr.error("Usuario o Contraseña incorrectos");
+								</script>
+							</c:if>
+							
+							
 
 							<div class="position-relative">
 								<div id="login-box"
@@ -79,8 +102,9 @@
 													</label> <label class="block clearfix"> <span
 														class="block input-icon input-icon-right"> <input
 															name="password" type="password" class="form-control"
-															placeholder="Contraseña" required pattern=".{8}" title="Recuerda que la contraseña tiene 8 caracteres" /> <i
-															class="ace-icon fa fa-lock"></i>
+															placeholder="Contraseña" required pattern=".{8}"
+															title="Recuerda que la contraseña tiene 8 caracteres" />
+															<i class="ace-icon fa fa-lock"></i>
 													</span>
 													</label>
 
@@ -152,52 +176,56 @@
 
 
 											<form action="registroUsuario.htm" method="post">
-										<fieldset>
-											<label class="block clearfix"> <span
-												class="block input-icon input-icon-right"> <input
-													type="text" class="form-control" required
-													oninput="checkRut(this)" placeholder="Rut" name="rut" /> <i
-													class="ace-icon fa fa-male"></i>
+												<fieldset>
+													<label class="block clearfix"> <span
+														class="block input-icon input-icon-right"> <input
+															type="text" class="form-control" required
+															oninput="checkRut(this)" placeholder="Rut" name="rut" />
+															<i class="ace-icon fa fa-male"></i>
 
-											</span>
-											</label> <label class="block clearfix"> <span
-												class="block input-icon input-icon-right"> <input
-													type="text" class="form-control" placeholder="Nombre"
-													name="nombre" required/> <i class="ace-icon fa fa-user"></i>
-											</span>
-											</label> <label class="block clearfix"> <span
-												class="block input-icon input-icon-right"> <input
-													type="text" class="form-control"
-													placeholder="Apellido Paterno" name="appat" required/> <i
-													class="ace-icon fa fa-user"></i>
-											</span>
-											</label> <label class="block clearfix"> <span
-												class="block input-icon input-icon-right"> <input
-													type="text" class="form-control"
-													placeholder="Apellido Materno" name="apmat" required /> <i
-													class="ace-icon fa fa-user"></i>
-											</span>
-											</label> <label class="block clearfix"> <span
-												class="block input-icon input-icon-right"> <input
-													type="password" class="form-control"
-													placeholder="Contraseña" name="clave" required pattern=".{8}" title="La contraseña debe tener 8 caracteres" /> <i
-													class="ace-icon fa fa-lock"></i>
-											</span>
-											</label> <label class="block clearfix"> <span
-												class="block input-icon input-icon-right"> <input
-													type="password" class="form-control"
-													placeholder="Repetir  contraseña" name="clave2" required pattern=".{8}" title="La contraseña debe tener 8 caracteres" /> <i
-													class="ace-icon fa fa-retweet"></i>
-											</span>
-											</label>
+													</span>
+													</label> <label class="block clearfix"> <span
+														class="block input-icon input-icon-right"> <input
+															type="text" class="form-control" placeholder="Nombre"
+															name="nombre" required /> <i class="ace-icon fa fa-user"></i>
+													</span>
+													</label> <label class="block clearfix"> <span
+														class="block input-icon input-icon-right"> <input
+															type="text" class="form-control"
+															placeholder="Apellido Paterno" name="appat" required />
+															<i class="ace-icon fa fa-user"></i>
+													</span>
+													</label> <label class="block clearfix"> <span
+														class="block input-icon input-icon-right"> <input
+															type="text" class="form-control"
+															placeholder="Apellido Materno" name="apmat" required />
+															<i class="ace-icon fa fa-user"></i>
+													</span>
+													</label> <label class="block clearfix"> <span
+														class="block input-icon input-icon-right"> <input
+															type="password" class="form-control"
+															placeholder="Contraseña" name="clave" required
+															pattern=".{8}"
+															title="La contraseña debe tener 8 caracteres" /> <i
+															class="ace-icon fa fa-lock"></i>
+													</span>
+													</label> <label class="block clearfix"> <span
+														class="block input-icon input-icon-right"> <input
+															type="password" class="form-control"
+															placeholder="Repetir  contraseña" name="clave2" required
+															pattern=".{8}"
+															title="La contraseña debe tener 8 caracteres" /> <i
+															class="ace-icon fa fa-retweet"></i>
+													</span>
+													</label>
 
-											<button type="Submit"
-												class="width-65 pull-right btn btn-sm btn-success">
-												<span class="bigger-110">Registrarme</span>
+													<button type="Submit"
+														class="width-65 pull-right btn btn-sm btn-success">
+														<span class="bigger-110">Registrarme</span>
 
-											</button>
-										</fieldset>
-									</form>
+													</button>
+												</fieldset>
+											</form>
 										</div>
 
 									</div>
@@ -208,45 +236,41 @@
 											class="ace-icon fa fa-arrow-left"></i> Volver a login
 										</a>
 
-										<script src="assets/js/jquery-2.1.4.min.js"></script>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-										<!-- <![endif]-->
+	<script src="assets/js/jquery-2.1.4.min.js"></script>
 
-										<!--[if IE]>
+	<!-- <![endif]-->
+
+	<!--[if IE]>
                                 <script src="assets/js/jquery-1.11.3.min.js"></script>
                                 <![endif]-->
-										<script type="text/javascript">
-											if ('ontouchstart' in document.documentElement)
-												document
-														.write("<script src='assets/js/jquery.mobile.custom.min.js'>"
-																+ "<" + "/script>");
-										</script>
+	<script type="text/javascript">
+		if ('ontouchstart' in document.documentElement)
+			document
+					.write("<script src='assets/js/jquery.mobile.custom.min.js'>"
+							+ "<" + "/script>");
+	</script>
 
-										<!-- inline scripts related to this page -->
-										<script type="text/javascript">
-											jQuery(function($) {
-												$(document)
-														.on(
-																'click',
-																'.toolbar a[data-target]',
-																function(e) {
-																	e
-																			.preventDefault();
-																	var target = $(
-																			this)
-																			.data(
-																					'target');
-																	$(
-																			'.widget-box.visible')
-																			.removeClass(
-																					'visible');//hide others
-																	$(target)
-																			.addClass(
-																					'visible');//show target
-																});
-											});
-
-                                                                                </script>
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript">
+		jQuery(function($) {
+			$(document).on('click', '.toolbar a[data-target]', function(e) {
+				e.preventDefault();
+				var target = $(this).data('target');
+				$('.widget-box.visible').removeClass('visible');//hide others
+				$(target).addClass('visible');//show target
+			});
+		});
+	</script>
 </body>
 <script>
 	function checkRut(rut) {

@@ -57,25 +57,35 @@
 
 							<h1 align="center">Menú</h1>
 
-							<table class="table table-condensed" style="width: 1100px">
-								<thead>
-									<tr>
-										<th>ID</th>
-										<th>Nombre</th>
-										<th>Tipo</th>
-										<th>Precio</th>
-										<th>Fecha</th>
-										<th>Horario Disponible</th>
+							<div align="center">
+								<table class="table table-condensed" style="width: 800px">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Nombre</th>
+											<th>Tipo</th>
+											<th>Precio</th>
+											<th>Fecha</th>
+											<th>Horario Disponible</th>
 
-									</tr>
-								</thead>
+										</tr>
+									</thead>
 
-								<c:forEach var="menu" items="${listaMenu} }">
+									<c:forEach var="menu" items="${listaMenu}">
+										<tr>
+											<td><c:out value="${menu.id}"></c:out></td>
+											<td><c:out value="${menu.nombre}"></c:out></td>
+											<td><c:out value="${menu.tipo}"></c:out></td>
+											<td><c:out value="${menu.precio}"></c:out></td>
+											<td><c:out value="${menu.fecha}"></c:out></td>
+											<td><a href="verHorarioDisponible.htm?id=${menu.id}&menu=${menu.nombre}"><input
+													class="btn btn-primary btn-sm" type="button"
+													value="Ver Horario Disponible" /></a></td>
+										</tr>
+									</c:forEach>
 
-								</c:forEach>
-
-							</table>
-
+								</table>
+							</div>
 
 							<!-- /.row -->
 							<!-- PAGE CONTENT ENDS -->

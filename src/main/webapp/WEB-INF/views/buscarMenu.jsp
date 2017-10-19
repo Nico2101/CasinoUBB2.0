@@ -31,7 +31,7 @@
 			<script type="javascript">
                     try{ace.settings.loadState('sidebar')}catch(e){}
                 </script>
-			<%@ include file="barraLateral.jsp"%>
+			<%@ include file="barraLateralUsuario.jsp"%>
 
 			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 				<i id="sidebar-toggle-icon"
@@ -71,7 +71,7 @@
 										<div class="col-sm-9">
 											<input name="dateSelected" type="date" id="form-field-1"
 												placeholder="" style="width: 300px"
-												class="col-xs-10 col-sm-5">
+												class="col-xs-10 col-sm-5" required>
 										</div>
 									</div>
 									<br> <br> <input type="hidden" name="action"

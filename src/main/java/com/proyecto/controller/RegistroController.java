@@ -31,11 +31,13 @@ public class RegistroController {
 		userTO.setClave(clave);
 
 		if (userDAO.agregarUsuario(userTO)) {
-			vista.setViewName("indexUsuario");
-			vista.addObject("nombre", nombre);
-		} else {
+			vista.addObject("registrado", "registrado");
 			vista.setViewName("login");
+			
+		} else {
 			vista.addObject("sinregistro", "No se pudo registrar");
+			vista.setViewName("login");
+			
 		}
 
 		return vista;

@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <ul class="nav nav-list">
     <li class="active">
-        <a href="index.htm">
+        <a href="indexUsuario.htm">
             <i class="menu-icon fa fa-home"></i>
             <span class="menu-text"> Inicio </span>
         </a>

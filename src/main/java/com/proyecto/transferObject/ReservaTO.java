@@ -6,27 +6,30 @@
 package com.proyecto.transferObject;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
  * @author Nicolas
  */
 public class ReservaTO {
-    private Date fecha;
+    private Timestamp fecha;
     private String rutUsuario;
     private int idMenu;
     private int id;
     private int idHorario;
 
-    public Date getFecha() {
-        return fecha;
-    }
+    
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
+    public Timestamp getFecha() {
+		return fecha;
+	}
 
-    public String getRutUsuario() {
+	public void setFecha(Timestamp fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getRutUsuario() {
         return rutUsuario;
     }
 

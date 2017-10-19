@@ -56,7 +56,7 @@ public class MenuDAO {
             PreparedStatement ps=conn.prepareStatement(OBTENER_MENU);
             ps.setDate(1, menu.getFecha());
             ResultSet rs=ps.executeQuery();
-            if(rs.next()){
+            while(rs.next()){
                 result=new MenuTO();
                 result.setId(rs.getInt("id"));
                 result.setNombre(rs.getString("nombre"));
