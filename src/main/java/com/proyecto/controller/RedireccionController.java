@@ -36,7 +36,7 @@ public class RedireccionController {
     	ModelAndView vista = new ModelAndView();
     	vista.setViewName("login");
     	HttpSession sesion = request.getSession(true);
-    	sesion.removeAttribute("usuario");
+    	sesion.removeAttribute("id");
     	return vista;
 
     }
