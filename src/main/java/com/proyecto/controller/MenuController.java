@@ -88,6 +88,44 @@ public class MenuController {
 		}
 
 	}
+	
+	@RequestMapping(value = "actualizarMenu", method = RequestMethod.POST)
+	public ModelAndView actualizarMenu(ModelAndView vista,
+			@RequestParam(value = "id", required = true) int id) {
+		MenuDAO menuDAO = new MenuDAO();
+		MenuTO menuTO = new MenuTO();
+		menuTO.setId(id);
+		
+		vista.addObject("editMenu", menuDAO.buscarMenu(menuTO));
+		vista.setViewName("actualizarMenu");
+		return vista;	
+	}
+	
+	@RequestMapping(value = "editarMenu", method = RequestMethod.POST)
+	public ModelAndView buscaMenu(ModelAndView vista,
+			@RequestParam(value = "dateSelected", required = true) String date) {
+
+		java.sql.Date fecha = java.sql.Date.valueOf(date);
+
+		MenuDAO menuDAO = new MenuDAO();
+		MenuTO menuTO = new MenuTO();
+
+		menuTO.setFecha(fecha);
+
+		if (menuDAO.buscaMenu(menuTO) == 1) {
+
+			vista.addObject("listaMenu", menuDAO.obtieneMenu(menuTO));
+			vista.setViewName("editarMenu");
+			return vista;
+
+		} else {
+			vista.addObject("NoHayMenu", "No Hay Menu");
+			vista.setViewName("buscarMenu2");
+			return vista;
+
+		}
+
+	}
 
 	@RequestMapping(value = "buscarMenu")
 	public ModelAndView buscarMenu() {

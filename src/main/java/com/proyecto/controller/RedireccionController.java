@@ -47,13 +47,13 @@ public class RedireccionController {
 		vista.setViewName("buscarMenu2");
 		return vista;
 	}
-	
+	/*
 	@RequestMapping (value="editarMenu")
 	public ModelAndView editarrMenu() {
 		ModelAndView vista=new ModelAndView();
 		vista.setViewName("editarMenu");
 		return vista;
-	}
+	}*/
 	
 	@RequestMapping (value="actualizarMenu")
 	public ModelAndView actualizarMenu() {

@@ -21,6 +21,7 @@ import com.proyecto.transferObject.MenuTO;
 public class MenuDAO {
 
     private static final String BUSCA_MENU="select * from menu where fecha=?";
+    private static final String BUSCA_MENUS="select * from menu where id=?";
     private static final String OBTENER_MENU="select * from menu where fecha=?";
     private static final String INSERT_QUERY ="insert into menu(nombre,precio,tipo,fecha) values(?,?,?,?)";
     
@@ -35,6 +36,7 @@ public class MenuDAO {
         try{
             conn=getConnection();
             PreparedStatement ps=conn.prepareStatement(BUSCA_MENU);
+            ps.setInt(1, menu.getId());
             ps.setDate(1, menu.getFecha());
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
@@ -45,6 +47,32 @@ public class MenuDAO {
             
         }
         return 0;
+    }
+    
+    public MenuTO buscarMenu(MenuTO menu){
+        Connection conn=null;
+        MenuTO result;
+        result=new MenuTO();
+        try{
+            conn=getConnection();
+            PreparedStatement ps=conn.prepareStatement(BUSCA_MENUS);
+            ps.setInt(1, menu.getId());
+            ResultSet rs=ps.executeQuery();
+
+            while(rs.next()){
+                
+                result.setId(rs.getInt("id"));
+                result.setNombre(rs.getString("nombre"));
+                result.setPrecio(rs.getInt("precio"));
+                result.setTipo(rs.getString("tipo"));
+                result.setFecha(rs.getDate("fecha"));
+            }
+            
+            
+        }catch(SQLException e){
+            
+        }
+        return result;
     }
     
     public LinkedList <MenuTO> obtieneMenu(MenuTO menu){

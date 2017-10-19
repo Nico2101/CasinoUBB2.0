@@ -72,7 +72,7 @@
 										<div class="col-sm-9">
 											<input name="nombreMenu" type="text" id="form-field-1"
 												placeholder="" style="width: 300px"
-												class="col-xs-10 col-sm-5">
+												class="col-xs-10 col-sm-5" value="${editMenu.nombre}">
 										</div>
 
 										<br> <br> <label
@@ -82,7 +82,7 @@
 										<div class="col-sm-9">
 											<select name="tipoMenu" class="col-xs-10 col-sm-5"
 												style="width: 300px">
-												<option selected>Seleccione una opcion</option>
+												<option selected>${editMenu.tipo}</option>
 												<option>Normal</option>
 												<option>Extra</option>
 											</select>

@@ -73,32 +73,23 @@
 								<th>Nombre</th>
 								<th>Precio</th>
 								<th>Tipo</th>
+								<th>Fecha</th>
 								<th>Editar</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<th scope="row">1</th>
-								<td>Porotos</td>
-								<td>2000</td>
-								<td>Normal</td>
-								<td><a href="actualizarMenu.htm">Editar</a></td>
-							</tr>
-							<tr>
-								<th scope="row">2</th>
-								<td>Arroz con pollo</td>
-								<td>2000</td>
-								<td>Normal</td>
-								<td><a href="actualizarMenu.htm">Editar</a></td>
-							</tr>
-							<tr>
-								<th scope="row">3</th>
-								<td>Arroz con papas fritas</td>
-								<td>3000</td>
-								<td>Extra</td>
-								<td><a href="actualizarMenu.htm">Editar</a></td>
-							</tr>
-						</tbody>
+
+									<c:forEach var="menu" items="${listaMenu}">
+										<tr>
+											<td><c:out value="${menu.id}"></c:out></td>
+											<td><c:out value="${menu.nombre}"></c:out></td>
+											<td><c:out value="${menu.tipo}"></c:out></td>
+											<td><c:out value="${menu.precio}"></c:out></td>
+											<td><c:out value="${menu.fecha}"></c:out></td>
+											<td><a href="actualizarMenu.htm?id=${menu.id}"><input
+													class="btn btn-primary btn-sm" type="button"
+													value="Editar" /></a></td>
+										</tr>
+									</c:forEach>
 					</table>
 
 					<div align="left">
