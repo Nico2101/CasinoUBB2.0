@@ -88,19 +88,17 @@ public class MenuController {
 		}
 
 	}
-	
-	@RequestMapping(value = "actualizarMenu", method = RequestMethod.POST)
-	public ModelAndView actualizarMenu(ModelAndView vista,
-			@RequestParam(value = "id", required = true) int id) {
+
+	@RequestMapping(value = "actualizarMenu", method = RequestMethod.GET)
+	public ModelAndView actualizarMenu(ModelAndView vista, @RequestParam(value = "id", required = true) int id) {
 		MenuDAO menuDAO = new MenuDAO();
 		MenuTO menuTO = new MenuTO();
 		menuTO.setId(id);
-		
+
 		vista.addObject("editMenu", menuDAO.buscarMenu(menuTO));
-		vista.setViewName("actualizarMenu");
-		return vista;	
+		return vista;
 	}
-	
+
 	@RequestMapping(value = "editarMenu", method = RequestMethod.POST)
 	public ModelAndView buscaMenu(ModelAndView vista,
 			@RequestParam(value = "dateSelected", required = true) String date) {
@@ -127,27 +125,55 @@ public class MenuController {
 
 	}
 
-	@RequestMapping(value = "buscarMenu")
-	public ModelAndView buscarMenu() {
-		ModelAndView vista = new ModelAndView();
-		vista.setViewName("buscarMenu");
-		return vista;
-	}
-
 	@RequestMapping(value = "verHorarioDisponible")
-	public ModelAndView verHorarioDisponible(ModelAndView vista, @RequestParam(value = "id") int id, @RequestParam(value="menu")String menu) {
-		
-		HorarioDAO horarioDAO=new HorarioDAO();
-		if(horarioDAO.verificarhorario()) {
-			if(horarioDAO.obtenerHorarioDisponible()!=null) {
+	public ModelAndView verHorarioDisponible(ModelAndView vista, @RequestParam(value = "id") int id,
+			@RequestParam(value = "menu") String menu) {
+
+		HorarioDAO horarioDAO = new HorarioDAO();
+		if (horarioDAO.verificarhorario()) {
+			if (horarioDAO.obtenerHorarioDisponible() != null) {
 				vista.addObject("horarioDisponible", horarioDAO.obtenerHorarioDisponible());
 				vista.addObject("id_menu", id);
 				vista.addObject("menu", menu);
 			}
-		}else {
+		} else {
 			vista.addObject("nohorario", "No hay horario disponible");
 		}
 		vista.setViewName("visualizarHorarioDisponible");
+		return vista;
+
+	}
+
+	@RequestMapping(value = "formActualizarMenu", method = RequestMethod.GET)
+	public ModelAndView menuActualizado(ModelAndView vista,
+			@RequestParam(value = "nombreMenu", required = false, defaultValue = "World") String nombreMenu,
+			@RequestParam(value = "tipoMenu", required = false, defaultValue = "World") String tipoMenu,
+			@RequestParam(value = "precioMenu", required = false, defaultValue = "World") int precioMenu,
+			@RequestParam(value = "dateSelected", required = false, defaultValue = "World") String dateMenu,
+			@RequestParam(value = "id", required = false, defaultValue = "World") int id) {
+
+		MenuDAO menuDAO = new MenuDAO();
+		MenuTO menuTO = new MenuTO();
+
+		java.sql.Date fecha = java.sql.Date.valueOf(dateMenu);
+
+		menuTO.setId(id);
+		menuTO.setFecha(fecha);
+		menuTO.setNombre(nombreMenu);
+		menuTO.setPrecio(precioMenu);
+		menuTO.setTipo(tipoMenu);
+
+		if (menuDAO.updateMenu(menuTO)) {
+			vista.addObject("actualizado", "actualizado");
+			vista.setViewName("indexAdministrador");
+		} else {
+			vista.addObject("noUpdated", "Erro al actualizar");
+			MenuTO menuTO2 = new MenuTO();
+			menuTO2.setId(id);
+			vista.addObject("editMenu", menuDAO.buscarMenu(menuTO2));
+			vista.setViewName("actualizarMenu");
+		}
+
 		return vista;
 
 	}

@@ -71,7 +71,7 @@
 										<div class="col-sm-9">
 											<input name="dateSelected" type="date" id="form-field-1"
 												placeholder="" style="width: 300px"
-												class="col-xs-10 col-sm-5">
+												class="col-xs-10 col-sm-5" required>
 										</div>
 									</div>
 									<br> <br> <input class="btn" value="Verificar"

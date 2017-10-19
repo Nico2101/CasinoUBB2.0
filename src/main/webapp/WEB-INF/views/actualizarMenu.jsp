@@ -3,7 +3,7 @@
     Created on : 15-sep-2017, 22:45:00
     Author     : Nicolas
 --%>
-
+<%@ include file="/WEB-INF/views/include.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -60,35 +60,55 @@
 
 							<div id="formulario">
 								<form class="form-horizontal" role="form"
-									action="MenuController" method="get">
+									action="formActualizarMenu.htm" method="get">
+
+
+									<c:if test="${not empty noUpdated }">
+										<script type="text/javascript">
+											toastr
+													.error("Error al actualizar el menú");
+										</script>
+									</c:if>
+
 
 									<h1>Editar Menú</h1>
 									<br> <br>
 									<div class="form-group" style="width: 1850px">
-
-										<label class="col-sm-3 control-label no-padding-right"
+										<input type="hidden" name="id" value="${editMenu.id }" /> <label
+											class="col-sm-3 control-label no-padding-right"
 											for="form-field-1"> Nombre </label>
 
 										<div class="col-sm-9">
 											<input name="nombreMenu" type="text" id="form-field-1"
 												placeholder="" style="width: 300px"
-												class="col-xs-10 col-sm-5" value="${editMenu.nombre}">
+												class="col-xs-10 col-sm-5" value="${editMenu.nombre}" required>
 										</div>
 
 										<br> <br> <label
 											class="col-sm-3 control-label no-padding-right"
 											for="form-field-1"> Tipo </label>
 
-										<div class="col-sm-9">
-											<select name="tipoMenu" class="col-xs-10 col-sm-5"
-												style="width: 300px">
-												<option selected>${editMenu.tipo}</option>
-												<option>Normal</option>
-												<option>Extra</option>
-											</select>
+										<c:if test="${editMenu.tipo=='Extra' }">
+											<div class="col-sm-9">
+												<select name="tipoMenu" class="col-xs-10 col-sm-5"
+													style="width: 300px">
+													<option>Normal</option>
+													<option selected>Extra</option>
+												</select>
 
-										</div>
+											</div>
+										</c:if>
 
+										<c:if test="${editMenu.tipo=='Normal' }">
+											<div class="col-sm-9">
+												<select name="tipoMenu" class="col-xs-10 col-sm-5"
+													style="width: 300px">
+													<option selected>Normal</option>
+													<option>Extra</option>
+												</select>
+
+											</div>
+										</c:if>
 										<br> <br> <label
 											class="col-sm-3 control-label no-padding-right"
 											for="form-field-1"> Precio </label>
@@ -96,7 +116,7 @@
 										<div class="col-sm-9">
 											<input name="precioMenu" type="number" id="form-field-1"
 												placeholder="" style="width: 300px"
-												class="col-xs-10 col-sm-5">
+												class="col-xs-10 col-sm-5" value="${editMenu.precio }" required>
 										</div>
 
 										<br> <br> <label
@@ -106,7 +126,7 @@
 										<div class="col-sm-9">
 											<input name="dateSelected" type="date" id="form-field-1"
 												placeholder="" style="width: 300px"
-												class="col-xs-10 col-sm-5">
+												class="col-xs-10 col-sm-5" value="${editMenu.fecha }" required>
 										</div>
 									</div>
 									<br> <br> <input class="btn" value="Guardar"
