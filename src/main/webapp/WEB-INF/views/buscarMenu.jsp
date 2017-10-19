@@ -57,11 +57,11 @@
 
 
 
-							
+
 							<div id="formulario">
-								<form action="verificarMenu.htm" class="form-horizontal" role="form"
-									 method="get">
-									
+								<form action="verificarMenu.htm" class="form-horizontal"
+									role="form" method="get">
+
 									<h1>Reservar Menú</h1>
 									<br>
 									<div class="form-group" style="width: 1850px">
@@ -85,7 +85,14 @@
 								<c:if test="${not empty NoHayMenu}">
 									<script>
 										toastr
-												.error("No hay menú para la fecha seleccionada");
+												.warning("No hay menú para la fecha seleccionada");
+									</script>
+								</c:if>
+
+								<c:if test="${not empty date}">
+									<script type="text/javascript">
+										toastr
+												.error("Error! La fecha ingresada es anterior a la actual");
 									</script>
 								</c:if>
 							</div>

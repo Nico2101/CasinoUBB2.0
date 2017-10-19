@@ -74,97 +74,18 @@
 								</script>
 							</c:if>
 							
-							<c:if test="${not empty errorUsuario}">
+							
+							<c:if test="${not empty clavesDistintas}">
 								<script>
-									toastr.error("Usuario o Contraseña incorrectos");
+									toastr.error("Las contraseñas ingresadas son distintas");
 								</script>
 							</c:if>
+							
+							
+
+							<div class="">
 								
-
-							<div class="position-relative">
-								<div id="login-box"
-									class="login-box visible widget-box no-border">
-									<div class="widget-body">
-										<div class="widget-main">
-											<h4 class="header blue lighter bigger">Iniciar Sesión</h4>
-
-											<div class="space-6"></div>
-
-											<form action="verificarLogin.htm" method="post">
-												<fieldset>
-													<label class="block clearfix"> <span
-														class="block input-icon input-icon-right"> <input
-															name="rut" type="text" class="form-control" required
-															oninput="checkRut(this)" placeholder="Rut" /> <i
-															class="ace-icon fa fa-user"></i>
-													</span>
-													</label> <label class="block clearfix"> <span
-														class="block input-icon input-icon-right"> <input
-															name="password" type="password" class="form-control"
-															placeholder="Contraseña" required pattern=".{8}"
-															title="Recuerda que la contraseña tiene 8 caracteres" />
-															<i class="ace-icon fa fa-lock"></i>
-													</span>
-													</label>
-
-													<div class="space"></div>
-
-
-													<div class="clearfix">
-
-														<button type="Submit"
-															class="width-35 pull-right btn btn-sm btn-primary">
-															<i class="ace-icon fa fa-key"></i> <span
-																class="bigger-110">Login</span>
-														</button>
-
-													</div>
-
-
-													<div class="space-4"></div>
-												</fieldset>
-											</form>
-
-
-
-											<div class="space-6"></div>
-
-
-										</div>
-										<!-- /.widget-main -->
-
-										<div class="toolbar clearfix">
-											<div></div>
-
-											<div>
-												<a href="#" data-target="#signup-box"
-													class="user-signup-link"> Registrarme <i
-													class="ace-icon fa fa-arrow-right"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<!-- /.widget-body -->
-								</div>
-								<!-- /.login-box -->
-
-								<div id="forgot-box" class="forgot-box widget-box no-border">
-									<div class="widget-body">
-										<div class="widget-main"></div>
-										<!-- /.widget-main -->
-
-										<div class="toolbar center">
-											<a href="#" data-target="#login-box"
-												class="back-to-login-link"> Back to login <i
-												class="ace-icon fa fa-arrow-right"></i>
-											</a>
-										</div>
-									</div>
-									<!-- /.widget-body -->
-								</div>
-								<!-- /.forgot-box -->
-
-								<div id="signup-box" class="signup-box widget-box no-border">
+								<div id="signup-box" class="signup-box visible widget-box no-border">
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header green lighter bigger">
@@ -179,25 +100,25 @@
 													<label class="block clearfix"> <span
 														class="block input-icon input-icon-right"> <input
 															type="text" class="form-control" required
-															oninput="checkRut(this)" placeholder="Rut" name="rut" />
+															oninput="checkRut(this)" placeholder="Rut" name="rut" value="${rut }" />
 															<i class="ace-icon fa fa-male"></i>
 
 													</span>
 													</label> <label class="block clearfix"> <span
 														class="block input-icon input-icon-right"> <input
 															type="text" class="form-control" placeholder="Nombre"
-															name="nombre" required /> <i class="ace-icon fa fa-user"></i>
+															name="nombre" required value="${nombre }"  /> <i class="ace-icon fa fa-user"></i>
 													</span>
 													</label> <label class="block clearfix"> <span
 														class="block input-icon input-icon-right"> <input
 															type="text" class="form-control"
-															placeholder="Apellido Paterno" name="appat" required />
+															placeholder="Apellido Paterno" name="appat" required value="${apellidoP}"  />
 															<i class="ace-icon fa fa-user"></i>
 													</span>
 													</label> <label class="block clearfix"> <span
 														class="block input-icon input-icon-right"> <input
 															type="text" class="form-control"
-															placeholder="Apellido Materno" name="apmat" required />
+															placeholder="Apellido Materno" name="apmat" required value="${apellidoM }"  />
 															<i class="ace-icon fa fa-user"></i>
 													</span>
 													</label> <label class="block clearfix"> <span
@@ -230,7 +151,7 @@
 									</div>
 
 									<div class="toolbar center">
-										<a href="#" data-target="#login-box"
+										<a href="login.htm" 
 											class="back-to-login-link"> <i
 											class="ace-icon fa fa-arrow-left"></i> Volver a login
 										</a>

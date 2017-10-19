@@ -20,25 +20,37 @@ public class RegistroController {
 			@RequestParam(value = "apmat", required = true) String apellidoMaterno,
 			@RequestParam(value = "clave", required = true) String clave,
 			@RequestParam(value = "clave2", required = true) String clave2) {
+		
+		if(clave.equals(clave2)) {
+			UsuarioTO userTO = new UsuarioTO();
+			UsuarioDAO userDAO = new UsuarioDAO();
 
-		UsuarioTO userTO = new UsuarioTO();
-		UsuarioDAO userDAO = new UsuarioDAO();
+			userTO.setNombre(nombre);
+			userTO.setRut(rut);
+			userTO.setApellidoPaterno(apellidoPaterno);
+			userTO.setApellidoMaterno(apellidoMaterno);
+			userTO.setClave(clave);
 
-		userTO.setNombre(nombre);
-		userTO.setRut(rut);
-		userTO.setApellidoPaterno(apellidoPaterno);
-		userTO.setApellidoMaterno(apellidoMaterno);
-		userTO.setClave(clave);
-
-		if (userDAO.agregarUsuario(userTO)) {
-			vista.addObject("registrado", "registrado");
-			vista.setViewName("login");
-			
-		} else {
-			vista.addObject("sinregistro", "No se pudo registrar");
-			vista.setViewName("login");
+			if (userDAO.agregarUsuario(userTO)) {
+				vista.addObject("registrado", "registrado");
+				vista.setViewName("login");
+				
+			} else {
+				vista.addObject("sinregistro", "No se pudo registrar");
+				vista.setViewName("login");
+				
+			}
+		}else {
+			vista.setViewName("login2");
+			vista.addObject("nombre", nombre);
+			vista.addObject("apellidoP", apellidoPaterno);
+			vista.addObject("apellidoM", apellidoMaterno);
+			vista.addObject("rut", rut);
+			vista.addObject("clavesDistintas", "claves distintas");
 			
 		}
+
+		
 
 		return vista;
 	}

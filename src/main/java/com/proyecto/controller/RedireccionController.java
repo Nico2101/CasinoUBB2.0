@@ -37,6 +37,8 @@ public class RedireccionController {
     	vista.setViewName("login");
     	HttpSession sesion = request.getSession(true);
     	sesion.removeAttribute("id");
+    	sesion.removeAttribute("nombre");
+    	sesion.invalidate();
     	return vista;
 
     }
