@@ -60,6 +60,7 @@
 									toastr.success("Menú ingresado correctamente");
 									</script>
 							</c:if>
+							
 
 							<div id="formulario">
 								<form class="form-horizontal" role="form"

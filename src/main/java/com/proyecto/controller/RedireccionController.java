@@ -42,13 +42,7 @@ public class RedireccionController {
     	return vista;
 
     }
-	
-	@RequestMapping (value="buscarMenu2")
-	public ModelAndView buscarMenu2() {
-		ModelAndView vista=new ModelAndView();
-		vista.setViewName("buscarMenu2");
-		return vista;
-	}
+
 
 	
 }

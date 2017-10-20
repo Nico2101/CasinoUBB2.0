@@ -1,9 +1,10 @@
 package com.proyecto.controller;
 
-import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.stereotype.Controller;
 
@@ -35,25 +36,43 @@ public class MenuController {
 			@RequestParam(value = "tipoMenu", required = false, defaultValue = "World") String tipoMenu,
 			@RequestParam(value = "precioMenu", required = false, defaultValue = "World") int precioMenu,
 			@RequestParam(value = "dateMenu", required = false, defaultValue = "World") String dateMenu,
-			ModelAndView vista) throws SQLException {
+			ModelAndView vista) throws SQLException, ParseException {
 		// model.addAttribute("user",user);
 		// model.addAttribute("pass",pass);
 
-		MenuDAO dao = new MenuDAO();
-		MenuTO to = new MenuTO();
-		java.sql.Date fecha = java.sql.Date.valueOf(dateMenu);
-		to.setFecha(fecha);
-		to.setNombre(nombreMenu);
-		to.setPrecio(precioMenu);
-		to.setTipo(tipoMenu);
-		// to.setFecha(dateMenu);
+		// Validar fechas
+		DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+		Date date1 = parser.parse(dateMenu);
+		Date fechaSistema = new Date();
 
-		dao.ingresaMenu(to);
+		if (date1.getDate() < fechaSistema.getDate() || date1.getMonth() < fechaSistema.getMonth()
+				|| date1.getYear() < fechaSistema.getYear()) {
+			vista.addObject("fechaAnterior", "fecha ingresada anterior a la fecha actual");
+			vista.addObject("nombreMenu", nombreMenu);
+			vista.addObject("tipoMenu", tipoMenu);
+			vista.addObject("precioMenu", precioMenu);
+			vista.setViewName("recargarIngresarMenu");
+			return vista;
+			// hasta aqui se valida fecha
 
-		// model.addAttribute("MenuTO",menuTO);
-		vista.setViewName("ingresarMenu");
-		vista.addObject("menuIngresado", "menuIngresado");
-		return vista;
+		} else {
+			MenuDAO dao = new MenuDAO();
+			MenuTO to = new MenuTO();
+			java.sql.Date fecha = java.sql.Date.valueOf(dateMenu);
+			to.setFecha(fecha);
+			to.setNombre(nombreMenu);
+			to.setPrecio(precioMenu);
+			to.setTipo(tipoMenu);
+			// to.setFecha(dateMenu);
+
+			dao.ingresaMenu(to);
+
+			// model.addAttribute("MenuTO",menuTO);
+			vista.setViewName("ingresarMenu");
+			vista.addObject("menuIngresado", "menuIngresado");
+			return vista;
+		}
+
 	}
 
 	// user view
@@ -63,27 +82,45 @@ public class MenuController {
 		return vista;
 	}
 
+	@RequestMapping(value = "buscarMenu2")
+	public ModelAndView buscarMenu2() {
+		ModelAndView vista = new ModelAndView();
+		vista.setViewName("buscarMenu2");
+		return vista;
+	}
+
 	@RequestMapping(value = "verificarMenu", method = RequestMethod.GET)
 	public ModelAndView verificaMenu(ModelAndView vista,
-			@RequestParam(value = "dateSelected", required = true) String date) {
+			@RequestParam(value = "dateSelected", required = true) String date) throws ParseException {
 
-		java.sql.Date fecha = java.sql.Date.valueOf(date);
+		// Validar fechas
+		DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+		Date date1 = parser.parse(date);
+		Date fechaSistema = new Date();
 
-		MenuDAO menuDAO = new MenuDAO();
-		MenuTO menuTO = new MenuTO();
-
-		menuTO.setFecha(fecha);
-
-		if (menuDAO.buscaMenu(menuTO) == 1) {
-
-			vista.addObject("listaMenu", menuDAO.obtieneMenu(menuTO));
-			vista.setViewName("verMenu");
-			return vista;
-
-		} else {
-			vista.addObject("NoHayMenu", "No Hay Menu");
+		if (date1.getDate() < fechaSistema.getDate() || date1.getMonth() < fechaSistema.getMonth()
+				|| date1.getYear() < fechaSistema.getYear()) {
+			vista.addObject("fechaAnterior", "fecha ingresada anterior a la fecha actual");
 			vista.setViewName("buscarMenu");
 			return vista;
+			// hasta aqui se valida fecha
+
+		} else {
+			java.sql.Date fecha = java.sql.Date.valueOf(date);
+
+			MenuDAO menuDAO = new MenuDAO();
+			MenuTO menuTO = new MenuTO();
+
+			menuTO.setFecha(fecha);
+			if (menuDAO.buscaMenu(menuTO) == 1) {
+				vista.addObject("listaMenu", menuDAO.obtieneMenu(menuTO));
+				vista.setViewName("verMenu");
+				return vista;
+			} else {
+				vista.addObject("NoHayMenu", "No Hay Menu");
+				vista.setViewName("buscarMenu");
+				return vista;
+			}
 
 		}
 
@@ -96,31 +133,46 @@ public class MenuController {
 		menuTO.setId(id);
 
 		vista.addObject("editMenu", menuDAO.buscarMenu(menuTO));
+		vista.setViewName("actualizarMenu");
 		return vista;
 	}
 
 	@RequestMapping(value = "editarMenu", method = RequestMethod.POST)
 	public ModelAndView buscaMenu(ModelAndView vista,
-			@RequestParam(value = "dateSelected", required = true) String date) {
+			@RequestParam(value = "dateSelected", required = true) String date) throws ParseException {
 
-		java.sql.Date fecha = java.sql.Date.valueOf(date);
+		// Validar fechas
+		DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+		Date date1 = parser.parse(date);
+		Date fechaSistema = new Date();
 
-		MenuDAO menuDAO = new MenuDAO();
-		MenuTO menuTO = new MenuTO();
-
-		menuTO.setFecha(fecha);
-
-		if (menuDAO.buscaMenu(menuTO) == 1) {
-
-			vista.addObject("listaMenu", menuDAO.obtieneMenu(menuTO));
-			vista.setViewName("editarMenu");
-			return vista;
-
-		} else {
-			vista.addObject("NoHayMenu", "No Hay Menu");
+		if (date1.getDate() < fechaSistema.getDate() || date1.getMonth() < fechaSistema.getMonth()
+				|| date1.getYear() < fechaSistema.getYear()) {
+			vista.addObject("fechaAnterior", "fecha ingresada anterior a la fecha actual");
 			vista.setViewName("buscarMenu2");
 			return vista;
+			// hasta aqui se valida fecha
 
+		} else {
+			java.sql.Date fecha = java.sql.Date.valueOf(date);
+
+			MenuDAO menuDAO = new MenuDAO();
+			MenuTO menuTO = new MenuTO();
+
+			menuTO.setFecha(fecha);
+
+			if (menuDAO.buscaMenu(menuTO) == 1) {
+
+				vista.addObject("listaMenu", menuDAO.obtieneMenu(menuTO));
+				vista.setViewName("editarMenu");
+				return vista;
+
+			} else {
+				vista.addObject("NoHayMenu", "No Hay Menu");
+				vista.setViewName("buscarMenu2");
+				return vista;
+
+			}
 		}
 
 	}
@@ -150,29 +202,50 @@ public class MenuController {
 			@RequestParam(value = "tipoMenu", required = false, defaultValue = "World") String tipoMenu,
 			@RequestParam(value = "precioMenu", required = false, defaultValue = "World") int precioMenu,
 			@RequestParam(value = "dateSelected", required = false, defaultValue = "World") String dateMenu,
-			@RequestParam(value = "id", required = false, defaultValue = "World") int id) {
+			@RequestParam(value = "id", required = false, defaultValue = "World") int id) throws ParseException {
 
-		MenuDAO menuDAO = new MenuDAO();
-		MenuTO menuTO = new MenuTO();
+		// Validar fechas
+		DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+		Date date1 = parser.parse(dateMenu);
+		Date fechaSistema = new Date();
 
-		java.sql.Date fecha = java.sql.Date.valueOf(dateMenu);
-
-		menuTO.setId(id);
-		menuTO.setFecha(fecha);
-		menuTO.setNombre(nombreMenu);
-		menuTO.setPrecio(precioMenu);
-		menuTO.setTipo(tipoMenu);
-
-		if (menuDAO.updateMenu(menuTO)) {
-			vista.addObject("actualizado", "actualizado");
-			vista.setViewName("indexAdministrador");
-		} else {
-			vista.addObject("noUpdated", "Erro al actualizar");
+		if (date1.getDate() < fechaSistema.getDate() || date1.getMonth() < fechaSistema.getMonth()
+				|| date1.getYear() < fechaSistema.getYear()) {
 			MenuTO menuTO2 = new MenuTO();
+			MenuDAO menuDAO = new MenuDAO();
 			menuTO2.setId(id);
+
 			vista.addObject("editMenu", menuDAO.buscarMenu(menuTO2));
+			vista.addObject("fechaAnterior", "fecha ingresada anterior a la fecha actual");
 			vista.setViewName("actualizarMenu");
+			return vista;
+			// hasta aqui se valida fecha
+
+		}else {
+			MenuDAO menuDAO = new MenuDAO();
+			MenuTO menuTO = new MenuTO();
+
+			java.sql.Date fecha = java.sql.Date.valueOf(dateMenu);
+
+			menuTO.setId(id);
+			menuTO.setFecha(fecha);
+			menuTO.setNombre(nombreMenu);
+			menuTO.setPrecio(precioMenu);
+			menuTO.setTipo(tipoMenu);
+
+			if (menuDAO.updateMenu(menuTO)) {
+				vista.addObject("actualizado", "actualizado");
+				vista.setViewName("indexAdministrador");
+			} else {
+				vista.addObject("noUpdated", "Erro al actualizar");
+				MenuTO menuTO2 = new MenuTO();
+				menuTO2.setId(id);
+				vista.addObject("editMenu", menuDAO.buscarMenu(menuTO2));
+				vista.setViewName("actualizarMenu");
+			}
 		}
+
+		
 
 		return vista;
 

@@ -84,7 +84,14 @@
 								<c:if test="${not empty NoHayMenu}">
 									<script>
 										toastr
-												.error("No hay menú para la fecha seleccionada");
+												.warning("No hay menú para la fecha seleccionada");
+									</script>
+								</c:if>
+								
+								<c:if test="${not empty fechaAnterior}">
+									<script>
+										toastr
+												.error("Error, la fecha seleccionada es anterior a la actual");
 									</script>
 								</c:if>
 							</div>

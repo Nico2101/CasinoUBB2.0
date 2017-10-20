@@ -31,7 +31,7 @@
 			<script type="javascript">
                     try{ace.settings.loadState('sidebar')}catch(e){}
                 </script>
-			<%@ include file="barraLateralUsuario.jsp"%>
+			<%@ include file="barraLateralAdministrador.jsp"%>
 
 			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 				<i id="sidebar-toggle-icon"
@@ -55,46 +55,81 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
-
-
+							<c:if test="${not empty fechaAnterior}">
+								<script>
+									toastr
+											.error("La fecha seleccionada es anterior a la actual");
+								</script>
+							</c:if>
 
 							<div id="formulario">
-								<form action="verificarMenu.htm" class="form-horizontal"
-									role="form" method="get">
+								<form class="form-horizontal" role="form"
+									action="ingresarmenu.htm" method="post">
 
-									<h1>Reservar Menú</h1>
+									<h1>Ingrese Menú</h1>
 									<br>
 									<div class="form-group" style="width: 1850px">
+
 										<label class="col-sm-3 control-label no-padding-right"
-											for="form-field-1"> Seleccione Fecha </label>
+											for="form-field-1"> Nombre </label>
 
 										<div class="col-sm-9">
-											<input name="dateSelected" type="date" id="form-field-1"
+											<input name="nombreMenu" type="text" id="form-field-1"
+												placeholder="" style="width: 300px"
+												class="col-xs-10 col-sm-5" required value="${nombreMenu }">
+										</div>
+
+										<br> <br> <label
+											class="col-sm-3 control-label no-padding-right"
+											for="form-field-1"> Tipo </label>
+
+										<div class="col-sm-9">
+											<c:if test="${tipoMenu=='Normal' }">
+												<select name="tipoMenu" class="col-xs-10 col-sm-5"
+													style="width: 300px">
+													<option selected>Normal</option>
+													<option>Extra</option>
+												</select>
+											</c:if>
+											
+											<c:if test="${tipoMenu=='Extra' }">
+												<select name="tipoMenu" class="col-xs-10 col-sm-5"
+													style="width: 300px">
+													<option>Normal</option>
+													<option selected>Extra</option>
+												</select>
+											</c:if>
+
+
+										</div>
+
+										<br> <br> <label
+											class="col-sm-3 control-label no-padding-right"
+											for="form-field-1"> Precio </label>
+
+										<div class="col-sm-9">
+											<input name="precioMenu" type="number" id="form-field-1"
+												placeholder="" style="width: 300px"
+												class="col-xs-10 col-sm-5" required value="${precioMenu }">
+										</div>
+
+										<br> <br> <label
+											class="col-sm-3 control-label no-padding-right"
+											for="form-field-1"> Fecha Menú</label>
+
+										<div class="col-sm-9">
+											<input name="dateMenu" type="date" id="form-field-1"
 												placeholder="" style="width: 300px"
 												class="col-xs-10 col-sm-5" required>
 										</div>
 									</div>
-									<br> <br> <input type="hidden" name="action"
-										value="seleccionaFecha"> <input class="btn"
-										value="Verificar" type="submit">
+									<br> <br> <input class="btn" value="agregar"
+										type="submit">
 
 
 								</form>
 
 
-								<c:if test="${not empty NoHayMenu}">
-									<script>
-										toastr
-												.warning("No hay menú para la fecha seleccionada");
-									</script>
-								</c:if>
-
-								<c:if test="${not empty fechaAnterior}">
-									<script type="text/javascript">
-										toastr
-												.error("Error! La fecha seleccionada es anterior a la actual");
-									</script>
-								</c:if>
 							</div>
 
 

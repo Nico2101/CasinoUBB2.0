@@ -69,6 +69,13 @@
 													.error("Error al actualizar el menú");
 										</script>
 									</c:if>
+									
+									<c:if test="${not empty fechaAnterior }">
+										<script type="text/javascript">
+											toastr
+													.error("Error, la fecha seleccionada es anterior a la actual");
+										</script>
+									</c:if>
 
 
 									<h1>Editar Menú</h1>
