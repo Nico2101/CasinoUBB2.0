@@ -47,25 +47,35 @@
 
 				<div class="page-content">
 
-					<div class="page-header"></div>
-
+					<br> <br>
 
 
 					<div class="row">
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
-							<form class="form-horizontal" role="form">
+							<form class="form-horizontal" role="form" method="get" action="agregarValoracion.htm">
 								<div align="center">
-									<div class="form-group">
-										<label class="col-sm-5 control-label no-padding-top">
+									<div class="form-group" style="width: 450px">
+										<label class="col-sm-5 control-label no-padding-right">
 											Valoración </label>
 
 										<div class="col-sm-5">
 											<div class="rating inline"></div>
 
-											<div class="hr hr-16 hr-dotted"></div>
 										</div>
+
+										<br> <br> <label
+											class="col-sm-5 control-label no-padding-right"
+											for="form-field-1"> Comentario </label>
+
+										<div class="col-sm-5">
+											<input name="comentario" type="text" id="form-field-1"
+												placeholder="" style="width: 200px"
+												class="col-xs-10 col-sm-5" required>
+										</div>
+										<br><br> <br> <input class="btn" value="agregar"
+											type="submit">
 									</div>
 
 								</div>
