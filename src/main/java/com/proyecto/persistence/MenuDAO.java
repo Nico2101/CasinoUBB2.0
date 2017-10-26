@@ -25,6 +25,7 @@ public class MenuDAO {
     private static final String OBTENER_MENU="select * from menu where fecha=?";
     private static final String INSERT_QUERY ="insert into menu(nombre,precio,tipo,fecha) values(?,?,?,?)";
     private static final String UPDATE_MENU="update menu set nombre=?, tipo=?,fecha=?,precio=? where id=? ";
+    private static final String LISTA_MENUS_COMPRADOS="select * from menu where id=?";
     
     
     private static final String DB_NAME = "mydb";
@@ -33,6 +34,28 @@ public class MenuDAO {
     private static final String USER = "root";
     private static final String PASSWORD = "";
     
+    
+    public MenuTO listaMenuCompradoUsuario(int idMenu) {
+    	Connection conn=null;
+    	MenuTO result=null;
+    	try {
+    		conn=getConnection();
+    		PreparedStatement ps=conn.prepareStatement(LISTA_MENUS_COMPRADOS);
+    		ps.setInt(1, idMenu);
+    		ResultSet rs=ps.executeQuery();
+    		while(rs.next()) {
+    			result=new MenuTO();
+    			result.setNombre(rs.getString("nombre"));
+    			result.setPrecio(rs.getInt("precio"));
+    			result.setTipo(rs.getString("tipo"));
+    			result.setId(rs.getInt("id"));
+    			
+    		}
+    	}catch(SQLException e) {
+    		
+    	}
+    	return result;
+    }
     
     public boolean updateMenu(MenuTO menu) {
     	Connection conn=null;

@@ -74,7 +74,7 @@
 												placeholder="" style="width: 200px"
 												class="col-xs-10 col-sm-5" required>
 										</div>
-										<br><br> <br> <input class="btn" value="agregar"
+										<br><br> <br> <input class="btn" value="Evaluar"
 											type="submit">
 									</div>
 

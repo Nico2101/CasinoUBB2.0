@@ -55,7 +55,38 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
-							
+							<h1 align="center">Menús Reservados</h1>
+
+							<div align="center">
+								<table class="table table-condensed" style="width: 800px">
+									<thead>
+										<tr>
+
+											<th>Nombre</th>
+											<th>Tipo</th>
+											<th>Precio</th>
+											<th>Evaluar</th>
+
+
+										</tr>
+									</thead>
+
+									<c:forEach var="menu" items="${menu}">
+										<tr>
+
+											<td><c:out value="${menu.nombre}"></c:out></td>
+											<td><c:out value="${menu.tipo}"></c:out></td>
+											<td><c:out value="${menu.precio}"></c:out></td>
+
+											<td><a
+												href="evaluar.htm?id=${menu.id}"><input
+													class="btn btn-primary btn-sm" type="button"
+													value="Evaluar" /></a></td>
+										</tr>
+									</c:forEach>
+
+								</table>
+							</div>
 
 							<!-- /.row -->
 							<!-- PAGE CONTENT ENDS -->
