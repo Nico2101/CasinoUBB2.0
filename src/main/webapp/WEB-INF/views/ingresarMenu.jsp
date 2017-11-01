@@ -56,11 +56,12 @@
 							<!-- PAGE CONTENT BEGINS -->
 
 							<c:if test="${not empty menuIngresado}">
-									<script>
-									toastr.success("Menú ingresado correctamente");
-									</script>
+								<script>
+									toastr
+											.success("Menú ingresado correctamente");
+								</script>
 							</c:if>
-							
+
 
 							<div id="formulario">
 								<form class="form-horizontal" role="form"
@@ -105,6 +106,17 @@
 
 										<br> <br> <label
 											class="col-sm-3 control-label no-padding-right"
+											for="form-field-1"> Cantidad de Raciones </label>
+
+										<div class="col-sm-9">
+											<input name="cantidadRaciones" type="number"
+												id="form-field-1" placeholder="" style="width: 300px"
+												class="col-xs-10 col-sm-5" required>
+										</div>
+
+
+										<br> <br> <label
+											class="col-sm-3 control-label no-padding-right"
 											for="form-field-1"> Fecha Menú</label>
 
 										<div class="col-sm-9">
@@ -112,6 +124,8 @@
 												placeholder="" style="width: 300px"
 												class="col-xs-10 col-sm-5" required>
 										</div>
+
+
 									</div>
 									<br> <br> <input class="btn" value="agregar"
 										type="submit">

@@ -55,41 +55,33 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
-							<h1 align="center">Menú</h1>
-
-							<c:if test="${not empty NoHayAlmuerzos}">
-								<script>
-									toastr.warning("No quedan almuerzos");
-								</script>
-							</c:if>
+							<h1 align="center">Menús Reservados</h1>
 
 							<div align="center">
 								<table class="table table-condensed" style="width: 800px">
 									<thead>
 										<tr>
-											<th>ID</th>
+
 											<th>Nombre</th>
 											<th>Tipo</th>
 											<th>Precio</th>
-											<th>Raciones Restantes</th>
-											<th>Fecha</th>
-											<th>Horario Disponible</th>
+											<th>Evaluar</th>
+
 
 										</tr>
 									</thead>
 
-									<c:forEach var="menu" items="${listaMenu}">
+									<c:forEach var="menu" items="${menu}">
 										<tr>
-											<td><c:out value="${menu.id}"></c:out></td>
+
 											<td><c:out value="${menu.nombre}"></c:out></td>
 											<td><c:out value="${menu.tipo}"></c:out></td>
 											<td><c:out value="${menu.precio}"></c:out></td>
-											<td><c:out value="${menu.cantRaciones}"></c:out></td>
-											<td><c:out value="${menu.fecha}"></c:out></td>
+
 											<td><a
-												href="verHorarioDisponible.htm?id=${menu.id}&menu=${menu.nombre}&cantRaciones=${menu.cantRaciones}&tipo=${menu.tipo}&precio=${menu.precio}&fecha=${menu.fecha}"><input
+												href="evaluar.htm?id=${menu.id}"><input
 													class="btn btn-primary btn-sm" type="button"
-													value="Ver Horario Disponible" /></a></td>
+													value="Evaluar" /></a></td>
 										</tr>
 									</c:forEach>
 

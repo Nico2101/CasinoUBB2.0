@@ -41,7 +41,7 @@
             <li class="">
                 <a href="">
                     <i class="menu-icon fa fa-caret-right"></i>
-                    Modificar Reserva
+                   Ver Reservas
                 </a>
 
                 <b class="arrow"></b>
@@ -50,11 +50,43 @@
              <li class="">
                 <a href="">
                     <i class="menu-icon fa fa-caret-right"></i>
-                    Eliminar Reserva
+                   
                 </a>
 
                 <b class="arrow"></b>
             </li>
+        </ul>
+    </li>
+    
+    <li class="">
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon glyphicon glyphicon-check"></i>
+            <span class="menu-text"> Servicio </span>
+
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+
+        <b class="arrow"></b>
+
+        <ul class="submenu">
+            <li class="">
+                <a href="listarMenusComprados.htm">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    Evaluar Servicio
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class="">
+                <a href="">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    Mis Evaluaciones
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            
         </ul>
     </li>
     

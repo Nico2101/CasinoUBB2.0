@@ -17,8 +17,17 @@ public class UsuarioTO {
     private String clave;
     private String rol;
     private int id;
+    private int saldo;
 
-    public int getId() {
+    public int getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(int saldo) {
+		this.saldo = saldo;
+	}
+
+	public int getId() {
 		return id;
 	}
 
