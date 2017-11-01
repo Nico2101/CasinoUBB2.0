@@ -25,7 +25,11 @@ public class RedireccionController {
 	
 	//Index User
 	@RequestMapping (value="indexUsuario",  method = RequestMethod.GET )
-	public ModelAndView indexUsuario() {
+	public ModelAndView indexUsuario(HttpSession sesion, HttpServletRequest request) {
+		sesion=request.getSession(true);
+		sesion.removeAttribute("listaMenu");
+		sesion.removeAttribute("menu");
+		sesion.removeAttribute("horarioDisponible");
 		ModelAndView vista=new ModelAndView();
 		vista.setViewName("indexUsuario");
 		return vista;

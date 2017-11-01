@@ -53,6 +53,7 @@ public class ReservaController {
 							vista.addObject("reservado", "reservado");
 							horarioDAO.actualizaRacionesHorario(id_horario);
 							menuDAO.actualizaRacionesMenu(id_menu);
+							usuarioDAO.updateSaldo(id, menuDAO.getPrecio(id_menu));
 						} else {
 							vista.addObject("noreservado", "Error al reservar");
 						}
