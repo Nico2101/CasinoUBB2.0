@@ -65,6 +65,7 @@
 											<th>Nombre</th>
 											<th>Tipo</th>
 											<th>Precio</th>
+											<th>Raciones Restantes</th>
 											<th>Fecha</th>
 											<th>Horario Disponible</th>
 
@@ -77,6 +78,7 @@
 											<td><c:out value="${menu.nombre}"></c:out></td>
 											<td><c:out value="${menu.tipo}"></c:out></td>
 											<td><c:out value="${menu.precio}"></c:out></td>
+											<td><c:out value="${menu.cantRaciones}"></c:out></td>
 											<td><c:out value="${menu.fecha}"></c:out></td>
 											<td><a href="verHorarioDisponible.htm?id=${menu.id}&menu=${menu.nombre}"><input
 													class="btn btn-primary btn-sm" type="button"

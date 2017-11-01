@@ -17,8 +17,17 @@ public class MenuTO {
     private String nombre;
     private String tipo;
     private Date fecha;
+    private int cantRaciones;
 
-    public Date getFecha() {
+    public int getCantRaciones() {
+		return cantRaciones;
+	}
+
+	public void setCantRaciones(int cantRaciones) {
+		this.cantRaciones = cantRaciones;
+	}
+
+	public Date getFecha() {
         return fecha;
     }
 

@@ -20,7 +20,7 @@ import com.proyecto.transferObject.UsuarioTO;
 public class UsuarioDAO {
 
 	private static final String VERIFICAR_USUARIO = "select * from usuario where rut=? and clave=?";
-	private static final String AGREGAR_USUARIO = "insert into usuario(rut,nombre,apellidoPaterno,apellidoMaterno,clave,rol) values(?,?,?,?,?,?)";
+	private static final String AGREGAR_USUARIO = "insert into usuario(rut,nombre,apellidoPaterno,apellidoMaterno,clave,rol,saldo) values(?,?,?,?,?,?,?)";
 	private static final String GET_USER = "select * from usuario where rut=? and clave=?";
 
 	private static final String DB_NAME = "mydb";
@@ -82,6 +82,7 @@ public class UsuarioDAO {
 			ps.setString(4, usuario.getApellidoMaterno());
 			ps.setString(5, usuario.getClave());
 			ps.setString(6, "usuario");
+			ps.setInt(7, 0);
 
 			ps.executeUpdate();
 			return true;

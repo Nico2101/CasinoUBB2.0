@@ -12,31 +12,41 @@ import java.sql.Time;
  * @author Nicolas
  */
 public class HorarioTO {
-    private int id;
-    private Time hora;
-    private int estado;
+	private int id;
+	private Time horaInicio;
+	private Time horaFin;
+	private int cantMaxRaciones;
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public Time getHora() {
-        return hora;
-    }
+	public Time getHoraInicio() {
+		return horaInicio;
+	}
 
-    public void setHora(Time hora) {
-        this.hora = hora;
-    }
+	public void setHoraInicio(Time horaInicio) {
+		this.horaInicio = horaInicio;
+	}
 
-    public int getEstado() {
-        return estado;
-    }
+	public Time getHoraFin() {
+		return horaFin;
+	}
 
-    public void setEstado(int estado) {
-        this.estado = estado;
-    }
+	public void setHoraFin(Time horaFin) {
+		this.horaFin = horaFin;
+	}
+
+	public int getCantMaxRaciones() {
+		return cantMaxRaciones;
+	}
+
+	public void setCantMaxRaciones(int cantMaxRaciones) {
+		this.cantMaxRaciones = cantMaxRaciones;
+	}
+
 }

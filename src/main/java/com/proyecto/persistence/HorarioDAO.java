@@ -20,27 +20,40 @@ import com.proyecto.transferObject.HorarioTO;
  */
 public class HorarioDAO {
 
-	private static final String OBTENER_HORARIO_DISPONIBLE = "select * from horario where estado=0";
-	private static final String ACTUALIZAR_HORARIO = "update horario set estado=1 where id=?";
-	private static final String VERIFICAR="select * from horario where estado=0";
-	
+	private static final String OBTENER_HORARIO_DISPONIBLE = "select * from horario";
+	private static final String ACTUALIZAR_RACIONES_HORARIO = "update horario set cantMaxRaciones=cantMaxRaciones-1 where id=?";
+
+	private static final String VERIFICAR = "select * from horario where cantMaxRaciones>0";
+
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
-	
-	public boolean verificarhorario() {
-		Connection conn=null;
+
+	public void actualizaRacionesHorario(int idHorario) {
+		Connection conn = null;
 		try {
-			conn=getConnection();
-			PreparedStatement ps=conn.prepareStatement(VERIFICAR);
-			ResultSet rs=ps.executeQuery();
-			if(rs.next()) {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(ACTUALIZAR_RACIONES_HORARIO);
+			ps.setInt(1, idHorario);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+
+		}
+	}
+
+	public boolean verificarhorario() {
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(VERIFICAR);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
 				return true;
 			}
-		}catch(SQLException e) {
-			
+		} catch (SQLException e) {
+
 		}
 		return false;
 	}
@@ -56,7 +69,9 @@ public class HorarioDAO {
 			while (rs.next()) {
 				result = new HorarioTO();
 				result.setId(rs.getInt("id"));
-				result.setHora(rs.getTime("hora"));
+				result.setHoraInicio(rs.getTime("horaInicio"));
+				result.setHoraFin(rs.getTime("horaFin"));
+				result.setCantMaxRaciones(rs.getInt("cantMaxRaciones"));
 				list.add(result);
 			}
 		} catch (SQLException e) {
@@ -64,20 +79,6 @@ public class HorarioDAO {
 			System.err.println("Quedo la pata hermano!!!");
 		}
 		return list;
-	}
-
-	public void actualizarHorario(int idHorario) {
-		Connection conn = null;
-		try {
-			conn = getConnection();
-			PreparedStatement ps = conn.prepareStatement(ACTUALIZAR_HORARIO);
-			ps.setInt(1, idHorario);
-			ps.executeUpdate();
-
-		} catch (SQLException e) {
-
-		}
-
 	}
 
 	private static Connection getConnection() {

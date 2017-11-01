@@ -52,18 +52,21 @@
 
 							<c:if test="${not empty nohorario}">
 								<script>
-									toastr.warning("No hay Horarios Disponibles");
+									toastr
+											.warning("No hay Horarios Disponibles");
 								</script>
 							</c:if>
 							<h1 align="center">Horario Disponible</h1>
 							<br>
-							
+
 							<div align="center">
 								<table class="table table-condensed" style="width: 500px">
 									<thead>
 										<tr>
 											<th>Menú</th>
-											<th>Hora</th>
+											<th>Hora Inicio</th>
+											<th>Hora Fin</th>
+											<th>Raciones Disponibles</th>
 											<th>Reservar</th>
 										</tr>
 									</thead>
@@ -71,7 +74,9 @@
 									<c:forEach var="horario" items="${horarioDisponible}">
 										<tr>
 											<td><c:out value="${menu}"></c:out></td>
-											<td><c:out value="${horario.hora}"></c:out></td>
+											<td><c:out value="${horario.horaInicio}"></c:out></td>
+											<td><c:out value="${horario.horaFin}"></c:out></td>
+											<td><c:out value="${horario.cantMaxRaciones}"></c:out></td>
 											<td><a
 												href="reservar.htm?id_menu=${id_menu}&id_horario=${horario.id}"><input
 													class="btn btn-primary btn-sm" type="button"
@@ -81,7 +86,7 @@
 
 								</table>
 							</div>
-							
+
 
 							<!-- /.row -->
 							<!-- PAGE CONTENT ENDS -->

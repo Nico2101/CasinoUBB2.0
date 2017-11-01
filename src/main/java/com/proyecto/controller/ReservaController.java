@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.proyecto.persistence.HorarioDAO;
+import com.proyecto.persistence.MenuDAO;
 import com.proyecto.persistence.ReservaDAO;
 import com.proyecto.transferObject.UsuarioTO;
 
@@ -20,19 +21,24 @@ public class ReservaController {
 	@RequestMapping(value = "reservar")
 	public ModelAndView reserva(HttpServletRequest request, ModelAndView vista,
 			@RequestParam(value = "id_menu") int id_menu, @RequestParam(value = "id_horario") int id_horario) {
-		HttpSession session=request.getSession(true);
-		int id=(int) session.getAttribute("id");
-		
+		HttpSession session = request.getSession(true);
+		int id = (int) session.getAttribute("id");
+
 		Timestamp fecha = new Timestamp(System.currentTimeMillis());
-		ReservaDAO reservaDAO=new ReservaDAO();
-		HorarioDAO horarioDAO=new HorarioDAO();
-		if(reservaDAO.reservar(fecha, id_menu, id_horario, id)) {
+		ReservaDAO reservaDAO = new ReservaDAO();
+		HorarioDAO horarioDAO = new HorarioDAO();
+		MenuDAO menuDAO = new MenuDAO();
+
+		// Hay que preguntar si quedan raciones en el horario y en el menu
+
+		if (reservaDAO.reservar(fecha, id_menu, id_horario, id)) {
 			vista.addObject("reservado", "reservado");
-			horarioDAO.actualizarHorario(id_horario);
-		}else {
+			horarioDAO.actualizaRacionesHorario(id_horario);
+			menuDAO.actualizaRacionesMenu(id_menu);
+		} else {
 			vista.addObject("noreservado", "Error al reservar");
 		}
-		
+
 		vista.setViewName("indexUsuario");
 		return vista;
 	}

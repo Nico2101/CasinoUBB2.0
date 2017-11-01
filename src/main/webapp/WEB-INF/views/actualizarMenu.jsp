@@ -69,7 +69,7 @@
 													.error("Error al actualizar el menú");
 										</script>
 									</c:if>
-									
+
 									<c:if test="${not empty fechaAnterior }">
 										<script type="text/javascript">
 											toastr
@@ -88,7 +88,8 @@
 										<div class="col-sm-9">
 											<input name="nombreMenu" type="text" id="form-field-1"
 												placeholder="" style="width: 300px"
-												class="col-xs-10 col-sm-5" value="${editMenu.nombre}" required>
+												class="col-xs-10 col-sm-5" value="${editMenu.nombre}"
+												required>
 										</div>
 
 										<br> <br> <label
@@ -123,7 +124,18 @@
 										<div class="col-sm-9">
 											<input name="precioMenu" type="number" id="form-field-1"
 												placeholder="" style="width: 300px"
-												class="col-xs-10 col-sm-5" value="${editMenu.precio }" required>
+												class="col-xs-10 col-sm-5" value="${editMenu.precio }"
+												required>
+										</div>
+
+										<br> <br> <label
+											class="col-sm-3 control-label no-padding-right"
+											for="form-field-1"> Cantidad de Raciones </label>
+
+										<div class="col-sm-9">
+											<input name="cantidadRaciones" type="number"
+												id="form-field-1" placeholder="" style="width: 300px"
+												class="col-xs-10 col-sm-5" required value="${editMenu.cantRaciones }">
 										</div>
 
 										<br> <br> <label
@@ -133,7 +145,8 @@
 										<div class="col-sm-9">
 											<input name="dateSelected" type="date" id="form-field-1"
 												placeholder="" style="width: 300px"
-												class="col-xs-10 col-sm-5" value="${editMenu.fecha }" required>
+												class="col-xs-10 col-sm-5" value="${editMenu.fecha }"
+												required>
 										</div>
 									</div>
 									<br> <br> <input class="btn" value="Guardar"

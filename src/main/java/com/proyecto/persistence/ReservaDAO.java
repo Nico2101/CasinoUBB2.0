@@ -23,30 +23,30 @@ import com.proyecto.transferObject.ReservaTO;
 public class ReservaDAO {
 
 	private static final String RESERVAR = "insert into reserva (fecha,idusuario,idmenu,idhorario) values(?,?,?,?)";
-	private static final String BUSCA_MENUS="select * from reserva where idusuario=?";
-	
+	private static final String BUSCA_MENUS = "select * from reserva where idusuario=?";
+
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
-	
+
 	public LinkedList<ReservaTO> existenMenus(int idUsuario) {
-		LinkedList<ReservaTO> lista=new LinkedList<>();
-		Connection conn=null;
-		ReservaTO result=null;
+		LinkedList<ReservaTO> lista = new LinkedList<>();
+		Connection conn = null;
+		ReservaTO result = null;
 		try {
-			conn=getConnection();
-			PreparedStatement ps= conn.prepareStatement(BUSCA_MENUS);
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(BUSCA_MENUS);
 			ps.setInt(1, idUsuario);
-			ResultSet rs=ps.executeQuery();
-			while(rs.next()) {
-				result=new ReservaTO();
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				result = new ReservaTO();
 				result.setIdMenu(rs.getInt("idmenu"));
 				lista.add(result);
 			}
-		}catch(SQLException e) {
-			
+		} catch (SQLException e) {
+
 		}
 		return lista;
 	}
@@ -73,7 +73,6 @@ public class ReservaDAO {
 
 		return false;
 	}
-
 
 	public static Connection getConnection() {
 		Connection conn = null;

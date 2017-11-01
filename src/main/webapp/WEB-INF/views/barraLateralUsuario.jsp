@@ -41,7 +41,7 @@
             <li class="">
                 <a href="">
                     <i class="menu-icon fa fa-caret-right"></i>
-                    Modificar Reserva
+                   Ver Reservas
                 </a>
 
                 <b class="arrow"></b>
@@ -50,7 +50,7 @@
              <li class="">
                 <a href="">
                     <i class="menu-icon fa fa-caret-right"></i>
-                    Eliminar Reserva
+                   
                 </a>
 
                 <b class="arrow"></b>

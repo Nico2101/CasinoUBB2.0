@@ -36,7 +36,8 @@ public class MenuController {
 			@RequestParam(value = "tipoMenu", required = false, defaultValue = "World") String tipoMenu,
 			@RequestParam(value = "precioMenu", required = false, defaultValue = "World") int precioMenu,
 			@RequestParam(value = "dateMenu", required = false, defaultValue = "World") String dateMenu,
-			ModelAndView vista) throws SQLException, ParseException {
+			@RequestParam(value = "cantidadRaciones") int cantRaciones, ModelAndView vista)
+			throws SQLException, ParseException {
 		// model.addAttribute("user",user);
 		// model.addAttribute("pass",pass);
 
@@ -51,6 +52,7 @@ public class MenuController {
 			vista.addObject("nombreMenu", nombreMenu);
 			vista.addObject("tipoMenu", tipoMenu);
 			vista.addObject("precioMenu", precioMenu);
+			vista.addObject("cantRaciones", cantRaciones);
 			vista.setViewName("recargarIngresarMenu");
 			return vista;
 			// hasta aqui se valida fecha
@@ -63,6 +65,7 @@ public class MenuController {
 			to.setNombre(nombreMenu);
 			to.setPrecio(precioMenu);
 			to.setTipo(tipoMenu);
+			to.setCantRaciones(cantRaciones);
 			// to.setFecha(dateMenu);
 
 			dao.ingresaMenu(to);
@@ -202,6 +205,7 @@ public class MenuController {
 			@RequestParam(value = "tipoMenu", required = false, defaultValue = "World") String tipoMenu,
 			@RequestParam(value = "precioMenu", required = false, defaultValue = "World") int precioMenu,
 			@RequestParam(value = "dateSelected", required = false, defaultValue = "World") String dateMenu,
+			@RequestParam(value = "cantidadRaciones") int cantRaciones,
 			@RequestParam(value = "id", required = false, defaultValue = "World") int id) throws ParseException {
 
 		// Validar fechas
@@ -221,7 +225,7 @@ public class MenuController {
 			return vista;
 			// hasta aqui se valida fecha
 
-		}else {
+		} else {
 			MenuDAO menuDAO = new MenuDAO();
 			MenuTO menuTO = new MenuTO();
 
@@ -232,6 +236,7 @@ public class MenuController {
 			menuTO.setNombre(nombreMenu);
 			menuTO.setPrecio(precioMenu);
 			menuTO.setTipo(tipoMenu);
+			menuTO.setCantRaciones(cantRaciones);
 
 			if (menuDAO.updateMenu(menuTO)) {
 				vista.addObject("actualizado", "actualizado");
@@ -244,8 +249,6 @@ public class MenuController {
 				vista.setViewName("actualizarMenu");
 			}
 		}
-
-		
 
 		return vista;
 
