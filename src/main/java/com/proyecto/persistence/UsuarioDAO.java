@@ -22,12 +22,29 @@ public class UsuarioDAO {
 	private static final String VERIFICAR_USUARIO = "select * from usuario where rut=? and clave=?";
 	private static final String AGREGAR_USUARIO = "insert into usuario(rut,nombre,apellidoPaterno,apellidoMaterno,clave,rol,saldo) values(?,?,?,?,?,?,?)";
 	private static final String GET_USER = "select * from usuario where rut=? and clave=?";
+	private static final String GET_SALDO="select saldo from usuario where id=?";
 
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
+	
+	public int getSaldo(int idUsuario) {
+		Connection conn=null;
+		try {
+			conn=getConnection();
+			PreparedStatement ps=conn.prepareStatement(GET_SALDO);
+			ps.setInt(1, idUsuario);
+			ResultSet rs=ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("saldo");
+			}
+		}catch(SQLException e) {
+			
+		}
+		return 0;
+	}
 
 	public int getUser(String rut, String clave) {
 		Connection conn = null;

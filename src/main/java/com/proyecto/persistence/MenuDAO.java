@@ -28,12 +28,29 @@ public class MenuDAO {
 	private static final String LISTA_MENUS_COMPRADOS = "select * from menu where id=?";
 	private static final String ACTUALIZAR_RACIONES_MENU = "update menu set cantidadRaciones=cantidadRaciones-1 where id=?";
 	private static final String HAY_RACIONES = "select * from menu where id=? and cantidadRaciones>0";
+	private static final String VALOR_MENU="select precio from menu where id=?";
 
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
+	
+	public int getPrecio(int idMenu) {
+		Connection conn=null;
+		try {
+			conn=getConnection();
+			PreparedStatement ps=conn.prepareStatement(VALOR_MENU);
+			ps.setInt(1, idMenu);
+			ResultSet rs=ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("precio");
+			}
+		}catch(SQLException e) {
+			
+		}
+		return 0;
+	}
 
 	public int hayRaciones(int idMenu) {
 		Connection conn = null;
