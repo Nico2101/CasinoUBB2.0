@@ -20,7 +20,8 @@ public class ReservaController {
 
 	@RequestMapping(value = "reservar")
 	public ModelAndView reserva(HttpServletRequest request, ModelAndView vista,
-			@RequestParam(value = "id_menu") int id_menu, @RequestParam(value = "id_horario") int id_horario) {
+			@RequestParam(value = "id_menu") int id_menu, @RequestParam(value = "id_horario") int id_horario,
+			@RequestParam(value = "cantRaciones") int cantRaciones) {
 		HttpSession session = request.getSession(true);
 		int id = (int) session.getAttribute("id");
 
@@ -29,17 +30,35 @@ public class ReservaController {
 		HorarioDAO horarioDAO = new HorarioDAO();
 		MenuDAO menuDAO = new MenuDAO();
 
-		// Hay que preguntar si quedan raciones en el horario y en el menu
+		if (cantRaciones == 0) {
 
-		if (reservaDAO.reservar(fecha, id_menu, id_horario, id)) {
-			vista.addObject("reservado", "reservado");
-			horarioDAO.actualizaRacionesHorario(id_horario);
-			menuDAO.actualizaRacionesMenu(id_menu);
+			vista.addObject("horarioDisponible", session.getAttribute("horarioDisponible"));
+			vista.addObject("menu", session.getAttribute("menu"));
+			vista.addObject("id_menu",id_menu);
+			vista.addObject("NoHayAlmuerzosEnHorario", "No quedan almuerzos disponibles en el horario indicado");
+			vista.setViewName("recargarVisualizarHorarioDisponible");
 		} else {
-			vista.addObject("noreservado", "Error al reservar");
+			if (horarioDAO.hayRaciones(id_horario) == 1) {
+				if (menuDAO.hayRaciones(id_menu) == 1) {
+					if (reservaDAO.reservar(fecha, id_menu, id_horario, id)) {
+						vista.addObject("reservado", "reservado");
+						horarioDAO.actualizaRacionesHorario(id_horario);
+						menuDAO.actualizaRacionesMenu(id_menu);
+					} else {
+						vista.addObject("noreservado", "Error al reservar");
+					}
+					vista.setViewName("indexUsuario");
+				} else {
+					vista.addObject("NoHayAlmuerzos", "No quedan almuerzos");
+					vista.setViewName("verMenu");
+				}
+			} else {
+				vista.addObject("NoHayAlmuerzosEnHorario", "No quedan almuerzos disponibles en el horario indicado");
+				vista.setViewName("visualizarHorarioDisponible");
+			}
+
 		}
 
-		vista.setViewName("indexUsuario");
 		return vista;
 	}
 }

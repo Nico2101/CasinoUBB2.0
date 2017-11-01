@@ -22,6 +22,7 @@ public class HorarioDAO {
 
 	private static final String OBTENER_HORARIO_DISPONIBLE = "select * from horario";
 	private static final String ACTUALIZAR_RACIONES_HORARIO = "update horario set cantMaxRaciones=cantMaxRaciones-1 where id=?";
+	private static final String HAY_RACIONES = "select * from horario where id=? and cantMaxRaciones>0";
 
 	private static final String VERIFICAR = "select * from horario where cantMaxRaciones>0";
 
@@ -30,6 +31,23 @@ public class HorarioDAO {
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
+
+	public int hayRaciones(int idHorario) {
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(HAY_RACIONES);
+			ps.setInt(1, idHorario);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return 1;
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return 0;
+	}
 
 	public void actualizaRacionesHorario(int idHorario) {
 		Connection conn = null;

@@ -6,6 +6,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -94,12 +97,15 @@ public class MenuController {
 
 	@RequestMapping(value = "verificarMenu", method = RequestMethod.GET)
 	public ModelAndView verificaMenu(ModelAndView vista,
-			@RequestParam(value = "dateSelected", required = true) String date) throws ParseException {
+			@RequestParam(value = "dateSelected", required = true) String date, HttpSession sesion,
+			HttpServletRequest request) throws ParseException {
 
 		// Validar fechas
 		DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
 		Date date1 = parser.parse(date);
 		Date fechaSistema = new Date();
+
+		sesion.removeAttribute("listaMenu");
 
 		if (date1.getDate() < fechaSistema.getDate() || date1.getMonth() < fechaSistema.getMonth()
 				|| date1.getYear() < fechaSistema.getYear()) {
@@ -117,6 +123,8 @@ public class MenuController {
 			menuTO.setFecha(fecha);
 			if (menuDAO.buscaMenu(menuTO) == 1) {
 				vista.addObject("listaMenu", menuDAO.obtieneMenu(menuTO));
+				sesion = request.getSession(true);
+				sesion.setAttribute("listaMenu", menuDAO.obtieneMenu(menuTO));
 				vista.setViewName("verMenu");
 				return vista;
 			} else {
@@ -182,19 +190,30 @@ public class MenuController {
 
 	@RequestMapping(value = "verHorarioDisponible")
 	public ModelAndView verHorarioDisponible(ModelAndView vista, @RequestParam(value = "id") int id,
-			@RequestParam(value = "menu") String menu) {
+			@RequestParam(value = "menu") String menu, @RequestParam(value = "cantRaciones") int cantRaciones,
+			HttpSession sesion) {
 
-		HorarioDAO horarioDAO = new HorarioDAO();
-		if (horarioDAO.verificarhorario()) {
-			if (horarioDAO.obtenerHorarioDisponible() != null) {
-				vista.addObject("horarioDisponible", horarioDAO.obtenerHorarioDisponible());
-				vista.addObject("id_menu", id);
-				vista.addObject("menu", menu);
-			}
+		if (cantRaciones == 0) {
+			vista.setViewName("recargarVerMenu");
+			vista.addObject("listaMenu", sesion.getAttribute("listaMenu"));
+			vista.addObject("NoHayAlmuerzos", "No quedan almuerzos");
 		} else {
-			vista.addObject("nohorario", "No hay horario disponible");
+			HorarioDAO horarioDAO = new HorarioDAO();
+
+			if (horarioDAO.verificarhorario()) {
+				if (horarioDAO.obtenerHorarioDisponible() != null) {
+					vista.addObject("horarioDisponible", horarioDAO.obtenerHorarioDisponible());
+					sesion.setAttribute("horarioDisponible", horarioDAO.obtenerHorarioDisponible());
+					sesion.setAttribute("menu", menu);
+					vista.addObject("id_menu", id);
+					vista.addObject("menu", menu);
+				}
+			} else {
+				vista.addObject("nohorario", "No hay horario disponible");
+			}
+			vista.setViewName("visualizarHorarioDisponible");
 		}
-		vista.setViewName("visualizarHorarioDisponible");
+
 		return vista;
 
 	}
