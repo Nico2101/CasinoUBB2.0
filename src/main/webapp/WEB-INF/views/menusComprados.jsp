@@ -65,6 +65,7 @@
 											<th>Nombre</th>
 											<th>Tipo</th>
 											<th>Precio</th>
+											<th>Fecha</th>
 											<th>Evaluar</th>
 
 
@@ -77,6 +78,7 @@
 											<td><c:out value="${menu.nombre}"></c:out></td>
 											<td><c:out value="${menu.tipo}"></c:out></td>
 											<td><c:out value="${menu.precio}"></c:out></td>
+											<td><c:out value="${menu.fecha}"></c:out></td>
 
 											<td><a
 												href="evaluar.htm?id=${menu.id}"><input

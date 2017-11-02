@@ -52,6 +52,7 @@ public class EvaluacionController {
 	public ModelAndView agregarValoracion(ModelAndView vista, @RequestParam(value = "score") float score,
 			@RequestParam(value = "comentario") String comentario) {
 		// enviar los datos a la bbdd
+		vista.setViewName("indexUsuario");
 		return vista;
 	}
 }

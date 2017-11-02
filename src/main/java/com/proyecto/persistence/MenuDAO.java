@@ -94,6 +94,7 @@ public class MenuDAO {
 				result.setNombre(rs.getString("nombre"));
 				result.setPrecio(rs.getInt("precio"));
 				result.setTipo(rs.getString("tipo"));
+				result.setFecha(rs.getDate("fecha"));
 				result.setId(rs.getInt("id"));
 
 			}
