@@ -55,7 +55,27 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
-							<h1 align="center">Menús Reservados</h1>
+							<c:if test="${not empty evaluacionAgregada}">
+								<script>
+									toastr
+											.success("Evaluacion agregada correctamente!");
+								</script>
+							</c:if>
+
+							<c:if test="${not empty errorAlValorar}">
+								<script>
+									toastr
+											.error("Se ha producido un error al evaluar el menu");
+								</script>
+							</c:if>
+
+
+							<div align="center" class="page-header">
+								<h1>
+									<strong>Menús Reservados No Evaluados</strong>
+								</h1>
+							</div>
+
 
 							<div align="center">
 								<table class="table table-condensed" style="width: 800px">
@@ -80,8 +100,7 @@
 											<td><c:out value="${menu.precio}"></c:out></td>
 											<td><c:out value="${menu.fecha}"></c:out></td>
 
-											<td><a
-												href="evaluar.htm?id=${menu.id}"><input
+											<td><a href="evaluar.htm?id=${menu.id}"><input
 													class="btn btn-primary btn-sm" type="button"
 													value="Evaluar" /></a></td>
 										</tr>

@@ -55,7 +55,11 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
-							<h1 align="center">Menú</h1>
+							<div align="center" class="page-header">
+								<h1>
+									<strong>Menú</strong>
+								</h1>
+							</div>
 
 							<c:if test="${not empty NoHayAlmuerzos}">
 								<script>

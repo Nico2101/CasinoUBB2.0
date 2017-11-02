@@ -67,7 +67,11 @@
 								<form class="form-horizontal" role="form"
 									action="ingresarmenu.htm" method="post">
 
-									<h1>Ingrese Menú</h1>
+									<div align="center" class="page-header">
+										<h1>
+											<strong>Ingrese Menú</strong>
+										</h1>
+									</div>
 									<br>
 									<div class="form-group" style="width: 1850px">
 

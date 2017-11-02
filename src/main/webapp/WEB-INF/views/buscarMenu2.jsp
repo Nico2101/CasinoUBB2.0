@@ -62,7 +62,11 @@
 								<form class="form-horizontal" role="form"
 									action="editarMenu.htm" method="post">
 
-									<h1>Editar Menú</h1>
+									<div align="center" class="page-header">
+										<h1>
+											<strong>Editar Menú</strong>
+										</h1>
+									</div>
 									<br>
 									<div class="form-group" style="width: 1850px">
 										<label class="col-sm-3 control-label no-padding-right"
@@ -87,7 +91,7 @@
 												.warning("No hay menú para la fecha seleccionada");
 									</script>
 								</c:if>
-								
+
 								<c:if test="${not empty fechaAnterior}">
 									<script>
 										toastr

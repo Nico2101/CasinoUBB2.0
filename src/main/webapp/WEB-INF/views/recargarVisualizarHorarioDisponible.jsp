@@ -50,25 +50,31 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
-							
-							
+
+
 							<c:if test="${not empty NoHayAlmuerzosEnHorario}">
 								<script>
-									toastr.warning("No quedan almuerzos en el horario indicado");
+									toastr
+											.warning("No quedan almuerzos en el horario indicado");
 								</script>
 							</c:if>
-							
-							
+
+
 							<c:if test="${not empty sinSaldo}">
 								<script>
-									toastr.error("No tiene saldo suficiente para comprar almuerzos, dirijase a caja para abonar");
+									toastr
+											.error("No tiene saldo suficiente para comprar almuerzos, dirijase a caja para abonar");
 								</script>
 							</c:if>
-							
-							
-							<h1 align="center">Horario Disponible</h1>
+
+
+							<div align="center" class="page-header">
+								<h1>
+									<strong>Horario Disponible</strong>
+								</h1>
+							</div>
 							<br>
-							
+
 							<div align="center">
 								<table class="table table-condensed" style="width: 500px">
 									<thead>
@@ -96,7 +102,7 @@
 
 								</table>
 							</div>
-							
+
 
 							<!-- /.row -->
 							<!-- PAGE CONTENT ENDS -->

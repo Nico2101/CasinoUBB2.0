@@ -61,12 +61,35 @@
 											.success("Menú reservado correctamente en el horario indicado!");
 								</script>
 							</c:if>
+							<c:if test="${not empty evaluacionAgregada}">
+								<script type="text/javascript">
+									toastr
+											.success("Evaluación agregada correctamente!");
+								</script>
+							</c:if>
+
+							<c:if test="${not empty noQuedanMenusParaEvaluar}">
+								<script type="text/javascript">
+									toastr
+											.warning("No quedan menus para evaluar");
+								</script>
+							</c:if>
+							
+							
+
+							<c:if test="${not empty NoHayMenuParaEvaluar}">
+								<script type="text/javascript">
+									toastr
+											.error("No tiene menús disponibles para evaluar");
+								</script>
+							</c:if>
 
 							<c:if test="${not empty noreservado}">
 								<script type="text/javascript">
 									toastr.error("Error al reservar menú");
 								</script>
 							</c:if>
+
 
 							<!-- /.row -->
 							<!-- PAGE CONTENT ENDS -->

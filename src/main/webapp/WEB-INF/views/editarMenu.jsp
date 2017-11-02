@@ -64,8 +64,12 @@
 					<!-- /.page-header -->
 
 
-					<h2>Menú</h2>
-					
+					<div align="center" class="page-header">
+						<h1>
+							<strong>Menú</strong>
+						</h1>
+					</div>
+
 					<table class="table table-condensed" style="width: 1000px">
 						<thead>
 							<tr>
@@ -79,19 +83,18 @@
 							</tr>
 						</thead>
 
-									<c:forEach var="menu" items="${listaMenu}">
-										<tr>
-											<td><c:out value="${menu.id}"></c:out></td>
-											<td><c:out value="${menu.nombre}"></c:out></td>
-											<td><c:out value="${menu.precio}"></c:out></td>
-											<td><c:out value="${menu.tipo}"></c:out></td>
-											<td><c:out value="${menu.fecha}"></c:out></td>
-											<td><c:out value="${menu.cantRaciones}"></c:out></td>
-											<td><a href="actualizarMenu.htm?id=${menu.id}"><input
-													class="btn btn-primary btn-sm" type="button"
-													value="Editar" /></a></td>
-										</tr>
-									</c:forEach>
+						<c:forEach var="menu" items="${listaMenu}">
+							<tr>
+								<td><c:out value="${menu.id}"></c:out></td>
+								<td><c:out value="${menu.nombre}"></c:out></td>
+								<td><c:out value="${menu.precio}"></c:out></td>
+								<td><c:out value="${menu.tipo}"></c:out></td>
+								<td><c:out value="${menu.fecha}"></c:out></td>
+								<td><c:out value="${menu.cantRaciones}"></c:out></td>
+								<td><a href="actualizarMenu.htm?id=${menu.id}"><input
+										class="btn btn-primary btn-sm" type="button" value="Editar" /></a></td>
+							</tr>
+						</c:forEach>
 					</table>
 
 					<div align="left">

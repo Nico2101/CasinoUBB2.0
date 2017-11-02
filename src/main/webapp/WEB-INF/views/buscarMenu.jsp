@@ -62,7 +62,13 @@
 								<form action="verificarMenu.htm" class="form-horizontal"
 									role="form" method="get">
 
-									<h1>Reservar Menú</h1>
+
+									<div align="center" class="page-header">
+										<h1>
+											<strong>Reservar Menú</strong>
+										</h1>
+									</div>
+
 									<br>
 									<div class="form-group" style="width: 1850px">
 										<label class="col-sm-3 control-label no-padding-right"

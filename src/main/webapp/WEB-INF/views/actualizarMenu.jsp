@@ -77,8 +77,12 @@
 										</script>
 									</c:if>
 
+									<div align="center" class="page-header">
+										<h1>
+											<strong>Editar Menú</strong>
+										</h1>
+									</div>
 
-									<h1>Editar Menú</h1>
 									<br> <br>
 									<div class="form-group" style="width: 1850px">
 										<input type="hidden" name="id" value="${editMenu.id }" /> <label
@@ -135,7 +139,8 @@
 										<div class="col-sm-9">
 											<input name="cantidadRaciones" type="number"
 												id="form-field-1" placeholder="" style="width: 300px"
-												class="col-xs-10 col-sm-5" required value="${editMenu.cantRaciones }">
+												class="col-xs-10 col-sm-5" required
+												value="${editMenu.cantRaciones }">
 										</div>
 
 										<br> <br> <label

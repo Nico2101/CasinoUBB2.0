@@ -1,16 +1,9 @@
-<%-- 
-    Document   : index
-    Created on : 15-sep-2017, 22:45:00
-    Author     : Nicolas
---%>
-<%@ include file="/WEB-INF/views/include.jsp"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
 <%@ include file="cabecera.jsp"%>
-<!-- HTML meta refresh URL redirection -->
-
 </head>
 
 <body class="no-skin">
@@ -19,13 +12,6 @@
 	</div>
 
 	<div class="main-container ace-save-state" id="main-container">
-		<script type="text/javascript">
-			try {
-				ace.settings.loadState('main-container')
-			} catch (e) {
-			}
-		</script>
-
 		<div id="sidebar"
 			class="sidebar                  responsive                    ace-save-state">
 			<script type="javascript">
@@ -40,25 +26,37 @@
 					data-icon2="ace-icon fa fa-angle-double-right"></i>
 			</div>
 		</div>
-
 		<div class="main-content">
 			<div class="main-content-inner">
 				<div class="breadcrumbs ace-save-state" id="breadcrumbs"></div>
 
 				<div class="page-content">
 
-					<br> <br>
 
+
+
+
+					<!-- /.page-header -->
 
 					<div class="row">
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
-							<form class="form-horizontal" role="form" method="get" action="agregarValoracion.htm">
+
+
+							<div align="center" class="page-header">
+								<h1>
+									<strong>Evaluar Servicio</strong>
+								</h1>
+							</div>
+							<br>
+
+							<form class="form-horizontal" role="form" method="get"
+								action="agregarValoracion.htm">
 								<div align="center">
 									<div class="form-group" style="width: 450px">
 										<label class="col-sm-5 control-label no-padding-right">
-											ValoraciÃ³n </label>
+											Valoración </label>
 
 										<div class="col-sm-5">
 											<div class="rating inline"></div>
@@ -74,14 +72,15 @@
 												placeholder="" style="width: 200px"
 												class="col-xs-10 col-sm-5" required>
 										</div>
-										<br><br> <br> <input class="btn" value="Evaluar"
-											type="submit">
+										<br> <br> <br> <input class="btn"
+											value="Evaluar" type="submit">
 									</div>
 
 								</div>
 							</form>
 
-							<!-- PAGE CONTENT ENDS -->
+
+
 						</div>
 						<!-- /.col -->
 					</div>
@@ -102,7 +101,7 @@
 		</a>
 	</div>
 	<!-- /.main-container -->
-	<%@ include file="scripts.jsp"%>
+
 	<!-- basic scripts -->
 
 	<!--[if !IE]> -->

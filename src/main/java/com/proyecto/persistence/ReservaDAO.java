@@ -23,7 +23,7 @@ import com.proyecto.transferObject.ReservaTO;
 public class ReservaDAO {
 
 	private static final String RESERVAR = "insert into reserva (fecha,idusuario,idmenu,idhorario) values(?,?,?,?)";
-	private static final String BUSCA_MENUS = "select * from reserva where idusuario=?";
+	private static final String BUSCA_MENUS = "select *,count(*) as cont from reserva r WHERE r.idusuario=? and NOT EXISTS (select * from evaluacion e where r.idmenu = e.idmenu) group by r.idmenu";
 
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
