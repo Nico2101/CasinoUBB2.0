@@ -77,8 +77,8 @@
 							</div>
 
 
-							<div align="center">
-								<table class="table table-condensed" style="width: 800px">
+							<div>
+								<table id="tablaMenusComprados" class="table table-condensed">
 									<thead>
 										<tr>
 
@@ -137,6 +137,54 @@
 
 	<%@ include file="scripts.jsp"%>
 </body>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js">
+	
+</script>
+<script
+	src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
+<script>
+	$(function() {
+		$('#tablaMenusComprados')
+				.DataTable(
+						{
+							'paging' : true,
+							'lengthChange' : true,
+							'searching' : false,
+							'ordering' : true,
+							'info' : true,
+							'autoWidth' : true,
+							'responsive' : true,
+							"lengthMenu" : [ [ 5, 10, 20, -1 ],
+									[ 5, 10, 20, "Todos" ] ],
+							"language" : {
+								"sProcessing" : "Procesando...",
+								"sLengthMenu" : "Mostrar _MENU_ registros",
+								"sZeroRecords" : "No se encontraron resultados",
+								"sEmptyTable" : "Ningún dato disponible en esta tabla",
+								"sInfo" : "Mostrando del _START_ al _END_",
+								"sInfoEmpty" : "Mostrando del 0 al 0 de 0",
+								"sInfoFiltered" : "(filtrado de un total de _MAX_ registros)",
+								"sInfoPostFix" : "",
+								"sSearch" : "Buscar:",
+								"sUrl" : "",
+								"sInfoThousands" : ",",
+								"sLoadingRecords" : "Cargando...",
+								"oPaginate" : {
+									"sFirst" : "Primero",
+									"sLast" : "Último",
+									"sNext" : "Siguiente",
+									"sPrevious" : "Anterior"
+								},
+								"oAria" : {
+									"sSortAscending" : ": Activar para ordenar la columna de manera ascendente",
+									"sSortDescending" : ": Activar para ordenar la columna de manera descendente"
+								}
+							}
+						})
+	})
+</script>
 
 </html>

@@ -67,6 +67,13 @@
 								</script>
 							</c:if>
 
+							<c:if test="${not empty nohorario}">
+								<script>
+									toastr
+											.warning("No hay horarios disponibles");
+								</script>
+							</c:if>
+
 							<div align="center">
 								<table class="table table-condensed" style="width: 800px">
 									<thead>

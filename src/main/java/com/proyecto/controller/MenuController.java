@@ -207,11 +207,14 @@ public class MenuController {
 					sesion.setAttribute("menu", menu);
 					vista.addObject("id_menu", id);
 					vista.addObject("menu", menu);
+					vista.setViewName("visualizarHorarioDisponible");
 				}
 			} else {
 				vista.addObject("nohorario", "No hay horario disponible");
+				vista.addObject("listaMenu", sesion.getAttribute("listaMenu"));
+				vista.setViewName("recargarVerMenu");
 			}
-			vista.setViewName("visualizarHorarioDisponible");
+			
 		}
 
 		return vista;
