@@ -72,7 +72,7 @@
 										<div class="modal-header no-padding">
 											<div class="table-header">
 												<button type="button" class="close" data-dismiss="modal"
-													aria-hidden="true">
+													aria-hidden="true" onclick="borrarDatos();">
 													<span class="white">&times;</span>
 												</button>
 												Aumentar Saldo Usuario
@@ -116,8 +116,8 @@
 
 										<div class="modal-footer no-margin-top">
 											<button class="btn btn-sm btn-danger pull-left"
-												data-dismiss="modal">
-												<i class="ace-icon fa fa-times"></i> Close
+												data-dismiss="modal" onclick="borrarDatos();">
+												<i class="ace-icon fa fa-times"></i> Cerrar
 											</button>
 
 
@@ -155,6 +155,11 @@
 </body>
 
 <script>
+	function borrarDatos(){
+		$('#rutUsuario').val("");
+		$('#saldo').val("");
+	}
+
 	function aumentarSaldo() {
 
 		var rut=$('#rutUsuario').val();
@@ -173,7 +178,7 @@
   		    		 toastr.error("El rut indicado no se encuentra en la base de datos");
   		    	 }else{
   		    		$('#modal-table').modal('hide');
-  		    		toastr.success("Se ha cargado el monto de "+saldo+ " pesos a tu cuenta");
+  		    		toastr.success("Se ha cargado el monto de "+saldo+ " pesos a la cuenta");
   		    		$('#rutUsuario').val("");
   		    		$('#saldo').val("");
   		    	 }
