@@ -37,7 +37,7 @@ public class ReservaController {
 			vista.addObject("horarioDisponible", session.getAttribute("horarioDisponible"));
 			vista.addObject("menu", session.getAttribute("menu"));
 			vista.addObject("id_menu", id_menu);
-			vista.setViewName("recargarVisualizarHorarioDisponible");
+			vista.setViewName("visualizarHorarioDisponible");
 		} else {
 			if (cantRaciones == 0) {
 
@@ -45,7 +45,7 @@ public class ReservaController {
 				vista.addObject("menu", session.getAttribute("menu"));
 				vista.addObject("id_menu", id_menu);
 				vista.addObject("NoHayAlmuerzosEnHorario", "No quedan almuerzos disponibles en el horario indicado");
-				vista.setViewName("recargarVisualizarHorarioDisponible");
+				vista.setViewName("visualizarHorarioDisponible");
 			} else {
 				if (horarioDAO.hayRaciones(id_horario) == 1) {
 					if (menuDAO.hayRaciones(id_menu) == 1) {

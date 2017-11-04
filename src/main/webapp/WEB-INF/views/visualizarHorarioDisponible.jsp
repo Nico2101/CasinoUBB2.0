@@ -51,6 +51,12 @@
 							<!-- PAGE CONTENT BEGINS -->
 
 
+							<c:if test="${not empty sinSaldo}">
+								<script>
+									toastr
+											.error("No tiene saldo suficiente para comprar almuerzos, dirijase a caja para abonar");
+								</script>
+							</c:if>
 
 							<c:if test="${not empty NoHayAlmuerzosEnHorario}">
 								<script>

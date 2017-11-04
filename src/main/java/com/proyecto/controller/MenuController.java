@@ -194,7 +194,7 @@ public class MenuController {
 			HttpSession sesion) {
 
 		if (cantRaciones == 0) {
-			vista.setViewName("recargarVerMenu");
+			vista.setViewName("verMenu");
 			vista.addObject("listaMenu", sesion.getAttribute("listaMenu"));
 			vista.addObject("NoHayAlmuerzos", "No quedan almuerzos");
 		} else {
@@ -212,7 +212,7 @@ public class MenuController {
 			} else {
 				vista.addObject("nohorario", "No hay horario disponible");
 				vista.addObject("listaMenu", sesion.getAttribute("listaMenu"));
-				vista.setViewName("recargarVerMenu");
+				vista.setViewName("verMenu");
 			}
 			
 		}

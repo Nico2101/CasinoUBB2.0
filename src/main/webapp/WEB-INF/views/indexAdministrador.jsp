@@ -65,6 +65,68 @@
 
 							<!-- /.row -->
 							<!-- PAGE CONTENT ENDS -->
+
+							<div id="modal-table" class="modal fade" tabindex="-1">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header no-padding">
+											<div class="table-header">
+												<button type="button" class="close" data-dismiss="modal"
+													aria-hidden="true">
+													<span class="white">&times;</span>
+												</button>
+												Aumentar Saldo Usuario
+											</div>
+										</div>
+
+										<div class="modal-body">
+											<form class="form-horizontal" role="form">
+												<br>
+												<div class="form-group" style="width: 850px">
+
+													<label class="col-sm-3 control-label no-padding-right"
+														for="form-field-1"> Rut Usuario </label>
+
+													<div class="col-sm-9">
+														<input id="rutUsuario" name="rutUsuario" type="text" id="form-field-1"
+															placeholder="" style="width: 300px"
+															class="col-xs-10 col-sm-5" required
+															oninput="checkRut(this)" >
+													</div>
+
+													<br> <br> <label
+														class="col-sm-3 control-label no-padding-right"
+														for="form-field-1"> Saldo </label>
+
+													<div class="col-sm-9">
+														<input id="saldo" name="saldo" type="number" id="form-field-1"
+															placeholder="" style="width: 300px"
+															class="col-xs-10 col-sm-5" required >
+													</div>
+												</div>
+
+
+												<div align="center">
+													<input class="btn" value="agregar" type="button"
+														onclick="aumentarSaldo();">
+												</div>
+
+											</form>
+										</div>
+
+										<div class="modal-footer no-margin-top">
+											<button class="btn btn-sm btn-danger pull-left"
+												data-dismiss="modal">
+												<i class="ace-icon fa fa-times"></i> Close
+											</button>
+
+
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
 							<!-- PAGE CONTENT ENDS -->
 						</div>
 						<!-- /.col -->
@@ -92,5 +154,95 @@
 	<%@ include file="scripts.jsp"%>
 </body>
 
+<script>
+	function aumentarSaldo() {
+
+		var rut=$('#rutUsuario').val();
+		var saldo=$('#saldo').val();
+		
+		$.ajax({
+  			 type:'GET',
+  			 url:"agregarSaldo.htm",
+  			 data:{
+  				 rutUsuario:rut,
+  				 saldo:saldo
+  			 },
+  		     dataType:'json',
+  		     success:function(data){
+  		    	 if(data.rut==null){
+  		    		 toastr.error("El rut indicado no se encuentra en la base de datos");
+  		    	 }else{
+  		    		$('#modal-table').modal('hide');
+  		    		toastr.success("Se ha cargado el monto de "+saldo+ " pesos a tu cuenta");
+  		    		$('#rutUsuario').val("");
+  		    		$('#saldo').val("");
+  		    	 }
+  		     },
+  		     error:function(jqXHR,errorThrown){
+  		    	 alert("Error");
+  		     }
+  		 });
+		
+	}
+</script>
+<script>
+	function checkRut(rut) {
+		// Despejar Puntos
+		var valor = rut.value.replace('.', '');
+		// Despejar Guión
+		valor = valor.replace('-', '');
+
+		// Aislar Cuerpo y Dígito Verificador
+		cuerpo = valor.slice(0, -1);
+		dv = valor.slice(-1).toUpperCase();
+
+		// Formatear RUN
+		rut.value = cuerpo + '-' + dv
+
+		// Si no cumple con el mínimo ej. (n.nnn.nnn)
+		if (cuerpo.length < 7) {
+			rut.setCustomValidity("RUT Incompleto");
+			return false;
+		}
+
+		// Calcular Dígito Verificador
+		suma = 0;
+		multiplo = 2;
+
+		// Para cada dígito del Cuerpo
+		for (i = 1; i <= cuerpo.length; i++) {
+
+			// Obtener su Producto con el Múltiplo Correspondiente
+			index = multiplo * valor.charAt(cuerpo.length - i);
+
+			// Sumar al Contador General
+			suma = suma + index;
+
+			// Consolidar Múltiplo dentro del rango [2,7]
+			if (multiplo < 7) {
+				multiplo = multiplo + 1;
+			} else {
+				multiplo = 2;
+			}
+
+		}
+
+		// Calcular Dígito Verificador en base al Módulo 11
+		dvEsperado = 11 - (suma % 11);
+
+		// Casos Especiales (0 y K)
+		dv = (dv == 'K') ? 10 : dv;
+		dv = (dv == 0) ? 11 : dv;
+
+		// Validar que el Cuerpo coincide con su Dígito Verificador
+		if (dvEsperado != dv) {
+			rut.setCustomValidity("RUT Inválido");
+			return false;
+		}
+
+		// Si todo sale bien, eliminar errores (decretar que es válido)
+		rut.setCustomValidity('');
+	}
+</script>
 
 </html>
