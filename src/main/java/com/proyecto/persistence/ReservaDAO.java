@@ -11,9 +11,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 import com.mysql.jdbc.Connection;
+import com.proyecto.transferObject.HorarioTO;
+import com.proyecto.transferObject.MenuTO;
 import com.proyecto.transferObject.ReservaTO;
 
 /**
@@ -24,12 +28,71 @@ public class ReservaDAO {
 
 	private static final String RESERVAR = "insert into reserva (fecha,idusuario,idmenu,idhorario) values(?,?,?,?)";
 	private static final String BUSCA_MENUS = "select *,count(*) as cont from reserva r WHERE r.idusuario=? and NOT EXISTS (select * from evaluacion e where r.idmenu = e.idmenu) group by r.idmenu";
+	private static final String DATOS_RESERVA_MENU = "SELECT m.id,m.nombre, m.precio,m.tipo, m.fecha from reserva r JOIN menu m on r.idmenu=m.id WHERE r.idusuario=? and m.fecha>=?";
+	private static final String DATOS_RESERVA_HORARIO = "SELECT h.id,h.horaInicio,h.horaFin from reserva r JOIN horario h on r.idhorario=h.id JOIN menu m on r.idmenu=m.id where r.idusuario=? and m.fecha>=?";
 
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
+
+	public LinkedList<HorarioTO> obtenerDatosReservaHorario(int idUsuario) {
+		Connection conn = null;
+		LinkedList<HorarioTO> lista = new LinkedList<>();
+		HorarioTO result = null;
+		// fecha actual
+		Date fechaSistema = new Date(System.currentTimeMillis());
+		DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+		String date1 = parser.format(fechaSistema);
+
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(DATOS_RESERVA_HORARIO);
+			ps.setInt(1, idUsuario);
+			ps.setString(2, date1);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				result = new HorarioTO();
+				result.setHoraInicio(rs.getTime("horaInicio"));
+				result.setHoraFin(rs.getTime("horaFin"));
+				lista.add(result);
+			}
+		} catch (SQLException e) {
+
+		}
+		return lista;
+	}
+
+	public LinkedList<MenuTO> obtenerDatosReservaMenu(int idUsuario) {
+		Connection conn = null;
+		LinkedList<MenuTO> lista = new LinkedList<>();
+		MenuTO result = null;
+		// fecha actual
+		Date fechaSistema = new Date(System.currentTimeMillis());
+		DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+		String date1 = parser.format(fechaSistema);
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(DATOS_RESERVA_MENU);
+			ps.setInt(1, idUsuario);
+			ps.setString(2, date1);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				result = new MenuTO();
+				result.setId(rs.getInt("id"));
+				result.setNombre(rs.getString("nombre"));
+				result.setPrecio(rs.getInt("precio"));
+				result.setTipo(rs.getString("tipo"));
+				result.setFecha(rs.getDate("fecha"));
+				lista.add(result);
+
+			}
+		} catch (SQLException e) {
+
+		}
+		return lista;
+	}
 
 	public LinkedList<ReservaTO> existenMenus(int idUsuario) {
 		LinkedList<ReservaTO> lista = new LinkedList<>();

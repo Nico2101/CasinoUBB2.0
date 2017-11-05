@@ -74,4 +74,22 @@ public class ReservaController {
 
 		return vista;
 	}
+
+	@RequestMapping(value = "verReservas")
+	public ModelAndView verReservas(ModelAndView vista, HttpSession sesion, HttpServletRequest request) {
+		ReservaDAO reservaDAO = new ReservaDAO();
+		sesion = request.getSession(true);
+		int id = (int) sesion.getAttribute("id");
+		if (reservaDAO.obtenerDatosReservaHorario(id).isEmpty()) {
+			vista.setViewName("indexUsuario");
+			vista.addObject("NoTieneReservas", "No tiene reservas");
+		} else {
+			vista.setViewName("verReservas");
+			vista.addObject("datosMenuReservado", reservaDAO.obtenerDatosReservaMenu(id));
+			vista.addObject("datosHorarioReservado", reservaDAO.obtenerDatosReservaHorario(id));
+		}
+
+		return vista;
+	}
+
 }

@@ -1,13 +1,11 @@
-<%-- 
-    Document   : index
-    Created on : 15-sep-2017, 22:45:00
-    Author     : Nicolas
---%>
 <%@ include file="/WEB-INF/views/include.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
+<%@page import="java.util.LinkedList"%>
+<%@page import="com.proyecto.transferObject.MenuTO"%>
+<%@page import="com.proyecto.transferObject.HorarioTO"%>
 <%@ include file="cabecera.jsp"%>
 <!-- HTML meta refresh URL redirection -->
 
@@ -55,46 +53,71 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
-							<c:if test="${not empty reservado}">
-								<script type="text/javascript">
-									toastr
-											.success("Menú reservado correctamente en el horario indicado!");
-								</script>
-							</c:if>
-							<c:if test="${not empty evaluacionAgregada}">
-								<script type="text/javascript">
-									toastr
-											.success("Evaluación agregada correctamente!");
-								</script>
-							</c:if>
+							<div align="center" class="page-header">
+								<h1>
+									<strong>Reservas</strong>
+								</h1>
+							</div>
 
-							<c:if test="${not empty noQuedanMenusParaEvaluar}">
-								<script type="text/javascript">
-									toastr
-											.warning("No quedan menus para evaluar");
+							<c:if test="${not empty NoHayAlmuerzos}">
+								<script>
+									toastr.warning("No quedan almuerzos");
 								</script>
 							</c:if>
 
+							<div align="center">
+								<table class="table table-condensed" style="width: 800px">
+									<thead>
+										<tr>
+
+											<th>Nombre Menú</th>
+											<th>Tipo</th>
+											<th>Precio</th>
+											<th>Fecha</th>
+											<th>Hora Inicio</th>
+											<th>Hora Fin</th>
+											<th>Editar/Eliminar</th>
 
 
-							<c:if test="${not empty NoHayMenuParaEvaluar}">
-								<script type="text/javascript">
-									toastr
-											.error("No tiene menús disponibles para evaluar");
-								</script>
-							</c:if>
 
-							<c:if test="${not empty noreservado}">
-								<script type="text/javascript">
-									toastr.error("Error al reservar menú");
-								</script>
-							</c:if>
+										</tr>
+									</thead>
 
-							<c:if test="${not empty NoTieneReservas}">
-								<script type="text/javascript">
-									toastr.error("No tiene reservas");
-								</script>
-							</c:if>
+									<%
+										LinkedList<MenuTO> list = (LinkedList<MenuTO>) request.getAttribute("datosMenuReservado");
+										LinkedList<HorarioTO> list2 = (LinkedList<HorarioTO>) request.getAttribute("datosHorarioReservado");
+
+										if (list != null && list2!=null)
+											for (int i = 0; i < list.size(); i++) {
+												MenuTO menu = list.get(i);
+												HorarioTO horario = list2.get(i);
+									%>
+									<tr>
+										<td><%=menu.getNombre()%></td>
+										<td><%=menu.getTipo()%></td>
+										<td><%=menu.getPrecio()%></td>
+										<td><%=menu.getFecha()%></td>
+										<td><%=horario.getHoraInicio()%></td>
+										<td><%=horario.getHoraFin()%></td>
+										<td><a class="blue" href="#"> <i
+												class="ace-icon fa fa-pencil bigger"> </i>
+										</a> &nbsp; <a class="red" href="#"> <i
+												class="ace-icon fa fa-trash bigger"> </i>
+										</a></td>
+
+
+									</tr>
+									<%
+										}
+										else {
+									%>
+									<h1>No hay datos</h1>
+									<%
+										}
+									%>
+
+								</table>
+							</div>
 
 							<!-- /.row -->
 							<!-- PAGE CONTENT ENDS -->

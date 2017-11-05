@@ -39,7 +39,7 @@
             </li>
 
             <li class="">
-                <a href="">
+                <a href="verReservas.htm">
                     <i class="menu-icon fa fa-caret-right"></i>
                    Ver Reservas
                 </a>
