@@ -47,14 +47,6 @@
                 <b class="arrow"></b>
             </li>
             
-             <li class="">
-                <a href="">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                   
-                </a>
-
-                <b class="arrow"></b>
-            </li>
         </ul>
     </li>
     
@@ -79,7 +71,7 @@
             </li>
 
             <li class="">
-                <a href="">
+                <a href="#">
                     <i class="menu-icon fa fa-caret-right"></i>
                     Mis Evaluaciones
                 </a>

@@ -14,6 +14,7 @@ import com.proyecto.persistence.HorarioDAO;
 import com.proyecto.persistence.MenuDAO;
 import com.proyecto.persistence.ReservaDAO;
 import com.proyecto.persistence.UsuarioDAO;
+import com.proyecto.transferObject.MenuTO;
 import com.proyecto.transferObject.UsuarioTO;
 
 @Controller
@@ -87,8 +88,42 @@ public class ReservaController {
 			vista.setViewName("verReservas");
 			vista.addObject("datosMenuReservado", reservaDAO.obtenerDatosReservaMenu(id));
 			vista.addObject("datosHorarioReservado", reservaDAO.obtenerDatosReservaHorario(id));
+			vista.addObject("datosReserva", reservaDAO.obtenerDatosReserva(id));
 		}
 
+		return vista;
+	}
+
+	@RequestMapping(value = "seleccionarCambiarMenu")
+	public ModelAndView cambiarMenu(ModelAndView vista, @RequestParam(value = "idMenuAnterior") int idMenuAnterior,
+			@RequestParam(value = "idReserva") int idReserva, @RequestParam(value = "idMenuNuevo") int idMenuNuevo,
+			@RequestParam(value="fecha") String fecha,
+			HttpSession sesion, HttpServletRequest request) {
+		sesion = request.getSession(true);
+		int idUsuario = (int) sesion.getAttribute("id");
+		ReservaDAO reservaDAO = new ReservaDAO();
+		MenuDAO menuDAO = new MenuDAO();
+		if (menuDAO.hayRaciones(idMenuNuevo) == 1) {
+			// hay raciones disponibles para el menu elegido
+			menuDAO.actualizaRacionesMenu(idMenuNuevo);
+			menuDAO.actualizarRacionesMenuAnterior(idMenuAnterior);
+			// actualizar reserva
+			reservaDAO.updateReserva(idMenuNuevo, idUsuario, idReserva);
+			vista.addObject("idMenu", idMenuNuevo);
+			vista.addObject("MenuCambiado", "Menu Cambiado Exitosamente");
+		} else {// No hay
+			vista.addObject("idMenu", idMenuAnterior);
+			vista.addObject("NoHayAlmuerzos", "No quedan Almuerzos");
+		}
+		vista.addObject("idReserva", idReserva);
+		MenuTO menuTO=new MenuTO();
+		
+		//fecha Menu
+		java.sql.Date date = java.sql.Date.valueOf(fecha);
+		menuTO.setFecha(date);
+		vista.addObject("fecha", date);
+		vista.addObject("listaMenu", menuDAO.obtieneMenu(menuTO));
+		vista.setViewName("verMenu2");
 		return vista;
 	}
 

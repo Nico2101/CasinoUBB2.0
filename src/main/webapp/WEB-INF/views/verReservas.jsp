@@ -6,6 +6,7 @@
 <%@page import="java.util.LinkedList"%>
 <%@page import="com.proyecto.transferObject.MenuTO"%>
 <%@page import="com.proyecto.transferObject.HorarioTO"%>
+<%@page import="com.proyecto.transferObject.ReservaTO"%>
 <%@ include file="cabecera.jsp"%>
 <!-- HTML meta refresh URL redirection -->
 
@@ -69,7 +70,7 @@
 								<table class="table table-condensed" style="width: 800px">
 									<thead>
 										<tr>
-
+											<th>ID Reserva</th>
 											<th>Nombre Menú</th>
 											<th>Tipo</th>
 											<th>Precio</th>
@@ -86,20 +87,26 @@
 									<%
 										LinkedList<MenuTO> list = (LinkedList<MenuTO>) request.getAttribute("datosMenuReservado");
 										LinkedList<HorarioTO> list2 = (LinkedList<HorarioTO>) request.getAttribute("datosHorarioReservado");
+										LinkedList<ReservaTO> list3 = (LinkedList<ReservaTO>) request.getAttribute("datosReserva");
 
-										if (list != null && list2!=null)
+										if (list != null && list2 != null)
 											for (int i = 0; i < list.size(); i++) {
 												MenuTO menu = list.get(i);
 												HorarioTO horario = list2.get(i);
+												ReservaTO reserva = list3.get(i);
 									%>
 									<tr>
+
+										<td><%=reserva.getId()%></td>
 										<td><%=menu.getNombre()%></td>
 										<td><%=menu.getTipo()%></td>
 										<td><%=menu.getPrecio()%></td>
 										<td><%=menu.getFecha()%></td>
 										<td><%=horario.getHoraInicio()%></td>
 										<td><%=horario.getHoraFin()%></td>
-										<td><a class="blue" href="#"> <i
+										<td><a class="blue" href="#"
+											onclick="datos('<%=reserva.getId()%>','<%=menu.getId()%>','<%=horario.getId()%>','<%=menu.getFecha()%>');"
+											data-toggle="modal" data-target="#modal-table"> <i
 												class="ace-icon fa fa-pencil bigger"> </i>
 										</a> &nbsp; <a class="red" href="#"> <i
 												class="ace-icon fa fa-trash bigger"> </i>
@@ -120,6 +127,53 @@
 							</div>
 
 							<!-- /.row -->
+
+							<div id="modal-table" class="modal fade" tabindex="-1">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header no-padding">
+											<div class="table-header">
+												<button type="button" class="close" data-dismiss="modal"
+													aria-hidden="true" onclick="borrarDatos();">
+													<span class="white">&times;</span>
+												</button>
+												Editar Reserva
+											</div>
+										</div>
+
+										<div class="modal-body">
+											<form class="form-horizontal" role="form">
+												<br>
+												<div align="center" class="page-header">
+													<h1>
+														<strong>¿Qué desea cambiar?</strong>
+													</h1>
+												</div>
+												<div align="center">
+													<a onclick="botonCambiarMenu();"><input class="btn"
+														value="Cambiar Menú" type="button"></a> <a
+														onclick="botonCambiarHorario();"><input class="btn"
+														value="Cambiar Horario" type="button"></a> <a
+														onclick="botonCambiarAmbos();"><input class="btn"
+														value="Ambos" type="button"></a>
+												</div>
+
+											</form>
+										</div>
+
+										<div class="modal-footer no-margin-top">
+											<button class="btn btn-sm btn-danger pull-left"
+												data-dismiss="modal">
+												<i class="ace-icon fa fa-times"></i> Cerrar
+											</button>
+
+
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
 							<!-- PAGE CONTENT ENDS -->
 							<!-- PAGE CONTENT ENDS -->
 						</div>
@@ -147,6 +201,41 @@
 
 	<%@ include file="scripts.jsp"%>
 </body>
+<script>
+	function datos(idReserva, idMenu, idHorario, fecha) {
+		console.log(idReserva);
+		localStorage.setItem('idReserva', idReserva);
+		localStorage.setItem('idMenu', idMenu);
+		localStorage.setItem('idHorario', idHorario);
+		localStorage.setItem('fecha', fecha);
+	}
 
+	function botonCambiarMenu() {
+		var idMenu = localStorage.getItem('idMenu');
+		var idHorario = localStorage.getItem('idHorario');
+		var fecha = localStorage.getItem('fecha');
+		var idReserva = localStorage.getItem('idReserva');
+		console.log(idReserva);
+
+		$.ajax({
+			type : 'GET',
+			url : "cambiarMenu.htm",
+			data : {
+				idMenu : idMenu,
+				idHorario : idHorario,
+				fecha : fecha
+			},
+			dataType : 'json',
+			success : function(data) {
+				console.log(data);
+				window.location = "obtenerMenu.htm?dateSelected=" + fecha
+						+ "&idMenu=" + idMenu+"&idReserva="+idReserva;
+			},
+			error : function(jqXHR, errorThrown) {
+				alert("Error");
+			}
+		});
+	}
+</script>
 
 </html>

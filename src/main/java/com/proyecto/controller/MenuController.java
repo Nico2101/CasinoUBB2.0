@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.proyecto.persistence.HorarioDAO;
@@ -273,6 +274,70 @@ public class MenuController {
 		}
 
 		return vista;
+
+	}
+	
+	@RequestMapping(value="cambiarMenu")
+	public @ResponseBody MenuTO cambiarMenu(int idMenu,int idHorario, String fecha) throws ParseException {
+		
+		MenuTO menuTO = null;
+		MenuDAO menuDAO=new MenuDAO();
+		if(idMenu>0 && idHorario>0) {
+			menuTO=new MenuTO();
+			java.sql.Date fecha2 = java.sql.Date.valueOf(fecha);
+			menuTO.setFecha(fecha2);
+			if(menuDAO.buscaMenu(menuTO)==1) {
+				menuTO=new MenuTO();
+				menuTO.setFecha(fecha2);
+			}
+			//Buscar Menu y listarlo en vista cambiarMenu
+			return menuTO;
+		}
+		return menuTO;
+	}
+	
+	@RequestMapping(value = "obtenerMenu", method = RequestMethod.GET)
+	public ModelAndView obtenerMenu(ModelAndView vista,
+			@RequestParam(value = "dateSelected", required = true) String date,@RequestParam(value = "idMenu", required = true) String idMenu,@RequestParam(value="idReserva") int idReserva, HttpSession sesion,
+			HttpServletRequest request) throws ParseException {
+
+		// Validar fechas
+		DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+		Date date1 = parser.parse(date);
+		Date fechaSistema = new Date();
+
+		sesion.removeAttribute("listaMenu");
+
+		if (date1.getDate() < fechaSistema.getDate() || date1.getMonth() < fechaSistema.getMonth()
+				|| date1.getYear() < fechaSistema.getYear()) {
+			vista.addObject("fechaAnterior", "fecha ingresada anterior a la fecha actual");
+			vista.setViewName("buscarMenu");
+			return vista;
+			// hasta aqui se valida fecha
+
+		} else {
+			java.sql.Date fecha = java.sql.Date.valueOf(date);
+
+			MenuDAO menuDAO = new MenuDAO();
+			MenuTO menuTO = new MenuTO();
+
+			menuTO.setFecha(fecha);
+			if (menuDAO.buscaMenu(menuTO) == 1) {
+				vista.addObject("listaMenu", menuDAO.obtieneMenu(menuTO));
+				vista.addObject("idMenu", idMenu);
+				vista.addObject("idReserva", idReserva);
+				sesion = request.getSession(true);
+				vista.addObject("fecha", fecha);
+				sesion.setAttribute("listaMenu", menuDAO.obtieneMenu(menuTO));
+				vista.setViewName("verMenu2");
+				return vista;
+			} else {
+				vista.addObject("NoHayMenu", "No Hay Menu");
+				vista.setViewName("buscarMenu");
+				return vista;
+			}
+
+		}
 
 	}
 
