@@ -153,9 +153,7 @@
 													<a onclick="botonCambiarMenu();"><input class="btn"
 														value="Cambiar Menú" type="button"></a> <a
 														onclick="botonCambiarHorario();"><input class="btn"
-														value="Cambiar Horario" type="button"></a> <a
-														onclick="botonCambiarAmbos();"><input class="btn"
-														value="Ambos" type="button"></a>
+														value="Cambiar Horario" type="button"></a>
 												</div>
 
 											</form>
@@ -229,12 +227,22 @@
 			success : function(data) {
 				console.log(data);
 				window.location = "obtenerMenu.htm?dateSelected=" + fecha
-						+ "&idMenu=" + idMenu+"&idReserva="+idReserva;
+						+ "&idMenu=" + idMenu + "&idReserva=" + idReserva;
 			},
 			error : function(jqXHR, errorThrown) {
 				alert("Error");
 			}
 		});
+	}
+
+	function botonCambiarHorario() {
+		var idMenu = localStorage.getItem('idMenu');
+		var idHorario = localStorage.getItem('idHorario');
+		var fecha = localStorage.getItem('fecha');
+		var idReserva = localStorage.getItem('idReserva');
+
+		window.location = "cambiarHorario.htm?idMenu=" + idMenu + "&idHorario="
+				+ idHorario + "&idReserva=" + idReserva;
 	}
 </script>
 

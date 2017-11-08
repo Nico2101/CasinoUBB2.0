@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <%@ include file="cabecera.jsp"%>
 <!-- HTML meta refresh URL redirection -->
 
@@ -19,12 +20,6 @@
 	</div>
 
 	<div class="main-container ace-save-state" id="main-container">
-		<script type="text/javascript">
-			try {
-				ace.settings.loadState('main-container')
-			} catch (e) {
-			}
-		</script>
 
 		<div id="sidebar"
 			class="sidebar                  responsive                    ace-save-state">
@@ -55,79 +50,77 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
-							<div align="center" class="page-header">
-								<h1>
-									<strong>Menú</strong>
-								</h1>
-							</div>
 
-							<c:if test="${not empty NoHayAlmuerzos}">
-								<script>
-									toastr.warning("No quedan almuerzos");
-								</script>
-							</c:if>
-							
-							<c:if test="${not empty MenuCambiado}">
-								<script>
-									toastr.success("Menu Cambiado Exitosamente!");
-								</script>
-							</c:if>
-							
-							<c:if test="${not empty sinSaldo}">
+							<c:if test="${not empty NoHayAlmuerzosEnHorario}">
 								<script>
 									toastr
-											.error("No tiene saldo suficiente para comprar almuerzos, dirijase a caja para abonar");
+											.warning("No quedan almuerzos en el horario indicado");
 								</script>
 							</c:if>
-
+							
+							<c:if test="${not empty HorarioCambiado}">
+								<script>
+									toastr
+											.success("Horario Cambiado Correctamente!");
+								</script>
+							</c:if>
 							
 
+
+							<div align="center" class="page-header">
+								<h1>
+									<strong>Horario Disponible</strong>
+								</h1>
+							</div>
+							<br>
+
 							<div align="center">
-								<table class="table table-condensed" style="width: 800px">
+								<table class="table table-condensed" style="width: 1000px">
 									<thead>
 										<tr>
+											<th>ID Reserva</th>
 											<th>ID Menú</th>
-											<th>Nombre</th>
-											<th>Tipo</th>
-											<th>Precio</th>
-											<th>Raciones Restantes</th>
-											<th>Fecha</th>
+											<th>Menú</th>
+											<th>Hora Inicio</th>
+											<th>Hora Fin</th>
+											<th>Raciones Disponibles</th>
 											<th></th>
-
 										</tr>
 									</thead>
 
-									<c:forEach var="menu" items="${listaMenu}">
-										<c:if test="${idMenu==menu.id}">
+									<c:forEach var="horario" items="${horarioDisponible}">
+
+										<c:if test="${idHorario==horario.id}">
 											<tr bgcolor="#00FFFF">
-												<td><c:out value="${menu.id}"></c:out></td>
+												<td>${idReserva}</td>
+												<td>${menu.id}</td>
 												<td><c:out value="${menu.nombre}"></c:out></td>
-												<td><c:out value="${menu.tipo}"></c:out></td>
-												<td><c:out value="${menu.precio}"></c:out></td>
-												<td><c:out value="${menu.cantRaciones}"></c:out></td>
-												<td><c:out value="${menu.fecha}"></c:out></td>
-												<td><strong>Menu Actualmente Reservado</strong></td>
+												<td><c:out value="${horario.horaInicio}"></c:out></td>
+												<td><c:out value="${horario.horaFin}"></c:out></td>
+												<td><c:out value="${horario.cantMaxRaciones}"></c:out></td>
+												<td><strong>Horario Actualmente Reservado</strong></td>
+											</tr>
+										</c:if>
+										<c:if test="${idHorario!=horario.id}">
+											<tr>
+												<td>${idReserva}</td>
+												<td>${menu.id}</td>
+												<td><c:out value="${menu.nombre}"></c:out></td>
+												<td><c:out value="${horario.horaInicio}"></c:out></td>
+												<td><c:out value="${horario.horaFin}"></c:out></td>
+												<td><c:out value="${horario.cantMaxRaciones}"></c:out></td>
+												<td><a
+													href="actualizarHorarioMenu.htm?idReserva=${idReserva}&id_menu=${menu.id}&idHorarioSeleccionado=${idHorario}&idHorarioNuevo=${horario.id}&cantRaciones=${horario.cantMaxRaciones}"><input
+														class="btn btn-primary btn-sm" type="button"
+														value="Seleccionar nuevo horario" /></a></td>
 											</tr>
 										</c:if>
 
-										<c:if test="${idMenu!=menu.id}">
-											<tr>
-												<td><c:out value="${menu.id}"></c:out></td>
-												<td><c:out value="${menu.nombre}"></c:out></td>
-												<td><c:out value="${menu.tipo}"></c:out></td>
-												<td><c:out value="${menu.precio}"></c:out></td>
-												<td><c:out value="${menu.cantRaciones}"></c:out></td>
-												<td><c:out value="${menu.fecha}"></c:out></td>
-												<td><a
-													href="seleccionarCambiarMenu.htm?fecha=${fecha}&idReserva=${idReserva}&idMenuAnterior=${idMenu}&idMenuNuevo=${menu.id}&precioNuevoMenu=${menu.precio}"><input
-														class="btn btn-primary btn-sm" type="button"
-														value="Seleccionar Menú" /></a></td>
-											</tr>
-										</c:if>
 									</c:forEach>
 
 								</table>
 							</div>
+
 
 							<!-- /.row -->
 							<!-- PAGE CONTENT ENDS -->

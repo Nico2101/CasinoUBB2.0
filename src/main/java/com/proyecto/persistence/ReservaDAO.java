@@ -34,12 +34,26 @@ public class ReservaDAO {
 	private static final String DATOS_RESERVA_HORARIO = "SELECT h.id,h.horaInicio,h.horaFin from reserva r JOIN horario h on r.idhorario=h.id JOIN menu m on r.idmenu=m.id where r.idusuario=? and m.fecha>=?";
 	private static final String UPDATE_RESERVA="update reserva set idmenu=? where idusuario=? and id=?";
 	private static final String DATOS_RESERVA="select * from reserva where idusuario=? and fecha>=?";
+	private static final String UPDATE_ID_HORARIO="update reserva set idhorario=? where id=?";
 	
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
+	
+	public void updateIdHorario(int idReserva, int idHorario) {
+		Connection conn=null;
+		try {
+			conn=getConnection();
+			PreparedStatement ps=conn.prepareStatement(UPDATE_ID_HORARIO);
+			ps.setInt(1, idHorario);
+			ps.setInt(2, idReserva);
+			ps.executeUpdate();
+		}catch(SQLException e) {
+			
+		}
+	}
 	
 	public LinkedList<ReservaTO> obtenerDatosReserva(int idUsuario) {
 		Connection conn = null;
