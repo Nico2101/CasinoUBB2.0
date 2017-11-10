@@ -61,6 +61,19 @@
 											.success("Menú actualizado correctamente!");
 								</script>
 							</c:if>
+							
+							<c:if test="${not empty RacionesActualizadas }">
+								<script type="text/javascript">
+									toastr
+											.success("Raciones actualizadas correctamente!");
+								</script>
+							</c:if>
+							
+							<c:if test="${not empty NoActualizadasRaciones}">
+								<script type="text/javascript">
+									toastr.error("Error al actualizar las raciones");
+								</script>
+							</c:if>
 
 
 							<!-- /.row -->

@@ -78,7 +78,7 @@
 
 		</ul></li>
 
-	<li class=""><a href="#" class="dropdown-toggle"> <i
+	<li class=""><a href="liberarCupos.htm" > <i
 			class="menu-icon glyphicon glyphicon-ok"></i> <span class="menu-text">
 				Liberar Cupos </span>
 
