@@ -14,10 +14,10 @@ public class HorarioController {
 		
 		HorarioDAO HorarioDAO=new HorarioDAO();
 		if(HorarioDAO.actualizarRaciones()) {
-			vista.addObject("RacionesActualizadas", "Raciones actualizadas correctamente! ");
+			vista.addObject("CuposActualizados", "Raciones actualizadas correctamente! ");
 			vista.setViewName("indexAdministrador");
 		}  else {
-			vista.addObject("NoActualizadasRaciones", "Error al actualizar las raciones");
+			vista.addObject("CuposNoActualizados", "Error al actualizar las raciones");
 			vista.setViewName("indexAdministrador");
 		}
 		

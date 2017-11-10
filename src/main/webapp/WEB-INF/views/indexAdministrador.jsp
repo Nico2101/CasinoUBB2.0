@@ -62,16 +62,16 @@
 								</script>
 							</c:if>
 							
-							<c:if test="${not empty RacionesActualizadas }">
+							<c:if test="${not empty CuposActualizados }">
 								<script type="text/javascript">
 									toastr
-											.success("Raciones actualizadas correctamente!");
+											.success("Cupos actualizados correctamente!");
 								</script>
 							</c:if>
 							
-							<c:if test="${not empty NoActualizadasRaciones}">
+							<c:if test="${not empty CuposNoActualizados}">
 								<script type="text/javascript">
-									toastr.error("Error al actualizar las raciones");
+									toastr.error("Error al actualizar los Cupos");
 								</script>
 							</c:if>
 
