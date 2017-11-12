@@ -61,17 +61,25 @@
 											.success("Menú actualizado correctamente!");
 								</script>
 							</c:if>
-							
+
+							<c:if test="${not empty NoHayValoraciones }">
+								<script type="text/javascript">
+									toastr
+											.warning("No hay evaluaciones de usuarios");
+								</script>
+							</c:if>
+
 							<c:if test="${not empty CuposActualizados }">
 								<script type="text/javascript">
 									toastr
 											.success("Cupos actualizados correctamente!");
 								</script>
 							</c:if>
-							
+
 							<c:if test="${not empty CuposNoActualizados}">
 								<script type="text/javascript">
-									toastr.error("Error al actualizar los Cupos");
+									toastr
+											.error("Error al actualizar los Cupos");
 								</script>
 							</c:if>
 
@@ -101,10 +109,10 @@
 														for="form-field-1"> Rut Usuario </label>
 
 													<div class="col-sm-9">
-														<input id="rutUsuario" name="rutUsuario" type="text" id="form-field-1"
-															placeholder="" style="width: 300px"
+														<input id="rutUsuario" name="rutUsuario" type="text"
+															id="form-field-1" placeholder="" style="width: 300px"
 															class="col-xs-10 col-sm-5" required
-															oninput="checkRut(this)" >
+															oninput="checkRut(this)">
 													</div>
 
 													<br> <br> <label
@@ -112,9 +120,9 @@
 														for="form-field-1"> Saldo </label>
 
 													<div class="col-sm-9">
-														<input id="saldo" name="saldo" type="number" id="form-field-1"
-															placeholder="" style="width: 300px"
-															class="col-xs-10 col-sm-5" required >
+														<input id="saldo" name="saldo" type="number"
+															id="form-field-1" placeholder="" style="width: 300px"
+															class="col-xs-10 col-sm-5" required>
 													</div>
 												</div>
 
@@ -168,39 +176,42 @@
 </body>
 
 <script>
-	function borrarDatos(){
+	function borrarDatos() {
 		$('#rutUsuario').val("");
 		$('#saldo').val("");
 	}
 
 	function aumentarSaldo() {
 
-		var rut=$('#rutUsuario').val();
-		var saldo=$('#saldo').val();
-		
-		$.ajax({
-  			 type:'GET',
-  			 url:"agregarSaldo.htm",
-  			 data:{
-  				 rutUsuario:rut,
-  				 saldo:saldo
-  			 },
-  		     dataType:'json',
-  		     success:function(data){
-  		    	 if(data.rut==null){
-  		    		 toastr.error("El rut indicado no se encuentra en la base de datos");
-  		    	 }else{
-  		    		$('#modal-table').modal('hide');
-  		    		toastr.success("Se ha cargado el monto de "+saldo+ " pesos a la cuenta");
-  		    		$('#rutUsuario').val("");
-  		    		$('#saldo').val("");
-  		    	 }
-  		     },
-  		     error:function(jqXHR,errorThrown){
-  		    	 alert("Error");
-  		     }
-  		 });
-		
+		var rut = $('#rutUsuario').val();
+		var saldo = $('#saldo').val();
+
+		$
+				.ajax({
+					type : 'GET',
+					url : "agregarSaldo.htm",
+					data : {
+						rutUsuario : rut,
+						saldo : saldo
+					},
+					dataType : 'json',
+					success : function(data) {
+						if (data.rut == null) {
+							toastr
+									.error("El rut indicado no se encuentra en la base de datos");
+						} else {
+							$('#modal-table').modal('hide');
+							toastr.success("Se ha cargado el monto de " + saldo
+									+ " pesos a la cuenta");
+							$('#rutUsuario').val("");
+							$('#saldo').val("");
+						}
+					},
+					error : function(jqXHR, errorThrown) {
+						alert("Error");
+					}
+				});
+
 	}
 </script>
 <script>

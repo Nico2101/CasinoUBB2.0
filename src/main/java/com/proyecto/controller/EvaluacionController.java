@@ -101,8 +101,38 @@ public class EvaluacionController {
 			vista.setViewName("menusComprados");
 			vista.addObject("errorAlValorar", "Se ha producido un error al valorar el menu");
 		}
-		
+
 		sesion.removeAttribute("idMenuEvaluado");
+		return vista;
+	}
+
+	@RequestMapping(value = "verPromedioValoraciones")
+	public ModelAndView verPromedioValoraciones(ModelAndView vista) {
+		EvaluacionDAO evaluacionDAO = new EvaluacionDAO();
+		LinkedList<EvaluacionTO> lista = new LinkedList<>();
+		MenuDAO menuDAO = new MenuDAO();
+		MenuTO menuTO = new MenuTO();
+		LinkedList<MenuTO> listaMenu = new LinkedList<>();
+		if (!evaluacionDAO.promedioValoracion().isEmpty()) {
+			lista = evaluacionDAO.promedioValoracion();
+			// paso a la vista el promedio de las valoraciones de los menús
+			vista.addObject("promedio", lista);
+
+			// ahora buscar la info del menu para mostrarla
+			for (int i = 0; i < lista.size(); i++) {
+				menuTO.setId(lista.get(i).getIdMenu());
+				listaMenu.add(menuDAO.buscarMenu(menuTO));
+
+			}
+
+			vista.addObject("listaMenu", listaMenu);
+			vista.setViewName("verPromedioValoraciones");
+			
+		} else {
+			vista.setViewName("indexAdministrador");
+			vista.addObject("NoHayValoraciones", "No existen evaluaciones de usuarios");
+		}
+
 		return vista;
 	}
 }

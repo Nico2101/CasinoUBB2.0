@@ -38,7 +38,7 @@
 					class="menu-icon fa fa-caret-right"></i> Ver Valoraciones
 			</a> <b class="arrow"></b></li>
 
-			<li class=""><a href="#"> <i
+			<li class=""><a href="verPromedioValoraciones.htm"> <i
 					class="menu-icon fa fa-caret-right"></i> Promedio Valoraciones
 			</a> <b class="arrow"></b></li>
 

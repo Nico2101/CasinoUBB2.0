@@ -29,7 +29,7 @@ import com.proyecto.transferObject.ReservaTO;
 public class ReservaDAO {
 
 	private static final String RESERVAR = "insert into reserva (fecha,idusuario,idmenu,idhorario) values(?,?,?,?)";
-	private static final String BUSCA_MENUS = "select *,count(*) as cont from reserva r WHERE r.idusuario=? and NOT EXISTS (select * from evaluacion e where r.idmenu = e.idmenu) group by r.idmenu";
+	private static final String BUSCA_MENUS = "select *,count(*) as cont from reserva r WHERE r.idusuario=? and NOT EXISTS (select * from evaluacion e where r.idmenu = e.idmenu and e.idusuario=r.idusuario) group by r.idmenu";
 	private static final String DATOS_RESERVA_MENU = "SELECT m.id,m.nombre, m.precio,m.tipo, m.fecha from reserva r JOIN menu m on r.idmenu=m.id WHERE r.idusuario=? and m.fecha>=?";
 	private static final String DATOS_RESERVA_HORARIO = "SELECT h.id,h.horaInicio,h.horaFin from reserva r JOIN horario h on r.idhorario=h.id JOIN menu m on r.idmenu=m.id where r.idusuario=? and m.fecha>=?";
 	private static final String UPDATE_RESERVA="update reserva set idmenu=? where idusuario=? and id=?";
