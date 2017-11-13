@@ -66,6 +66,15 @@
 								</script>
 							</c:if>
 
+
+							<c:if test="${not empty ReservaEliminada}">
+								<script type="text/javascript">
+									toastr
+											.success("Reserva Eliminada Correctamente!");
+								</script>
+							</c:if>
+
+
 							<div align="center">
 								<table class="table table-condensed" style="width: 800px">
 									<thead>
@@ -108,7 +117,9 @@
 											onclick="datos('<%=reserva.getId()%>','<%=menu.getId()%>','<%=horario.getId()%>','<%=menu.getFecha()%>');"
 											data-toggle="modal" data-target="#modal-table"> <i
 												class="ace-icon fa fa-pencil bigger"> </i>
-										</a> &nbsp; <a class="red" href="#"> <i
+										</a> &nbsp; <a class="red" href="#"
+											onclick="datos('<%=reserva.getId()%>','<%=menu.getId()%>','<%=horario.getId()%>','<%=menu.getFecha()%>');"
+											data-toggle="modal" data-target="#modal-tableDelete"> <i
 												class="ace-icon fa fa-trash bigger"> </i>
 										</a></td>
 
@@ -172,32 +183,73 @@
 								</div>
 								<!-- /.modal-dialog -->
 							</div>
-							<!-- PAGE CONTENT ENDS -->
-							<!-- PAGE CONTENT ENDS -->
+
+
+							<div id="modal-tableDelete" class="modal fade" tabindex="-1">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header no-padding">
+											<div class="table-header">
+												<button type="button" class="close" data-dismiss="modal"
+													aria-hidden="true" onclick="borrarDatos();">
+													<span class="white">&times;</span>
+												</button>
+												Eliminar Reserva
+											</div>
+										</div>
+
+										<div class="modal-body">
+											<form class="form-horizontal" role="form">
+												<br>
+												<div align="center" class="page-header">
+													<h1>
+														<strong>¿Seguro que desea eliminar la reserva?</strong>
+													</h1>
+												</div>
+												<div align="center">
+													<a onclick="botonSi();"><input class="btn" value="Sí"
+														type="button"></a> &nbsp; &nbsp; &nbsp;
+													<button class="btn" data-dismiss="modal">No</button>
+												</div>
+
+											</form>
+										</div>
+
+										<div class="modal-footer no-margin-top">
+											<button class="btn btn-sm btn-danger pull-right"
+												data-dismiss="modal">
+												<i class="ace-icon fa fa-times"></i> Cerrar
+											</button>
+
+
+										</div>
+
+										<!-- PAGE CONTENT ENDS -->
+										<!-- PAGE CONTENT ENDS -->
+									</div>
+									<!-- /.col -->
+								</div>
+								<!-- /.row -->
+							</div>
+							<!-- /.page-content -->
 						</div>
-						<!-- /.col -->
 					</div>
-					<!-- /.row -->
+					<!-- /.main-content -->
+
+					<div class="footer">
+						<%@ include file="pieDePagina.jsp"%>
+					</div>
+
+					<a href="#" id="btn-scroll-up"
+						class="btn-scroll-up btn btn-sm btn-inverse"> <i
+						class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+					</a>
 				</div>
-				<!-- /.page-content -->
-			</div>
-		</div>
-		<!-- /.main-content -->
-
-		<div class="footer">
-			<%@ include file="pieDePagina.jsp"%>
-		</div>
-
-		<a href="#" id="btn-scroll-up"
-			class="btn-scroll-up btn btn-sm btn-inverse"> <i
-			class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-		</a>
-	</div>
-	<!-- /.main-container -->
+				<!-- /.main-container -->
 
 
 
-	<%@ include file="scripts.jsp"%>
+				<%@ include file="scripts.jsp"%>
 </body>
 <script>
 	function datos(idReserva, idMenu, idHorario, fecha) {
@@ -243,6 +295,18 @@
 
 		window.location = "cambiarHorario.htm?idMenu=" + idMenu + "&idHorario="
 				+ idHorario + "&idReserva=" + idReserva;
+	}
+
+	function botonSi() {
+
+		var idMenu = localStorage.getItem('idMenu');
+		var idHorario = localStorage.getItem('idHorario');
+		var idReserva = localStorage.getItem('idReserva');
+		console.log(idMenu);
+		console.log(idHorario);
+		console.log(idReserva);
+		window.location = "eliminarReserva.htm?idMenu=" + idMenu
+				+ "&idHorario=" + idHorario + "&idReserva=" + idReserva;
 	}
 </script>
 

@@ -17,6 +17,7 @@ import com.proyecto.persistence.ReservaDAO;
 import com.proyecto.persistence.UsuarioDAO;
 import com.proyecto.transferObject.HorarioTO;
 import com.proyecto.transferObject.MenuTO;
+import com.proyecto.transferObject.ReservaTO;
 import com.proyecto.transferObject.UsuarioTO;
 
 @Controller
@@ -230,6 +231,46 @@ public class ReservaController {
 
 		return vista;
 
+	}
+
+	@RequestMapping(value = "eliminarReserva")
+	public ModelAndView eliminarReserva(HttpServletRequest request, ModelAndView vista,
+			@RequestParam(value = "idMenu") int idMenu, @RequestParam(value = "idReserva") int idReserva,
+			@RequestParam(value = "idHorario") int idHorario, HttpSession sesion) {
+
+		ReservaTO reservaTO = new ReservaTO();
+		HorarioDAO horarioDAO = new HorarioDAO();
+		MenuDAO menuDAO = new MenuDAO();
+		ReservaDAO reservaDAO = new ReservaDAO();
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+		sesion = request.getSession(true);
+		int id = (int) sesion.getAttribute("id");
+
+		reservaTO.setId(idReserva);
+		horarioDAO.actualizaRacionesHorarioAntiguo(idHorario);
+		menuDAO.actualizarRacionesMenuAnterior(idMenu);
+		reservaDAO.eliminaReserva(idMenu, idHorario, idReserva);
+
+		// obtener el valor del precio del amuerzo
+		int precio = menuDAO.getPrecio(idMenu);
+
+		// sumar el precio del almuerzo al saldo del usuario
+		usuarioDAO.updateSaldoEliminarReserva(id, precio);
+
+		if (reservaDAO.obtenerDatosReservaHorario(id).isEmpty()) {
+			vista.setViewName("indexUsuario");
+			vista.addObject("NoTieneMasReservas", "No tiene reservas");
+			vista.addObject("ReservaEliminada", "Reserva eliminada correctamente");
+		} else {
+			vista.setViewName("verReservas");
+			vista.addObject("datosMenuReservado", reservaDAO.obtenerDatosReservaMenu(id));
+			vista.addObject("datosHorarioReservado", reservaDAO.obtenerDatosReservaHorario(id));
+			vista.addObject("datosReserva", reservaDAO.obtenerDatosReserva(id));
+			vista.addObject("ReservaEliminada", "Reserva eliminada correctamente");
+		}
+
+		return vista;
 	}
 
 }

@@ -61,6 +61,21 @@
 											.success("Menú reservado correctamente en el horario indicado!");
 								</script>
 							</c:if>
+
+							<c:if test="${not empty ReservaEliminada}">
+								<script type="text/javascript">
+									toastr
+											.success("Reserva Eliminada Correctamente!");
+								</script>
+							</c:if>
+							
+							<c:if test="${not empty NoTieneMasReservas}">
+								<script type="text/javascript">
+									toastr
+											.warning("No tiene mas reservas");
+								</script>
+							</c:if>
+
 							<c:if test="${not empty evaluacionAgregada}">
 								<script type="text/javascript">
 									toastr

@@ -35,12 +35,29 @@ public class ReservaDAO {
 	private static final String UPDATE_RESERVA="update reserva set idmenu=? where idusuario=? and id=?";
 	private static final String DATOS_RESERVA="select * from reserva where idusuario=? and fecha>=?";
 	private static final String UPDATE_ID_HORARIO="update reserva set idhorario=? where id=?";
+	private static final String ELIMINA_RESERVA="DELETE from reserva where idmenu=? and idhorario=? and id=?";
+
 	
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
+	
+	public void eliminaReserva( int idmenu, int idhorario,int idreserva) {
+		Connection conn=null;
+		try {
+			conn=getConnection();
+			PreparedStatement ps=conn.prepareStatement(ELIMINA_RESERVA);
+			ps.setInt(1, idmenu);
+			ps.setInt(2, idhorario);
+			ps.setInt(3, idreserva);
+			ps.executeUpdate();
+		}catch(SQLException e) {
+			
+		}
+	}
+
 	
 	public void updateIdHorario(int idReserva, int idHorario) {
 		Connection conn=null;
