@@ -7,7 +7,16 @@ public class EvaluacionTO {
 	private String comentario;
 	private int idMenu;
 	private int idUsuario;
+    private String menu;
+    
+	public String getMenu() {
+		return menu;
+	}
 
+	public void setMenu(String menu) {
+		this.menu = menu;
+	}
+    
 	public int getId() {
 		return id;
 	}
