@@ -184,4 +184,20 @@ public class EvaluacionController {
 	    vista.addObject("lista", dao.obtenerEvaluaciones(idU));
 		return vista;
 	}
+	
+	
+	@RequestMapping(value = "eliminarEva", method = RequestMethod.GET)
+	public ModelAndView elimina(ModelAndView vista,HttpSession sesion,HttpServletRequest request,
+			@RequestParam(value = "id", required = true) int id) throws SQLException {
+		EvaluacionDAO dao = new EvaluacionDAO();
+		EvaluacionTO to = new EvaluacionTO();
+		to.setId(id);
+		dao.eliminaEvaluacion(to);
+		
+		sesion = request.getSession(true);
+		int idU = (int) sesion.getAttribute("id");
+	    vista.setViewName("verEvaluaciones");
+	    vista.addObject("lista", dao.obtenerEvaluaciones(idU));
+		return vista;
+	}
 }

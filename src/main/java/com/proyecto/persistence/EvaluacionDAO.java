@@ -19,7 +19,8 @@ public class EvaluacionDAO {
     private static final String VER_EVALUACIONES ="SELECT evaluacion.id,valoracion,comentario,nombre FROM `evaluacion` JOIN `menu` ON(evaluacion.idmenu=MENU.id) WHERE idusuario=?";
 	private static final String BUSCA_EV="select id,valoracion,comentario from evaluacion where id=?";
     private static final String EDIT_EV="update evaluacion set valoracion=?, comentario=? where id=?";
-	
+	private static final String ELIMINA_EVA="DELETE from evaluacion where id=?";
+    
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
@@ -117,6 +118,18 @@ public class EvaluacionDAO {
 			ps.setInt(3, to.getId());
 			ps.executeUpdate();
 			
+		} catch (SQLException e) {
+
+		}
+	}
+	
+	public void eliminaEvaluacion(EvaluacionTO evaluacion) {
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(ELIMINA_EVA);
+			ps.setInt(1, evaluacion.getId());
+			ps.executeUpdate();
 		} catch (SQLException e) {
 
 		}

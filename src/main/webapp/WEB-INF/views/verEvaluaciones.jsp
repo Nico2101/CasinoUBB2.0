@@ -109,9 +109,9 @@
 											
 											> <i
 												class="ace-icon fa fa-pencil bigger"> </i>
-										</a> &nbsp; <a class="red" href="#"
-											onclick="datos('<%=task.getId()%>');"
-											data-toggle="modal" data-target="#modal-tableDelete"> <i
+										</a> &nbsp; <a class="red" href="eliminarEva.htm?id=<%=task.getId()%>"
+											onclick="return confirm('¿Está seguro que desea eliminar la evaluación con ID:  <%=task.getId()%>?');"
+											> <i
 												class="ace-icon fa fa-trash bigger"> </i>
 										</a></td>
 
