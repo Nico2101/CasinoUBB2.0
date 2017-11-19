@@ -71,7 +71,7 @@
             </li>
 
             <li class="">
-                <a href="#">
+                <a href="verEvaluaciones.htm">
                     <i class="menu-icon fa fa-caret-right"></i>
                     Mis Evaluaciones
                 </a>

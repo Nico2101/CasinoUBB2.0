@@ -1,6 +1,9 @@
 package com.proyecto.controller;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.LinkedList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -133,6 +136,68 @@ public class EvaluacionController {
 			vista.addObject("NoHayValoraciones", "No existen evaluaciones de usuarios");
 		}
 
+		return vista;
+	}
+	@RequestMapping(value = "verEvaluaciones")
+	public ModelAndView verEvaluaciones(ModelAndView vista, HttpSession sesion, HttpServletRequest request) throws SQLException {
+		EvaluacionDAO dao = new EvaluacionDAO();
+		sesion = request.getSession(true);
+		int id = (int) sesion.getAttribute("id");
+		//int id= 2;
+	    vista.setViewName("verEvaluaciones");
+	    vista.addObject("lista", dao.obtenerEvaluaciones(id));
+		
+		return vista;
+	}
+	
+	
+
+	@RequestMapping(value = "editarEvaluacion", method = RequestMethod.GET)
+	public ModelAndView buscaEva(ModelAndView vista,
+			@RequestParam(value = "id", required = true) int id) throws ParseException {
+		EvaluacionDAO dao = new EvaluacionDAO();
+	    EvaluacionTO to = new EvaluacionTO();
+	    to.setId(id);
+	    
+		vista.addObject("editEva", dao.obtieneE(to));
+		vista.setViewName("editarEvaluacion2");
+		return vista;
+	}
+	
+	@RequestMapping(value = "actualizarEvaluacion", method = RequestMethod.GET)
+	public ModelAndView actualiza(ModelAndView vista,HttpSession sesion,HttpServletRequest request,
+			@RequestParam(value = "id", required = true) int id,
+			@RequestParam(value = "score") float score,
+			@RequestParam(value="comentario",required=true)String comentario) throws ParseException, SQLException {
+		
+		EvaluacionDAO dao = new EvaluacionDAO();
+		EvaluacionTO to = new EvaluacionTO();
+		to.setId(id);
+		to.setComentario(comentario);
+		to.setValoracion(score);
+		
+		dao.actualizaEva(to);
+		
+		sesion = request.getSession(true);
+		int idU = (int) sesion.getAttribute("id");
+	    vista.setViewName("verEvaluaciones");
+	    vista.addObject("lista", dao.obtenerEvaluaciones(idU));
+		return vista;
+	}
+	
+	
+	@RequestMapping(value = "eliminarEva", method = RequestMethod.GET)
+	public ModelAndView elimina(ModelAndView vista,HttpSession sesion,HttpServletRequest request,
+			@RequestParam(value = "id", required = true) int id) throws SQLException {
+		EvaluacionDAO dao = new EvaluacionDAO();
+		EvaluacionTO to = new EvaluacionTO();
+		to.setId(id);
+		dao.eliminaEvaluacion(to);
+		
+		sesion = request.getSession(true);
+		int idU = (int) sesion.getAttribute("id");
+	    vista.setViewName("verEvaluaciones");
+	    vista.addObject("lista", dao.obtenerEvaluaciones(idU));
 		return vista;
 	}
 }
