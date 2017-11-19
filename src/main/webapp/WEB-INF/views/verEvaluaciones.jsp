@@ -81,9 +81,9 @@
 									<thead>
 										<tr>
 											<th>ID Evaluacion</th>
+											<th>Menu</th>
 											<th>Valoración</th>
 											<th>Comentario</th>
-											<th>Menu</th>
 											<th>Editar/Eliminar</th>
 
 
@@ -94,25 +94,23 @@
 									<%
 										LinkedList<EvaluacionTO> list = (LinkedList<EvaluacionTO>) request.getAttribute("lista");
 
-
-				                    if(list != null)
-				                        for (int i = 0; i < list.size(); i++) {
-				                            EvaluacionTO task = list.get(i);
+										if (list != null)
+											for (int i = 0; i < list.size(); i++) {
+												EvaluacionTO task = list.get(i);
 									%>
 									<tr>
 
 										<td><%=task.getId()%></td>
+										<td><%=task.getMenu()%></td>
 										<td><%=task.getValoracion()%></td>
 										<td><%=task.getComentario()%></td>
-										<td><%=task.getMenu()%></td>
-										<td><a class="blue" href="editarEvaluacion.htm?id=<%=task.getId()%>"
-											
-											> <i
+										<td><a class="blue"
+											href="editarEvaluacion.htm?id=<%=task.getId()%>"> <i
 												class="ace-icon fa fa-pencil bigger"> </i>
-										</a> &nbsp; <a class="red" href="eliminarEva.htm?id=<%=task.getId()%>"
-											onclick="return confirm('¿Está seguro que desea eliminar la evaluación con ID:  <%=task.getId()%>?');"
-											> <i
-												class="ace-icon fa fa-trash bigger"> </i>
+										</a> &nbsp; <a class="red"
+											href="eliminarEva.htm?id=<%=task.getId()%>"
+											onclick="return confirm('¿Está seguro que desea eliminar la evaluación con ID:  <%=task.getId()%>?');">
+												<i class="ace-icon fa fa-trash bigger"> </i>
 										</a></td>
 
 
@@ -131,172 +129,27 @@
 
 							<!-- /.row -->
 
-							<div id="modal-table" class="modal fade" tabindex="-1">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header no-padding">
-											<div class="table-header">
-												<button type="button" class="close" data-dismiss="modal"
-													aria-hidden="true" onclick="borrarDatos();">
-													<span class="white">&times;</span>
-												</button>
-												Editar Reserva
-											</div>
-										</div>
-
-										<div class="modal-body">
-											<form class="form-horizontal" role="form">
-												<br>
-												<div align="center" class="page-header">
-													<h1>
-														<strong>¿Qué desea cambiar?</strong>
-													</h1>
-												</div>
-												<div align="center">
-													<a onclick="botonCambiarMenu();"><input class="btn"
-														value="Cambiar Menú" type="button"></a> <a
-														onclick="botonCambiarHorario();"><input class="btn"
-														value="Cambiar Horario" type="button"></a>
-												</div>
-
-											</form>
-										</div>
-
-										<div class="modal-footer no-margin-top">
-											<button class="btn btn-sm btn-danger pull-left"
-												data-dismiss="modal">
-												<i class="ace-icon fa fa-times"></i> Cerrar
-											</button>
-
-
-										</div>
-									</div>
-									<!-- /.modal-content -->
-								</div>
-								<!-- /.modal-dialog -->
-							</div>
-
-
-							<div id="modal-tableDelete" class="modal fade" tabindex="-1">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header no-padding">
-											<div class="table-header">
-												<button type="button" class="close" data-dismiss="modal"
-													aria-hidden="true" onclick="borrarDatos();">
-													<span class="white">&times;</span>
-												</button>
-												Eliminar Reserva
-											</div>
-										</div>
-
-										<div class="modal-body">
-											<form class="form-horizontal" role="form">
-												<br>
-												<div align="center" class="page-header">
-													<h1>
-														<strong>¿Seguro que desea eliminar la reserva?</strong>
-													</h1>
-												</div>
-												<div align="center">
-													<a onclick="botonSi();"><input class="btn" value="Sí"
-														type="button"></a> &nbsp; &nbsp; &nbsp;
-													<button class="btn" data-dismiss="modal">No</button>
-												</div>
-
-											</form>
-										</div>
-
-										<div class="modal-footer no-margin-top">
-											<button class="btn btn-sm btn-danger pull-right"
-												data-dismiss="modal">
-												<i class="ace-icon fa fa-times"></i> Cerrar
-											</button>
-
-
-										</div>
-
-										<!-- PAGE CONTENT ENDS -->
-										<!-- PAGE CONTENT ENDS -->
-									</div>
-									<!-- /.col -->
-								</div>
-								<!-- /.row -->
-							</div>
 							<!-- /.page-content -->
 						</div>
 					</div>
 					<!-- /.main-content -->
-
-					<div class="footer">
-						<%@ include file="pieDePagina.jsp"%>
-					</div>
-
-					<a href="#" id="btn-scroll-up"
-						class="btn-scroll-up btn btn-sm btn-inverse"> <i
-						class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-					</a>
 				</div>
-				<!-- /.main-container -->
+			</div>
 
+			<div class="footer">
+				<%@ include file="pieDePagina.jsp"%>
+			</div>
 
+			<a href="#" id="btn-scroll-up"
+				class="btn-scroll-up btn btn-sm btn-inverse"> <i
+				class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div>
+		<!-- /.main-container -->
 
-				<%@ include file="scripts.jsp"%>
+	</div>
+
+	<%@ include file="scripts.jsp"%>
 </body>
-<script>
-	function datos(idEvaluacion) {
-		console.log(idReserva);
-		localStorage.setItem('idevaluacion', idEvaluacion);
-	}
-
-	function botonCambiarMenu() {
-		var idMenu = localStorage.getItem('idMenu');
-		var idHorario = localStorage.getItem('idHorario');
-		var fecha = localStorage.getItem('fecha');
-		var idReserva = localStorage.getItem('idReserva');
-		console.log(idReserva);
-
-		$.ajax({
-			type : 'GET',
-			url : "cambiarMenu.htm",
-			data : {
-				idMenu : idMenu,
-				idHorario : idHorario,
-				fecha : fecha
-			},
-			dataType : 'json',
-			success : function(data) {
-				console.log(data);
-				window.location = "obtenerMenu.htm?dateSelected=" + fecha
-						+ "&idMenu=" + idMenu + "&idReserva=" + idReserva;
-			},
-			error : function(jqXHR, errorThrown) {
-				alert("Error");
-			}
-		});
-	}
-
-	function botonCambiarHorario() {
-		var idMenu = localStorage.getItem('idMenu');
-		var idHorario = localStorage.getItem('idHorario');
-		var fecha = localStorage.getItem('fecha');
-		var idReserva = localStorage.getItem('idReserva');
-
-		window.location = "cambiarHorario.htm?idMenu=" + idMenu + "&idHorario="
-				+ idHorario + "&idReserva=" + idReserva;
-	}
-
-	function botonSi() {
-
-		var idMenu = localStorage.getItem('idMenu');
-		var idHorario = localStorage.getItem('idHorario');
-		var idReserva = localStorage.getItem('idReserva');
-		console.log(idMenu);
-		console.log(idHorario);
-		console.log(idReserva);
-		window.location = "eliminarReserva.htm?idMenu=" + idMenu
-				+ "&idHorario=" + idHorario + "&idReserva=" + idReserva;
-	}
-</script>
 
 </html>

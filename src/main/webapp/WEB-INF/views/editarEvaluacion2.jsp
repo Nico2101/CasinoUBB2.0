@@ -6,7 +6,7 @@
 <%@ include file="cabecera.jsp"%>
 </head>
 
-<body class="no-skin">
+<body class="no-skin" onload="rate('${editEva.valoracion}');">
 	<div id="navbar" class="navbar navbar-default          ace-save-state">
 		<%@ include file="barraSuperior.jsp"%>
 	</div>
@@ -251,6 +251,29 @@
 					});
 
 		});
+	</script>
+	<script>
+	function rate(valoracion){
+		console.log(valoracion);
+		$('.rating').raty({
+			'cancel' : true,
+			'half' : true,
+			'starType' : 'i',
+			'score':valoracion,
+			'halfShow':    true
+		/**,
+		
+		'click': function() {
+			setRatingColors.call(this);
+		},
+		'mouseover': function() {
+			setRatingColors.call(this);
+		},
+		'mouseout': function() {
+			setRatingColors.call(this);
+		}*/
+		})//.find('i:not(.star-raty)').addClass('grey');
+	}
 	</script>
 </body>
 </html>

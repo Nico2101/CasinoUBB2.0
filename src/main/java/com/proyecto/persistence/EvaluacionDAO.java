@@ -96,7 +96,7 @@ public class EvaluacionDAO {
 			if (rs.next()) {
 				result = new EvaluacionTO();
 				result.setId(rs.getInt("id"));
-				result.setValoracion(rs.getInt("valoracion"));
+				result.setValoracion(rs.getFloat("valoracion"));
 				result.setComentario(rs.getString("comentario"));
 			}
 
