@@ -62,17 +62,39 @@
 								</script>
 							</c:if>
 
+
+							<c:if test="${not empty SinEvaluaciones}">
+								<script type="text/javascript">
+									toastr
+											.warning("Usuario no ha evaluado menús");
+								</script>
+							</c:if>
+							
+							<c:if test="${not empty evaluacionEliminada}">
+								<script type="text/javascript">
+									toastr
+											.success("Evaluación eliminada correctamente");
+								</script>
+							</c:if>
+
+							<c:if test="${not empty NoTieneMasEvaluaciones}">
+								<script type="text/javascript">
+									toastr
+											.warning("No quedan evaluaciones");
+								</script>
+							</c:if>
+
+
 							<c:if test="${not empty ReservaEliminada}">
 								<script type="text/javascript">
 									toastr
 											.success("Reserva Eliminada Correctamente!");
 								</script>
 							</c:if>
-							
+
 							<c:if test="${not empty NoTieneMasReservas}">
 								<script type="text/javascript">
-									toastr
-											.warning("No tiene mas reservas");
+									toastr.warning("No tiene mas reservas");
 								</script>
 							</c:if>
 

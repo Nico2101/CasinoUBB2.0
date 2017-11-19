@@ -144,8 +144,15 @@ public class EvaluacionController {
 		sesion = request.getSession(true);
 		int id = (int) sesion.getAttribute("id");
 		//int id= 2;
-	    vista.setViewName("verEvaluaciones");
-	    vista.addObject("lista", dao.obtenerEvaluaciones(id));
+	    
+	    if(dao.obtenerEvaluaciones(id).isEmpty()) {
+	    	vista.setViewName("indexUsuario");
+	    	vista.addObject("SinEvaluaciones","Usuario no ha evaluado menus");
+	    }else {
+	    	vista.setViewName("verEvaluaciones");
+	    	vista.addObject("lista", dao.obtenerEvaluaciones(id));
+	    }
+	    
 		
 		return vista;
 	}
@@ -181,6 +188,7 @@ public class EvaluacionController {
 		sesion = request.getSession(true);
 		int idU = (int) sesion.getAttribute("id");
 	    vista.setViewName("verEvaluaciones");
+	    vista.addObject("EvaluacionActualizada", "Evauacion actualziada correctatemne");
 	    vista.addObject("lista", dao.obtenerEvaluaciones(idU));
 		return vista;
 	}
@@ -196,8 +204,15 @@ public class EvaluacionController {
 		
 		sesion = request.getSession(true);
 		int idU = (int) sesion.getAttribute("id");
-	    vista.setViewName("verEvaluaciones");
-	    vista.addObject("lista", dao.obtenerEvaluaciones(idU));
+		if(dao.obtenerEvaluaciones(id).isEmpty()) {
+	    	vista.setViewName("indexUsuario");
+	    	vista.addObject("evaluacionEliminada", "Evaluacion eliminada correctamente");
+	    	vista.addObject("NoTieneMasEvaluaciones","Usuario no tiene evaluaciones");
+	    }else {
+	    	vista.setViewName("verEvaluaciones");
+	    	vista.addObject("evaluacionEliminada", "Evaluacion eliminada correctamente");
+	    	vista.addObject("lista", dao.obtenerEvaluaciones(id));
+	    }
 		return vista;
 	}
 }

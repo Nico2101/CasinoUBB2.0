@@ -61,20 +61,19 @@
 								</h1>
 							</div>
 
-							<c:if test="${not empty NoHayAlmuerzos}">
-								<script>
-									toastr.warning("No quedan almuerzos");
-								</script>
-							</c:if>
-
-
-							<c:if test="${not empty ReservaEliminada}">
+							<c:if test="${not empty evaluacionEliminada}">
 								<script type="text/javascript">
 									toastr
-											.success("Reserva Eliminada Correctamente!");
+											.error("Evaluación eliminada correctamente");
 								</script>
 							</c:if>
-
+							
+							<c:if test="${not empty EvaluacionActualizada}">
+								<script type="text/javascript">
+									toastr
+											.success("Evaluación actualziada correctamente");
+								</script>
+							</c:if>
 
 							<div align="center">
 								<table class="table table-condensed" style="width: 800px">
