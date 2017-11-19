@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 import com.proyecto.transferObject.HorarioTO;
+import com.proyecto.transferObject.ReservaTO;
 
 /**
  *
@@ -23,17 +24,22 @@ public class HorarioDAO {
 	private static final String OBTENER_HORARIO_DISPONIBLE = "select * from horario";
 	private static final String ACTUALIZAR_RACIONES_HORARIO = "update horario set cantMaxRaciones=cantMaxRaciones-1 where id=?";
 	private static final String HAY_RACIONES = "select * from horario where id=? and cantMaxRaciones>0";
-	private static final String ACTUALIZAR_RACIONES_HORARIO_ANTIGUO="update horario set cantMaxRaciones=cantMaxRaciones+1 where id=?";
+	private static final String ACTUALIZAR_RACIONES_HORARIO_ANTIGUO = "update horario set cantMaxRaciones=cantMaxRaciones+1 where id=?";
+	private static final String HORARIO_RESERVADO = "SELECT h.horaInicio,h.horaFin, COUNT(*) as cant from reserva r JOIN horario h ON r.idhorario=h.id JOIN menu m on r.idmenu=m.id where m.fecha>=CURRENT_DATE and r.idusuario=? GROUP BY r.idhorario";
 
 	private static final String VERIFICAR = "select * from horario where cantMaxRaciones>0";
-	private static final String LIBERAR_CUPOS="update horario set cantMaxRaciones=30";
-	
+	private static final String LIBERAR_CUPOS = "update horario set cantMaxRaciones=30";
+
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
 	
+	public LinkedList<ReservaTO> getHorario(int idUsuario){
+		return null;
+	}
+
 	public void actualizaRacionesHorarioAntiguo(int idHorario) {
 		Connection conn = null;
 		try {
@@ -62,7 +68,7 @@ public class HorarioDAO {
 		}
 		return 0;
 	}
-	
+
 	public boolean actualizarRaciones() {
 		Connection conn = null;
 		try {
@@ -70,7 +76,7 @@ public class HorarioDAO {
 			PreparedStatement ps = conn.prepareStatement(LIBERAR_CUPOS);
 			ps.executeUpdate();
 			return true;
-			
+
 		} catch (SQLException e) {
 
 		}
