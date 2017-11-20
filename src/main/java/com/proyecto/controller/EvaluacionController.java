@@ -203,15 +203,15 @@ public class EvaluacionController {
 		dao.eliminaEvaluacion(to);
 		
 		sesion = request.getSession(true);
-		int idU = (int) sesion.getAttribute("id");
-		if(dao.obtenerEvaluaciones(id).isEmpty()) {
+		int idUsuario = (int) sesion.getAttribute("id");
+		if(dao.obtenerEvaluaciones(idUsuario).isEmpty()) {
 	    	vista.setViewName("indexUsuario");
 	    	vista.addObject("evaluacionEliminada", "Evaluacion eliminada correctamente");
 	    	vista.addObject("NoTieneMasEvaluaciones","Usuario no tiene evaluaciones");
 	    }else {
 	    	vista.setViewName("verEvaluaciones");
 	    	vista.addObject("evaluacionEliminada", "Evaluacion eliminada correctamente");
-	    	vista.addObject("lista", dao.obtenerEvaluaciones(id));
+	    	vista.addObject("lista", dao.obtenerEvaluaciones(idUsuario));
 	    }
 		return vista;
 	}
