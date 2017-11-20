@@ -73,7 +73,7 @@ public class InformesController {
 			@RequestParam(value = "cantRaciones") int cantRaciones, @RequestParam(value = "horaI") Time horaI,
 			@RequestParam(value = "horaF") Time horaF) throws Exception {
 		// Escribir PDF
-		
+
 		String FILE_NAME = "ticket.pdf";
 
 		// Declaramos un documento como un objecto Document.
@@ -103,7 +103,6 @@ public class InformesController {
 		Paragraph mensaje = new Paragraph();
 		Paragraph footer = new Paragraph();
 
-
 		Image imagen = Image
 				.getInstance("https://github.com/Nico2101/CasinoUBB2.0/blob/master/Screenshot_2.png?raw=true");
 
@@ -119,12 +118,19 @@ public class InformesController {
 
 		Paragraph contenido = new Paragraph();
 		contenido.setFont(FontFactory.getFont("Times New Roman", 12));
-		
-		contenido.add("|        "+cantRaciones+"x  "+tipo+"  "+cantRaciones*precio+"        |\n");
-		contenido.add("|          Menu: "+nombreMenu+"         |\n");
-		contenido.add("|       Fecha: "+fecha+"      |\n");
-		contenido.add("|   Hora: "+horaI+"-"+horaF+"  |\n");
-		
+
+		if (tipo.equalsIgnoreCase("Normal")) {
+			contenido.add("|        " + cantRaciones + "x  " + tipo + "  " + cantRaciones * precio + "        |\n");
+		}
+
+		if (tipo.equalsIgnoreCase("Extra")) {
+			contenido.add("|          " + cantRaciones + "x  " + tipo + "  " + cantRaciones * precio + "          |\n");
+		}
+
+		contenido.add("|          Menu: " + nombreMenu + "         |\n");
+		contenido.add("|       Fecha: " + fecha + "      |\n");
+		contenido.add("|   Hora: " + horaI + "-" + horaF + "  |\n");
+
 		footer.add("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n");
 
 		sup.setAlignment(Element.ALIGN_CENTER);
@@ -147,7 +153,6 @@ public class InformesController {
 			documento.add(footer);
 			documento.add(vacio1);
 			documento.add(mensaje);
-			
 
 		} catch (DocumentException ex) {
 			ex.getMessage();
