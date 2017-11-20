@@ -71,7 +71,7 @@
 							<c:if test="${not empty EvaluacionActualizada}">
 								<script type="text/javascript">
 									toastr
-											.success("Evaluación actualziada correctamente");
+											.success("Evaluación actualizada correctamente");
 								</script>
 							</c:if>
 

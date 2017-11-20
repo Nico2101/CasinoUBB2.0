@@ -36,8 +36,26 @@ public class HorarioDAO {
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
 	
-	public LinkedList<ReservaTO> getHorario(int idUsuario){
-		return null;
+	public LinkedList<HorarioTO> getHorario(int idUsuario){
+		LinkedList<HorarioTO> lista=new LinkedList<>();
+		HorarioTO result=null;
+		Connection conn=null;
+		try {
+			conn=getConnection();
+			PreparedStatement ps=conn.prepareStatement(HORARIO_RESERVADO);
+			ps.setInt(1, idUsuario);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				result=new HorarioTO();
+				result.setHoraInicio(rs.getTime("horaInicio"));
+				result.setHoraFin(rs.getTime("horaFin"));
+				result.setCantMaxRaciones(rs.getInt("cant"));
+				lista.add(result);
+			}
+		}catch(SQLException e) {
+			
+		}
+		return lista;
 	}
 
 	public void actualizaRacionesHorarioAntiguo(int idHorario) {

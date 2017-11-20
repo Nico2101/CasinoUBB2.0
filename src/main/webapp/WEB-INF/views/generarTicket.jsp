@@ -8,6 +8,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@page import="java.util.LinkedList"%>
+<%@page import="com.proyecto.transferObject.MenuTO"%>
+<%@page import="com.proyecto.transferObject.HorarioTO"%>
 <%@ include file="cabecera.jsp"%>
 <!-- HTML meta refresh URL redirection -->
 
@@ -90,27 +93,48 @@
 											<th>Hora Inicio</th>
 											<th>Hora Fin</th>
 											<th>Tikcet</th>
-											
+
 
 
 										</tr>
 									</thead>
 
-									<c:forEach var="menu" items="${menu}">
-										<tr>
 
-											<td><c:out value="${menu.nombre}"></c:out></td>
-											<td><c:out value="${menu.tipo}"></c:out></td>
-											<td><c:out value="${menu.precio}"></c:out></td>
-											<td><c:out value="${menu.fecha}"></c:out></td>
-											<td><c:out value="Hola"></c:out></td>
-											<td><c:out value="Hola"></c:out></td>
-											<td><c:out value="Hola"></c:out></td>
-											<td><a href="evaluar.htm?id=${menu.id}"><input
-													class="btn btn-primary btn-sm" type="button"
-													value="Generar Ticket" /></a></td>
-										</tr>
-									</c:forEach>
+									<%
+										LinkedList<MenuTO> list = (LinkedList<MenuTO>) request.getAttribute("menu");
+										LinkedList<HorarioTO> list2 = (LinkedList<HorarioTO>) request.getAttribute("datosHorario");
+
+										if (list != null && list2 != null)
+											for (int i = 0; i < list.size(); i++) {
+												MenuTO menu = list.get(i);
+												HorarioTO horario = list2.get(i);
+									%>
+
+									<tr>
+
+
+										<td><%=menu.getNombre()%></td>
+										<td><%=menu.getTipo()%></td>
+										<td><%=menu.getPrecio()%></td>
+										<td><%=menu.getFecha()%></td>
+										<td><%=horario.getCantMaxRaciones()%></td>
+										<td><%=horario.getHoraInicio()%></td>
+										<td><%=horario.getHoraFin()%></td>
+										<td><a
+											href="getTicket.htm?menu=<%=menu.getNombre()%>&tipo=<%=menu.getTipo()%>&precio=<%=menu.getPrecio()%>&fecha=<%=menu.getFecha()%>&cantRaciones=<%=horario.getCantMaxRaciones()%>&horaI=<%=horario.getHoraInicio()%>&horaF=<%=horario.getHoraFin()%>"><input
+												class="btn btn-primary btn-sm" type="button"
+												value="Generar Ticket" /></a></td>
+
+
+									</tr>
+									<%
+										}
+										else {
+									%>
+									<h1>No hay datos</h1>
+									<%
+										}
+									%>
 
 								</table>
 							</div>

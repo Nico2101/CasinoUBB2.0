@@ -11,6 +11,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Time;
 import java.util.LinkedList;
 
 import javax.servlet.ServletOutputStream;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lowagie.text.Document;
@@ -32,6 +34,7 @@ import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
+import com.proyecto.persistence.HorarioDAO;
 import com.proyecto.persistence.MenuDAO;
 import com.proyecto.persistence.ReservaDAO;
 import com.proyecto.transferObject.MenuTO;
@@ -45,15 +48,15 @@ public class InformesController {
 		HttpSession sesion = request.getSession();
 		int idUsuario = (int) sesion.getAttribute("id");
 		ReservaDAO reservaDAO = new ReservaDAO();
-		LinkedList<ReservaTO> reserva = new LinkedList<>();
+		HorarioDAO horarioDAO = new HorarioDAO();
+
 		if (!reservaDAO.existenMenus(idUsuario).isEmpty()) {
-			reserva = reservaDAO.existenMenus(idUsuario);
 
 			// Obtener Datos del menu
 			vista.addObject("menu", reservaDAO.datosTicket(idUsuario));
 
 			// obtener datos Horario reservado
-
+			vista.addObject("datosHorario", horarioDAO.getHorario(idUsuario));
 			vista.setViewName("generarTicket");
 		} else {
 			vista.addObject("SinReservas", "Usuario no tiene reservas");
@@ -64,9 +67,13 @@ public class InformesController {
 	}
 
 	@RequestMapping(value = "getTicket")
-	public void generarPDF(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void generarPDF(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(value = "menu") String nombreMenu, @RequestParam(value = "tipo") String tipo,
+			@RequestParam(value = "precio") int precio, @RequestParam(value = "fecha") String fecha,
+			@RequestParam(value = "cantRaciones") int cantRaciones, @RequestParam(value = "horaI") Time horaI,
+			@RequestParam(value = "horaF") Time horaF) throws Exception {
 		// Escribir PDF
-
+		
 		String FILE_NAME = "ticket.pdf";
 
 		// Declaramos un documento como un objecto Document.
@@ -94,6 +101,8 @@ public class InformesController {
 		Paragraph sup = new Paragraph();
 		Paragraph saltolinea = new Paragraph();
 		Paragraph mensaje = new Paragraph();
+		Paragraph footer = new Paragraph();
+
 
 		Image imagen = Image
 				.getInstance("https://github.com/Nico2101/CasinoUBB2.0/blob/master/Screenshot_2.png?raw=true");
@@ -102,21 +111,28 @@ public class InformesController {
 		imagen.setAlignment(Element.ALIGN_JUSTIFIED);
 
 		titulo.setFont(FontFactory.getFont("Times New Roman", 14, Font.BOLD));
-		sup.add("_ _ _ _ _ _ _ _ _ _ _ _ _\n");
-		titulo.add("| *******Ticket*******|\n");
+		sup.add("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n");
+		titulo.add("|    *******Ticket*******    |\n");
 
-		saltolinea.add("|                                     |\n");
+		saltolinea.add("|                                            |\n");
 		mensaje.add("Recorta el ticket y presentalo en el casino");
 
 		Paragraph contenido = new Paragraph();
 		contenido.setFont(FontFactory.getFont("Times New Roman", 12));
-		contenido.add("|    1x  colacion  1900    |");
+		
+		contenido.add("|        "+cantRaciones+"x  "+tipo+"  "+cantRaciones*precio+"        |\n");
+		contenido.add("|          Menu: "+nombreMenu+"         |\n");
+		contenido.add("|       Fecha: "+fecha+"      |\n");
+		contenido.add("|   Hora: "+horaI+"-"+horaF+"  |\n");
+		
+		footer.add("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n");
 
 		sup.setAlignment(Element.ALIGN_CENTER);
 		saltolinea.setAlignment(Element.ALIGN_CENTER);
 		titulo.setAlignment(Element.ALIGN_CENTER);
 		contenido.setAlignment(Element.ALIGN_CENTER);
 		mensaje.setAlignment(Element.ALIGN_CENTER);
+		footer.setAlignment(Element.ALIGN_CENTER);
 
 		try {
 			// Agregamos el texto al documento.
@@ -127,8 +143,11 @@ public class InformesController {
 			documento.add(titulo);
 			documento.add(saltolinea);
 			documento.add(contenido);
+			documento.add(saltolinea);
+			documento.add(footer);
 			documento.add(vacio1);
 			documento.add(mensaje);
+			
 
 		} catch (DocumentException ex) {
 			ex.getMessage();

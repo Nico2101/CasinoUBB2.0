@@ -46,7 +46,7 @@
 
 							<div align="center" class="page-header">
 								<h1>
-									<strong>Evaluar Servicio</strong>
+									<strong>Editar Evaluación</strong>
 								</h1>
 							</div>
 							<br>
