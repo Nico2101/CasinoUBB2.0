@@ -26,7 +26,7 @@ public class HorarioDAO {
 	private static final String HAY_RACIONES = "select * from horario where id=? and cantMaxRaciones>0";
 	private static final String ACTUALIZAR_RACIONES_HORARIO_ANTIGUO = "update horario set cantMaxRaciones=cantMaxRaciones+1 where id=?";
 	private static final String HORARIO_RESERVADO = "SELECT h.horaInicio,h.horaFin, COUNT(*) as cant from reserva r JOIN horario h ON r.idhorario=h.id JOIN menu m on r.idmenu=m.id where m.fecha>=CURRENT_DATE and r.idusuario=? GROUP BY r.idhorario";
-
+	private static final String DATOS_HORARIO = "select id, horaInicio, horaFin from horario where id=?";
 	private static final String VERIFICAR = "select * from horario where cantMaxRaciones>0";
 	private static final String LIBERAR_CUPOS = "update horario set cantMaxRaciones=30";
 
@@ -35,25 +35,46 @@ public class HorarioDAO {
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
-	
-	public LinkedList<HorarioTO> getHorario(int idUsuario){
-		LinkedList<HorarioTO> lista=new LinkedList<>();
-		HorarioTO result=null;
-		Connection conn=null;
+
+	public HorarioTO DatosHorario(int idHorario) {
+		HorarioTO result = null;
+		Connection conn = null;
 		try {
-			conn=getConnection();
-			PreparedStatement ps=conn.prepareStatement(HORARIO_RESERVADO);
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(DATOS_HORARIO);
+			ps.setInt(1, idHorario);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				result = new HorarioTO();
+				result.setId(rs.getInt("id"));
+				result.setHoraInicio(rs.getTime("horaInicio"));
+				result.setHoraFin(rs.getTime("horaFin"));
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return result;
+	}
+
+	public LinkedList<HorarioTO> getHorario(int idUsuario) {
+		LinkedList<HorarioTO> lista = new LinkedList<>();
+		HorarioTO result = null;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(HORARIO_RESERVADO);
 			ps.setInt(1, idUsuario);
-			ResultSet rs=ps.executeQuery();
-			while(rs.next()) {
-				result=new HorarioTO();
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				result = new HorarioTO();
 				result.setHoraInicio(rs.getTime("horaInicio"));
 				result.setHoraFin(rs.getTime("horaFin"));
 				result.setCantMaxRaciones(rs.getInt("cant"));
 				lista.add(result);
 			}
-		}catch(SQLException e) {
-			
+		} catch (SQLException e) {
+
 		}
 		return lista;
 	}

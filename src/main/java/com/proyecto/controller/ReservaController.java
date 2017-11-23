@@ -1,6 +1,7 @@
 package com.proyecto.controller;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -82,15 +83,23 @@ public class ReservaController {
 	@RequestMapping(value = "verReservas")
 	public ModelAndView verReservas(ModelAndView vista, HttpSession sesion, HttpServletRequest request) {
 		ReservaDAO reservaDAO = new ReservaDAO();
+		HorarioDAO horarioDAO = new HorarioDAO();
+		LinkedList<HorarioTO> listaIdHorario = new LinkedList<>();
+		LinkedList<HorarioTO> listaDatosHorarioReserva = new LinkedList<>();
 		sesion = request.getSession(true);
 		int id = (int) sesion.getAttribute("id");
-		if (reservaDAO.obtenerDatosReservaHorario(id).isEmpty()) {
+		if (reservaDAO.obtenerIDReservaHorario(id).isEmpty()) {
 			vista.setViewName("indexUsuario");
 			vista.addObject("NoTieneReservas", "No tiene reservas");
 		} else {
+			listaIdHorario = reservaDAO.obtenerIDReservaHorario(id);
+			for (int i = 0; i < listaIdHorario.size(); i++) {
+				listaDatosHorarioReserva.add(horarioDAO.DatosHorario(listaIdHorario.get(i).getId()));
+			}
+
 			vista.setViewName("verReservas");
 			vista.addObject("datosMenuReservado", reservaDAO.obtenerDatosReservaMenu(id));
-			vista.addObject("datosHorarioReservado", reservaDAO.obtenerDatosReservaHorario(id));
+			vista.addObject("datosHorarioReservado", listaDatosHorarioReserva);
 			vista.addObject("datosReserva", reservaDAO.obtenerDatosReserva(id));
 		}
 
@@ -244,6 +253,9 @@ public class ReservaController {
 		ReservaDAO reservaDAO = new ReservaDAO();
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 
+		LinkedList<HorarioTO> listaIdHorario = new LinkedList<>();
+		LinkedList<HorarioTO> listaDatosHorarioReserva = new LinkedList<>();
+
 		sesion = request.getSession(true);
 		int id = (int) sesion.getAttribute("id");
 
@@ -258,14 +270,19 @@ public class ReservaController {
 		// sumar el precio del almuerzo al saldo del usuario
 		usuarioDAO.updateSaldoEliminarReserva(id, precio);
 
-		if (reservaDAO.obtenerDatosReservaHorario(id).isEmpty()) {
+		if (reservaDAO.obtenerIDReservaHorario(id).isEmpty()) {
 			vista.setViewName("indexUsuario");
-			vista.addObject("NoTieneMasReservas", "No tiene reservas");
+			vista.addObject("NoTieneReservas", "No tiene reservas");
 			vista.addObject("ReservaEliminada", "Reserva eliminada correctamente");
 		} else {
+			listaIdHorario = reservaDAO.obtenerIDReservaHorario(id);
+			for (int i = 0; i < listaIdHorario.size(); i++) {
+				listaDatosHorarioReserva.add(horarioDAO.DatosHorario(listaIdHorario.get(i).getId()));
+			}
+
 			vista.setViewName("verReservas");
 			vista.addObject("datosMenuReservado", reservaDAO.obtenerDatosReservaMenu(id));
-			vista.addObject("datosHorarioReservado", reservaDAO.obtenerDatosReservaHorario(id));
+			vista.addObject("datosHorarioReservado", listaDatosHorarioReserva);
 			vista.addObject("datosReserva", reservaDAO.obtenerDatosReserva(id));
 			vista.addObject("ReservaEliminada", "Reserva eliminada correctamente");
 		}

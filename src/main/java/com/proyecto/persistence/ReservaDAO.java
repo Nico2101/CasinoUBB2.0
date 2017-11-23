@@ -31,7 +31,7 @@ public class ReservaDAO {
 	private static final String RESERVAR = "insert into reserva (fecha,idusuario,idmenu,idhorario) values(?,?,?,?)";
 	private static final String BUSCA_MENUS = "select *,count(*) as cont from reserva r WHERE r.idusuario=? and NOT EXISTS (select * from evaluacion e where r.idmenu = e.idmenu and e.idusuario=r.idusuario) group by r.idmenu";
 	private static final String DATOS_RESERVA_MENU = "SELECT m.id,m.nombre, m.precio,m.tipo, m.fecha from reserva r JOIN menu m on r.idmenu=m.id WHERE r.idusuario=? and m.fecha>=?";
-	private static final String DATOS_RESERVA_HORARIO = "SELECT h.id,h.horaInicio,h.horaFin from reserva r JOIN horario h on r.idhorario=h.id JOIN menu m on r.idmenu=m.id where r.idusuario=? and m.fecha>=?";
+	private static final String ID_RESERVA_HORARIO = "SELECT h.id from reserva r JOIN horario h on r.idhorario=h.id JOIN menu m on r.idmenu=m.id where r.idusuario=? and m.fecha>=?";
 	private static final String UPDATE_RESERVA = "update reserva set idmenu=? where idusuario=? and id=?";
 	private static final String DATOS_RESERVA = "select * from reserva where idusuario=? and fecha>=?";
 	private static final String UPDATE_ID_HORARIO = "update reserva set idhorario=? where id=?";
@@ -136,7 +136,7 @@ public class ReservaDAO {
 		}
 	}
 
-	public LinkedList<HorarioTO> obtenerDatosReservaHorario(int idUsuario) {
+	public LinkedList<HorarioTO> obtenerIDReservaHorario(int idUsuario) {
 		Connection conn = null;
 		LinkedList<HorarioTO> lista = new LinkedList<>();
 		HorarioTO result = null;
@@ -147,15 +147,13 @@ public class ReservaDAO {
 
 		try {
 			conn = getConnection();
-			PreparedStatement ps = conn.prepareStatement(DATOS_RESERVA_HORARIO);
+			PreparedStatement ps = conn.prepareStatement(ID_RESERVA_HORARIO);
 			ps.setInt(1, idUsuario);
 			ps.setString(2, date1);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				result = new HorarioTO();
 				result.setId(rs.getInt("id"));
-				result.setHoraInicio(rs.getTime("horaInicio"));
-				result.setHoraFin(rs.getTime("horaFin"));
 				lista.add(result);
 			}
 		} catch (SQLException e) {
