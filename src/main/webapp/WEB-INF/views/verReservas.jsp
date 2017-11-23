@@ -235,21 +235,23 @@
 						</div>
 					</div>
 					<!-- /.main-content -->
-
-					<div class="footer">
-						<%@ include file="pieDePagina.jsp"%>
-					</div>
-
-					<a href="#" id="btn-scroll-up"
-						class="btn-scroll-up btn btn-sm btn-inverse"> <i
-						class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-					</a>
 				</div>
-				<!-- /.main-container -->
+			</div>
+		</div>
+		<div class="footer">
+			<%@ include file="pieDePagina.jsp"%>
+		</div>
+
+		<a href="#" id="btn-scroll-up"
+			class="btn-scroll-up btn btn-sm btn-inverse"> <i
+			class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+		</a>
+	</div>
+	<!-- /.main-container -->
 
 
 
-				<%@ include file="scripts.jsp"%>
+	<%@ include file="scripts.jsp"%>
 </body>
 <script>
 	function datos(idReserva, idMenu, idHorario, fecha) {
