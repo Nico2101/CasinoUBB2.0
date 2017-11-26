@@ -13,8 +13,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta charset="utf-8" />
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css"
+	rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <title>Login CasinoUBB</title>
 
 <meta name="description" content="User login page" />
@@ -49,7 +52,7 @@
         <![endif]-->
 </head>
 
-<body class="login-layout">
+<body class="login-layout light-login">
 	<div class="main-container">
 		<div class="main-content">
 			<div class="row">
@@ -58,10 +61,10 @@
 						<div class="center">
 							<h1>
 
-								<i class="ace-icon fa fa-cutlery white"></i> <span class="white"
+								<i class="ace-icon fa fa-cutlery black"></i> <span class="black"
 									id="id-text2">Casino UBB</span>
 							</h1>
-
+							<br> <br> <br>
 							<c:if test="${not empty registrado}">
 								<script>
 									toastr.success("Registrado correctamente!");
@@ -73,13 +76,14 @@
 									toastr.error("Error en el registro");
 								</script>
 							</c:if>
-							
+
 							<c:if test="${not empty errorUsuario}">
 								<script>
-									toastr.error("Usuario o Contraseña incorrectos");
+									toastr
+											.error("Usuario o Contraseña incorrectos");
 								</script>
 							</c:if>
-								
+
 
 							<div class="position-relative">
 								<div id="login-box"
@@ -277,55 +281,42 @@
 		var valor = rut.value.replace('.', '');
 		// Despejar Guión
 		valor = valor.replace('-', '');
-
 		// Aislar Cuerpo y Dígito Verificador
 		cuerpo = valor.slice(0, -1);
 		dv = valor.slice(-1).toUpperCase();
-
 		// Formatear RUN
 		rut.value = cuerpo + '-' + dv
-
 		// Si no cumple con el mínimo ej. (n.nnn.nnn)
 		if (cuerpo.length < 7) {
 			rut.setCustomValidity("RUT Incompleto");
 			return false;
 		}
-
 		// Calcular Dígito Verificador
 		suma = 0;
 		multiplo = 2;
-
 		// Para cada dígito del Cuerpo
 		for (i = 1; i <= cuerpo.length; i++) {
-
 			// Obtener su Producto con el Múltiplo Correspondiente
 			index = multiplo * valor.charAt(cuerpo.length - i);
-
 			// Sumar al Contador General
 			suma = suma + index;
-
 			// Consolidar Múltiplo dentro del rango [2,7]
 			if (multiplo < 7) {
 				multiplo = multiplo + 1;
 			} else {
 				multiplo = 2;
 			}
-
 		}
-
 		// Calcular Dígito Verificador en base al Módulo 11
 		dvEsperado = 11 - (suma % 11);
-
 		// Casos Especiales (0 y K)
 		dv = (dv == 'K') ? 10 : dv;
 		dv = (dv == 0) ? 11 : dv;
-
 		// Validar que el Cuerpo coincide con su Dígito Verificador
 		if (dvEsperado != dv) {
 			rut.setCustomValidity("RUT Inválido");
 			return false;
 		}
-
 		// Si todo sale bien, eliminar errores (decretar que es válido)
 		rut.setCustomValidity('');
 	}
@@ -333,4 +324,3 @@
 
 
 </html>
-

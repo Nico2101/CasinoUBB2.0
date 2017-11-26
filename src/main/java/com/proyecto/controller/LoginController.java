@@ -2,6 +2,7 @@ package com.proyecto.controller;
 
 import java.sql.SQLException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,11 +14,48 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.proyecto.persistence.MenuDAO;
 import com.proyecto.persistence.UsuarioDAO;
 import com.proyecto.transferObject.UsuarioTO;
 
 @Controller
 public class LoginController {
+
+	@RequestMapping(value = "inicioCasino")
+	public ModelAndView inicioCasino() {
+		ModelAndView vista = new ModelAndView();
+		vista.setViewName("inicioCasino");
+
+		// obtener Menu del dia
+		MenuDAO menuDAO = new MenuDAO();
+
+		// hay menu normal y extra
+		if (!menuDAO.menuDelDiaNormal().isEmpty() && !menuDAO.menuDelDiaExtra().isEmpty()) {
+			vista.addObject("MenuNormal", menuDAO.menuDelDiaNormal());
+			vista.addObject("MenuExtra", menuDAO.menuDelDiaExtra());
+		} else {
+			
+			System.out.println("Paso por aca");
+			// solo hay menu normal
+			if (!menuDAO.menuDelDiaNormal().isEmpty() && menuDAO.menuDelDiaExtra().isEmpty()) {
+				vista.addObject("MenuNormal", menuDAO.menuDelDiaNormal());
+			}
+
+			// solo hay extra
+			if (!menuDAO.menuDelDiaExtra().isEmpty() && menuDAO.menuDelDiaNormal().isEmpty()) {
+				vista.addObject("MenuExtra", menuDAO.menuDelDiaExtra());
+			}
+
+			// no hay menu para el dia
+			if (menuDAO.menuDelDiaExtra().isEmpty() && menuDAO.menuDelDiaNormal().isEmpty()) {
+				vista.addObject("NoHayMenu", "No hay menu para hoy");
+				System.out.println("No hay menu");
+			}
+
+		}
+
+		return vista;
+	}
 
 	@RequestMapping(value = "login")
 	public ModelAndView goToLogin() {
@@ -64,6 +102,38 @@ public class LoginController {
 			vista.setViewName("login");
 			return vista;
 		}
+	}
+
+	// Index Adm
+	@RequestMapping(value = "indexAdministrador", method = RequestMethod.GET)
+	public ModelAndView index() {
+		ModelAndView vista = new ModelAndView();
+		vista.setViewName("indexAdministrador");
+		return vista;
+	}
+
+	// Index User
+	@RequestMapping(value = "indexUsuario", method = RequestMethod.GET)
+	public ModelAndView indexUsuario(HttpSession sesion, HttpServletRequest request) {
+		sesion = request.getSession(true);
+		sesion.removeAttribute("listaMenu");
+		sesion.removeAttribute("menu");
+		sesion.removeAttribute("horarioDisponible");
+		ModelAndView vista = new ModelAndView();
+		vista.setViewName("indexUsuario");
+		return vista;
+	}
+
+	@RequestMapping(value = "salir")
+	public ModelAndView cerrarSesion(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+		ModelAndView vista = new ModelAndView();
+		vista.setViewName("login");
+		HttpSession sesion = request.getSession(true);
+		sesion.removeAttribute("id");
+		sesion.removeAttribute("nombre");
+		sesion.invalidate();
+		return vista;
+
 	}
 
 }

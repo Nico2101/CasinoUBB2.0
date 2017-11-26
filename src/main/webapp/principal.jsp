@@ -12,6 +12,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:redirect url="/login.htm" />
+	<c:redirect url="/inicioCasino.htm" />
 </body>
 </html>
