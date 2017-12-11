@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 import com.mysql.jdbc.Connection;
 import com.proyecto.transferObject.UsuarioTO;
@@ -28,12 +29,39 @@ public class UsuarioDAO {
 	private static final String VERIFICAR_USER = "select * from usuario where rut=?";
 	private static final String AGREGAR_SALDO = "update usuario set saldo=saldo+? where rut=?";
 	private static final String UPDATE_SALDO_ELIMINAR_RESERVA = "update usuario set saldo=saldo+? where id=?";
+	private static final String LISTAR_USUARIOS="select * from usuario";
 
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
+	
+	public LinkedList<UsuarioTO> obtenerListaUsuarios() {
+		LinkedList<UsuarioTO> list = new LinkedList<>();
+		Connection conn = null;
+		UsuarioTO result = null;
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(LISTAR_USUARIOS);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				if(rs.getString("rol").equalsIgnoreCase("usuario")) {
+				result = new UsuarioTO();
+				result.setRut(rs.getString("rut"));
+				result.setNombre(rs.getString("nombre"));
+				result.setApellidoPaterno(rs.getString("apellidoPaterno"));
+				result.setApellidoMaterno(rs.getString("apellidoMaterno"));
+				list.add(result);
+			    }
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Quedo la pata hermano!!!");
+		}
+		return list;
+	}
+
 
 	public void updateSaldoEliminarReserva(int idUsuario, int precioAlmuerzo) {
 		Connection conn = null;

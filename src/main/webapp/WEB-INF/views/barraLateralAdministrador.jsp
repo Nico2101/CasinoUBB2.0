@@ -56,7 +56,7 @@
 					class="menu-icon fa fa-caret-right"></i> Aumentar Saldo</a> <b
 				class="arrow"></b></li>
 
-			<li class=""><a href="#"> <i
+			<li class=""><a href="listarUsuarios.htm"> <i
 					class="menu-icon fa fa-caret-right"></i> Ver Total Usuarios
 			</a> <b class="arrow"></b></li>
 
