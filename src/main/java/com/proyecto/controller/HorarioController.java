@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.proyecto.persistence.HorarioDAO;
 
 @Controller 
-public class HorarioController  {
+public class HorarioController {
 	@RequestMapping(value="liberarCupos")
 	public  ModelAndView liberarCupos(ModelAndView vista) {
 		

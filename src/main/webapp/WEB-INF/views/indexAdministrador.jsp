@@ -74,6 +74,13 @@
 									toastr.error("Error al actualizar los Cupos");
 								</script>
 							</c:if>
+							
+							<c:if test="${not empty noHayUusuarios}">
+								<script>
+									toastr
+											.error("No usuarios registrados en el sistema");
+								</script>
+							</c:if>
 
 
 							<!-- /.row -->
