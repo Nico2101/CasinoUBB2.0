@@ -8,6 +8,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@page import="java.util.LinkedList"%>
+<%@page import="com.proyecto.transferObject.MenuTO"%>
+<%@page import="com.proyecto.transferObject.EvaluacionTO"%>
 <%@ include file="cabecera.jsp"%>
 <!-- HTML meta refresh URL redirection -->
 
@@ -19,8 +22,8 @@
 	</div>
 
 	<div class="main-container ace-save-state" id="main-container">
-		<script type="text/javascript">	
-		    try {
+		<script type="text/javascript">
+			try {
 				ace.settings.loadState('main-container')
 			} catch (e) {
 			}
@@ -31,7 +34,7 @@
 			<script type="javascript">
                     try{ace.settings.loadState('sidebar')}catch(e){}
                 </script>
-			<%@ include file="barraLateralUsuario.jsp"%>
+			<%@ include file="barraLateralAdministrador.jsp"%>
 
 			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 				<i id="sidebar-toggle-icon"
@@ -55,60 +58,72 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 
+							<c:if test="${not empty actualizado }">
+								<script type="text/javascript">
+									toastr
+											.success("Menú actualizado correctamente!");
+								</script>
+							</c:if>
+
+
+							<!-- /.row -->
+							<!-- PAGE CONTENT ENDS -->
+
+
 							<div align="center" class="page-header">
 								<h1>
-									<strong>Menú</strong>
+									<strong>Menús Evaluados</strong>
 								</h1>
 							</div>
 
-							<c:if test="${not empty NoHayAlmuerzos}">
-								<script>
-									toastr.warning("No quedan almuerzos");
-								</script>
-							</c:if>
-							
-							<c:if test="${not empty nohorario}">
-								<script>
-									toastr
-											.warning("No hay horarios disponibles");
-								</script>
-							</c:if>
 
-							<div align="center">
-								<table id="example" class="table table-condensed" >
+							<div>
+								<table id="tablaValoracion" class="table table-condensed">
 									<thead>
 										<tr>
-											<th>ID</th>
+
 											<th>Nombre</th>
 											<th>Tipo</th>
 											<th>Precio</th>
-											<th>Raciones Restantes</th>
-											<th>Fecha</th>
-											<th>Horario Disponible</th>
+											<th style="width:200px">Valoración (0-5)</th>
+											<th>Comentario</th>
+
+
 
 										</tr>
 									</thead>
 
-									<c:forEach var="menu" items="${listaMenu}">
-										<tr>
-											<td><c:out value="${menu.id}"></c:out></td>
-											<td><c:out value="${menu.nombre}"></c:out></td>
-											<td><c:out value="${menu.tipo}"></c:out></td>
-											<td><c:out value="${menu.precio}"></c:out></td>
-											<td><c:out value="${menu.cantRaciones}"></c:out></td>
-											<td><c:out value="${menu.fecha}"></c:out></td>
-											<td><a
-												href="verHorarioDisponible.htm?id=${menu.id}&menu=${menu.nombre}&cantRaciones=${menu.cantRaciones}&tipo=${menu.tipo}&precio=${menu.precio}&fecha=${menu.fecha}"><input
-													class="btn btn-primary btn-sm" type="button"
-													value="Ver Horario Disponible" /></a></td>
-										</tr>
-									</c:forEach>
+									<%
+										LinkedList<EvaluacionTO> list = (LinkedList<EvaluacionTO>) request.getAttribute("promedio");
+										LinkedList<MenuTO> list2 = (LinkedList<MenuTO>) request.getAttribute("listaMenu");
+
+										if (list != null && list2 != null)
+											for (int i = 0; i < list.size(); i++) {
+
+												EvaluacionTO evaluacion = list.get(i);
+												MenuTO menu = list2.get(i);
+									%>
+
+									<tr>
+										<td><%=menu.getNombre()%></td>
+										<td><%=menu.getTipo()%></td>
+										<td><%=menu.getPrecio()%></td>
+										<td><%=evaluacion.getValoracion()%></td>
+										<td><%=evaluacion.getComentario()%></td>
+									</tr>
+									<%
+										}
+										else {
+									%>
+									<h1>No hay datos</h1>
+									<%
+										}
+									%>
 
 								</table>
 							</div>
 
-							<!-- /.row -->
-							<!-- PAGE CONTENT ENDS -->
+
 							<!-- PAGE CONTENT ENDS -->
 						</div>
 						<!-- /.col -->
@@ -134,7 +149,8 @@
 
 
 	<%@ include file="scripts.jsp"%>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+</body>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script type="text/javascript"
 	src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js">
 	
@@ -144,12 +160,12 @@
 
 <script>
 	$(function() {
-		$('#example')
+		$('#tablaValoracion')
 				.DataTable(
 						{
 							'paging' : true,
 							'lengthChange' : true,
-							'searching' : true,
+							'searching' : false,
 							'ordering' : true,
 							'info' : true,
 							'autoWidth' : true,
@@ -183,7 +199,6 @@
 						})
 	})
 </script>
-</body>
 
 
 </html>

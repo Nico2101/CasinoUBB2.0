@@ -34,7 +34,7 @@
 	</a> <b class="arrow"></b>
 
 		<ul class="submenu">
-			<li class=""><a href="#"> <i
+			<li class=""><a href="verValoraciones.htm"> <i
 					class="menu-icon fa fa-caret-right"></i> Ver Valoraciones
 			</a> <b class="arrow"></b></li>
 

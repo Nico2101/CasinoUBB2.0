@@ -20,6 +20,7 @@ public class EvaluacionDAO {
 	private static final String BUSCA_EV="select id,valoracion,comentario from evaluacion where id=?";
     private static final String EDIT_EV="update evaluacion set valoracion=?, comentario=? where id=?";
 	private static final String ELIMINA_EVA="DELETE from evaluacion where id=?";
+	private static final String VER_VALORACIONES ="select * from evaluacion group by idmenu";
     
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
@@ -39,6 +40,29 @@ public class EvaluacionDAO {
 				result=new EvaluacionTO();
 				result.setIdMenu(rs.getInt("idmenu"));
 				result.setValoracion(rs.getFloat("promedio"));
+				lista.add(result);
+			}
+		}catch(SQLException e) {
+			
+		}
+
+		return lista;
+	}
+	
+	public LinkedList<EvaluacionTO> verValoraciones(){
+		LinkedList<EvaluacionTO> lista = new LinkedList<>();
+		EvaluacionTO result = null;
+		Connection conn = null;
+		try {
+			conn=getConnection();
+			PreparedStatement ps= conn.prepareStatement(VER_VALORACIONES);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				result=new EvaluacionTO();
+				result.setIdMenu(rs.getInt("idmenu"));
+				result.setValoracion(rs.getFloat("valoracion"));
+				result.setComentario(rs.getString("comentario"));
+				
 				lista.add(result);
 			}
 		}catch(SQLException e) {

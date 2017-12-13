@@ -138,6 +138,37 @@ public class EvaluacionController {
 
 		return vista;
 	}
+	
+	@RequestMapping(value = "verValoraciones")
+	public ModelAndView verValoraciones(ModelAndView vista) {
+		EvaluacionDAO evaluacionDAO = new EvaluacionDAO();
+		LinkedList<EvaluacionTO> lista = new LinkedList<>();
+		MenuDAO menuDAO = new MenuDAO();
+		MenuTO menuTO = new MenuTO();
+		LinkedList<MenuTO> listaMenu = new LinkedList<>();
+		if (!evaluacionDAO.verValoraciones().isEmpty()) {
+			lista = evaluacionDAO.verValoraciones();
+			// paso a la vista el promedio de las valoraciones de los menús
+			vista.addObject("promedio", lista);
+
+			// ahora buscar la info del menu para mostrarla
+			for (int i = 0; i < lista.size(); i++) {
+				menuTO.setId(lista.get(i).getIdMenu());
+				listaMenu.add(menuDAO.buscarMenu(menuTO));
+
+			}
+
+			vista.addObject("listaMenu", listaMenu);
+			vista.setViewName("verValoraciones");
+			
+		} else {
+			vista.setViewName("indexAdministrador");
+			vista.addObject("NoHayValoraciones", "No existen evaluaciones de usuarios");
+		}
+
+		return vista;
+	}
+	
 	@RequestMapping(value = "verEvaluaciones")
 	public ModelAndView verEvaluaciones(ModelAndView vista, HttpSession sesion, HttpServletRequest request) throws SQLException {
 		EvaluacionDAO dao = new EvaluacionDAO();
