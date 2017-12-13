@@ -21,6 +21,7 @@ import com.mysql.jdbc.Connection;
 import com.proyecto.transferObject.HorarioTO;
 import com.proyecto.transferObject.MenuTO;
 import com.proyecto.transferObject.ReservaTO;
+import com.proyecto.transferObject.UsuarioTO;
 
 /**
  *
@@ -37,12 +38,36 @@ public class ReservaDAO {
 	private static final String UPDATE_ID_HORARIO = "update reserva set idhorario=? where id=?";
 	private static final String ELIMINA_RESERVA = "DELETE from reserva where idmenu=? and idhorario=? and id=?";
 	private static final String DATOS_TICKET = "select m.id, m.nombre,m.precio,m.tipo,m.fecha,count(*) as cant from reserva r JOIN menu m on r.idmenu= m.id JOIN horario h on r.idhorario= h.id WHERE r.idusuario=? and m.fecha>=CURRENT_DATE group by r.idmenu, h.id";
+	private static final String LISTAPERSONAS_RESERVAS = "SELECT u.id,u.nombre, u.rut,  count(*) as cantidad from reserva r JOIN usuario u on r.idusuario=u.id WHERE  r.fecha BETWEEN ? and ?  group by r.idusuario";
 
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
+
+	public LinkedList<UsuarioTO> obtenerReservas(String fechaInicio, String fechaFinal) {
+		LinkedList<UsuarioTO> lista = new LinkedList<>();
+		Connection conn = null;
+		UsuarioTO result = null;
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(LISTAPERSONAS_RESERVAS);
+			ps.setString(1, fechaInicio);
+			ps.setString(2, fechaFinal);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				result = new UsuarioTO();
+				result.setRut(rs.getString("rut"));
+				result.setNombre(rs.getString("nombre"));
+				result.setId(rs.getInt("cantidad"));
+				lista.add(result);
+			}
+		} catch (SQLException e) {
+
+		}
+		return lista;
+	}
 
 	public LinkedList<MenuTO> datosTicket(int idUsuario) {
 		LinkedList<MenuTO> lista = new LinkedList<>();
