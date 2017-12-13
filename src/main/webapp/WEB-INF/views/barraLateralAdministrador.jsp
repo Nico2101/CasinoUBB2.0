@@ -72,7 +72,7 @@
 	</a> <b class="arrow"></b>
 
 		<ul class="submenu">
-			<li class=""><a href="#"> <i
+			<li class=""><a href="informeAlmuerzos.htm"> <i
 					class="menu-icon fa fa-caret-right"></i> Total Almuerzos Vendidos
 			</a> <b class="arrow"></b></li>
 
