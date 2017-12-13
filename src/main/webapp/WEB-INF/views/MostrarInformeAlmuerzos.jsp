@@ -92,7 +92,7 @@
 													<th><c:out value="${total}"></c:out></th>
 												</tr>
 												<br>
-												<input class="btn" value="Generar Informe" type="submit">
+												<input class="btn pull-right" value="Generar Informe" type="submit">
 											</c:if>
 											<c:if test="${empty listaMenuVendidos }">
 
