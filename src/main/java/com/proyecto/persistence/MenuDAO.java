@@ -34,12 +34,57 @@ public class MenuDAO {
 	private static final String ACTUALIZAR_RACIONES_MENU_ANTIGUO = "update menu set cantidadRaciones=cantidadRaciones+1 where id=?";
 	private static final String MENU_DEL_DIA_NORMAL = "select nombre, precio from menu where fecha=? and tipo='Normal'";
 	private static final String MENU_DEL_DIA_EXTRA = "select nombre, precio from menu where fecha=?  and tipo='Extra'";
+	private static final String INFORME_MENU = "select m.nombre, m.precio, m.tipo, count(*) AS totalVendidos from menu m join reserva r on r.idmenu=m.id where r.fecha between ? and ? GROUP BY r.idmenu";
+	private static final String TOTAL_ALMUERZOS_VENDIDOS = "select count(*) AS totalVendidos from menu m join reserva r on r.idmenu=m.id where r.fecha between ? and ?";
 
 	private static final String DB_NAME = "mydb";
 	private static final String PORT = "3306";
 	private static final String URL = "jdbc:mysql://localhost:" + PORT + "/" + DB_NAME;
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
+
+	public int totalAlmuerzosVendidos(String fechaInicio, String fechaFin) {
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(TOTAL_ALMUERZOS_VENDIDOS);
+			ps.setString(1, fechaInicio);
+			ps.setString(2, fechaFin);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("totalVendidos");
+			}
+		} catch (SQLException e) {
+
+		}
+		return 0;
+	}
+
+	public LinkedList<MenuTO> informeMenu(String fechaInicio, String fechaFin) {
+		LinkedList<MenuTO> lista = new LinkedList<>();
+		MenuTO result = null;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			PreparedStatement ps = conn.prepareStatement(INFORME_MENU);
+			ps.setString(1, fechaInicio);
+			ps.setString(2, fechaFin);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				result = new MenuTO();
+				result.setNombre(rs.getString("nombre"));
+				result.setTipo(rs.getString("tipo"));
+				result.setPrecio(rs.getInt("precio"));
+				result.setCantRaciones(rs.getInt("totalVendidos"));
+				lista.add(result);
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return lista;
+
+	}
 
 	public LinkedList<MenuTO> menuDelDiaNormal() {
 		LinkedList<MenuTO> lista = new LinkedList<>();

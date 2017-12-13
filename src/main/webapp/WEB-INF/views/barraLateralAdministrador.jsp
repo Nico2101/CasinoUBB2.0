@@ -60,7 +60,7 @@
 					class="menu-icon fa fa-caret-right"></i> Ver Total Usuarios
 			</a> <b class="arrow"></b></li>
 
-			<li class=""><a href="#"> <i
+			<li class=""><a href="listaPersonasMes.htm"> <i
 					class="menu-icon fa fa-caret-right"></i> Listar Usuarios con
 					Reserva
 			</a> <b class="arrow"></b></li>
@@ -72,7 +72,7 @@
 	</a> <b class="arrow"></b>
 
 		<ul class="submenu">
-			<li class=""><a href="#"> <i
+			<li class=""><a href="informeAlmuerzos.htm"> <i
 					class="menu-icon fa fa-caret-right"></i> Total Almuerzos Vendidos
 			</a> <b class="arrow"></b></li>
 
