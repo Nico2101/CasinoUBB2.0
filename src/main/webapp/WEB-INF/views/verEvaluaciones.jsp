@@ -64,7 +64,7 @@
 							<c:if test="${not empty evaluacionEliminada}">
 								<script type="text/javascript">
 									toastr
-											.error("Evaluación eliminada correctamente");
+											.success("Evaluación eliminada correctamente");
 								</script>
 							</c:if>
 							
